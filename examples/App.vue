@@ -14,13 +14,21 @@
       :options="options" />
 
     <div class="box2" @contextmenu="onContextMenu2($event)">
-      Useage:
+
       <ol>
+        <li>
+          Install:
+          <pre>
+            <code class="language-shell">          
+npm install -save @imengyu/vue3-context-menu
+            </code>
+          </pre>
+        </li>
         <li>
           Import vue3-context-menu in main.js:
           <pre>
             <code class="language-javascript">          
-import ContextMenu from 'vue3-context-menu'
+import ContextMenu from '@imengyu/vue3-context-menu'
 
 createApp(App)
   .use(ContextMenu)        

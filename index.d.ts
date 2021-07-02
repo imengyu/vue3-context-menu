@@ -1,3 +1,5 @@
+import { App } from "vue";
+
 declare module 'vue3-context-menu' {
 }
 
@@ -91,3 +93,9 @@ declare module '@vue/runtime-core' {
     $contextmenu: (options : MenuOptions) => void;
   }
 }
+
+declare const Plugin: {
+  install: (app: App<Element>) => void
+};
+
+export default Plugin;
