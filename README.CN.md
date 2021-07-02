@@ -62,6 +62,51 @@ onContextMenu(e : MouseEvent) {
 }
 ```
 
+同样，也可以使用组件模式显示菜单：
+
+```html
+<context-menu v-model:show="show" :options="options" />
+```
+
+```js
+data() {
+  return {
+    show: false,
+    options: {
+      items:[
+        {
+          label: "Copy",
+          onClick: () => {
+            document.execCommand('copy');
+          }
+        },
+        { label: "Paste", disabled: true },
+        {
+          label: "Print",
+          icon: 'icon-print',
+          onClick: () => {
+            document.execCommand('print');
+          }
+        },
+      ],
+      iconFontClass: 'iconfont',
+      customClass: "class-a",
+      minWidth: 230,
+      x: 0,
+      y: 0
+    }
+  }
+},
+methods: {
+  onButtonClick(e : MouseEvent) {
+    //显示菜单
+    this.show = true;
+    this.options.x = e.x;
+    this.options.y = e.y;
+  },
+}
+```
+
 ### 参数说明
 
 #### MenuOptions

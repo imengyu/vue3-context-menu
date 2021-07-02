@@ -65,6 +65,51 @@ onContextMenu(e : MouseEvent) {
 }
 ```
 
+Similarly, you can use component to display the menu:
+
+```html
+<context-menu v-model:show="show" :options="options" />
+```
+
+```js
+data() {
+  return {
+    show: false,
+    options: {
+      items:[
+        {
+          label: "Copy",
+          onClick: () => {
+            document.execCommand('copy');
+          }
+        },
+        { label: "Paste", disabled: true },
+        {
+          label: "Print",
+          icon: 'icon-print',
+          onClick: () => {
+            document.execCommand('print');
+          }
+        },
+      ],
+      iconFontClass: 'iconfont',
+      customClass: "class-a",
+      minWidth: 230,
+      x: 0,
+      y: 0
+    }
+  }
+},
+methods: {
+  onButtonClick(e : MouseEvent) {
+    //Show menu
+    this.show = true;
+    this.options.x = e.x;
+    this.options.y = e.y;
+  },
+}
+```
+
 ### Parameter description
 
 #### MenuOptions
