@@ -1,0 +1,49 @@
+{
+  "name": "vue3-context-menu",
+  "version": "1.0.0",
+  "description": "A context menu for Vue3",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vue-cli-service build --target lib --name vue3-context-menu --dest lib index.js",
+    "serve": "vue-cli-service serve",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imengyu/vue3-context-menu.git"
+  },
+  "keywords": [
+    "vue3",
+    "vue",
+    "context",
+    "menu",
+    "contextmenu"
+  ],
+  "author": "imengyu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imengyu/vue3-context-menu/issues"
+  },
+  "homepage": "https://github.com/imengyu/vue3-context-menu#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/babel-plugin-jsx": "^1.0.6",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-unit-mocha": "^4.5.13",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.0",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "@vue/test-utils": "^2.0.0-0",
+    "eslint": "^7.29.0",
+    "eslint-plugin-vue": "^7.12.1",
+    "typescript": "^4.3.5",
+    "vue": "^3.0.0"
+  }
+}
