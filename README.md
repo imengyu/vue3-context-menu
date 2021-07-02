@@ -1,7 +1,7 @@
 
 vue3-context-menu
 ---
-A context menu for Vue3
+A context component menu for Vue3
 
 ![Screenshot](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/first.png)
 
