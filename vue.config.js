@@ -10,6 +10,7 @@ module.exports = {
       filename: 'index.html'
     }
   },
+  publicPath: './',
   chainWebpack: config => {
     config.module
     .rule('js')

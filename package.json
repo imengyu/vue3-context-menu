@@ -12,6 +12,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vue-cli-service build --target lib --name vue3-context-menu --dest lib index.js",
+    "build-demo": "vue-cli-service build",
     "serve": "vue-cli-service serve",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint"

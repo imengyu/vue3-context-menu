@@ -5,11 +5,11 @@ A context menu for Vue3
 
 ![Screenshot](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/first.png)
 
+[中文说明](https://github.com/imengyu/vue3-context-menu/blob/main/README.CN.md)
+
 ---
 
-[View Demo]() 
-
-[中文说明](https://github.com/imengyu/vue3-context-menu/blob/main/README.CN.md)
+[View Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
 
 ---
 
@@ -67,7 +67,7 @@ onContextMenu(e : MouseEvent) {
 
 ### Parameter description
 
-## MenuOptions
+#### MenuOptions
 
 | Attribute | description | type | optional value | default value|
 | :----: | :----: | :----: | :----: | :----: |
@@ -82,7 +82,7 @@ onContextMenu(e : MouseEvent) {
 | minWidth | Minimum width of main menu (in pixels) | `number` | — | `100` |
 | maxWidth | Maximum width of main menu (in pixels) | `number` | — | `600` |
 
-## MenuItem
+#### MenuItem
 
 | Attribute | description | type | optional value | default value|
 | :----: | :----: | :----: | :----: | :----: |

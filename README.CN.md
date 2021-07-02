@@ -7,7 +7,7 @@ vue3-context-menu
 
 ---
 
-[查看演示]() 
+[查看演示](https://imengyu.top/pages/vue3-context-menu-demo/) 
 
 ---
 
@@ -64,7 +64,7 @@ onContextMenu(e : MouseEvent) {
 
 ### 参数说明
 
-## MenuOptions
+#### MenuOptions
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
@@ -79,7 +79,7 @@ onContextMenu(e : MouseEvent) {
 | minWidth | 主菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
 
-## MenuItem
+#### MenuItem
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
