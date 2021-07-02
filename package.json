@@ -1,8 +1,14 @@
 {
-  "name": "vue3-context-menu",
+  "name": "@imengyu/vue3-context-menu",
   "version": "1.0.0",
   "description": "A context menu compoent for Vue3",
   "main": "index.js",
+  "files": [
+    "src",
+    "examples",
+    "screenshot",
+    "types"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vue-cli-service build --target lib --name vue3-context-menu --dest lib index.js",
@@ -19,6 +25,8 @@
     "vue",
     "context",
     "menu",
+    "右键菜单",
+    "菜单",
     "contextmenu"
   ],
   "author": "imengyu",
