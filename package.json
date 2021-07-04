@@ -1,6 +1,6 @@
 {
   "name": "@imengyu/vue3-context-menu",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A context menu component for Vue3",
   "main": "index.js",
   "files": [
