@@ -59,8 +59,8 @@ export default defineComponent({
           }
         } as ContextMenuGlobalData,
         position: this.currentShowPos as ContextMenuPositionData,
-        onClose: this.onChidrenClose,
-        onPreUpdatePos: this.onChidrenUpdatePos,
+        onClose: this.onChildrenClose,
+        onPreUpdatePos: this.onChildrenUpdatePos,
       })
     ])
   },
@@ -75,13 +75,13 @@ export default defineComponent({
         this.$emit('close');
       }
     },
-    onChidrenClose(byUserClick : boolean) {
+    onChildrenClose(byUserClick : boolean) {
       if(byUserClick) {
         this.$emit('close');
         this.$emit('update:show', false);
       }
     },
-    onChidrenUpdatePos(newPos: ContextMenuPositionData) {
+    onChildrenUpdatePos(newPos: ContextMenuPositionData) {
       this.currentShowPos.x = newPos.x;
       this.currentShowPos.y = newPos.y;
     },
@@ -91,7 +91,7 @@ export default defineComponent({
 
 <style>
 .mx-context-menu-host {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;

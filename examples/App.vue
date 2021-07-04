@@ -229,7 +229,11 @@ export default defineComponent({
     }
   },
   mounted() {
-    (window as any).hljs.highlightAll();
+    (window as unknown as {
+      hljs: {
+        highlightAll: () => void
+      }
+    }).hljs.highlightAll();
   },
   methods: {
     onButtonClick(e : MouseEvent) {

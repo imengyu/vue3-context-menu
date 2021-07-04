@@ -12,10 +12,10 @@
     @mouseenter="onMenuMouseEnter"
     @mouseleave="onMenuMouseLeave($event)">
     <div v-show="menuOverflow" class="mx-context-menu-updown up" @click="onScroll(false)">
-      <img src="./ContextMenuRightArrow.svg" />
+      <span class="mx-right-arrow" />
     </div>
     <div v-show="menuOverflow" class="mx-context-menu-updown down" @click="onScroll(true)">
-      <img src="./ContextMenuRightArrow.svg" />
+      <span class="mx-right-arrow" />
     </div>
     <div 
       class="mx-context-menu-items"
@@ -34,7 +34,7 @@
           <span class="text">
             <i :class="item.icon + ' icon '+ options.iconFontClass"></i>
             <span>{{ item.label }}</span>
-            <img v-if="item.children && item.children.length > 0" class="right-arrow" src="./ContextMenuRightArrow.svg" />
+            <span v-if="item.children && item.children.length > 0" class="mx-right-arrow" />
           </span>
         </div>
         <div v-if="item.divided" class="mx-context-menu-item-sperator"></div>
@@ -49,9 +49,9 @@
       :options="options"
       :globalData="childGlobalData"
       :position="childPosition"
-      @close="onChidrenClose"
-      @keepOpen="onChidrenKeepOpen"
-      @preUpdatePos="onChidrenUpdatePos"
+      @close="onChildrenClose"
+      @keepOpen="onChildrenKeepOpen"
+      @preUpdatePos="onChildrenUpdatePos"
     ></ContextSubMenu>
   </div>
 </template>
@@ -98,7 +98,7 @@ export default defineComponent({
     const menuReady = ref(false);
     const menuOverflow = ref(false);
 
-    let nextShouldHiveItem = null as MenuItem|null;
+    let nextShouldHideItem = null as MenuItem|null;
     const maxHeight = ref(0);
     const activeItem = ref<MenuItem|null>(null);
     const childGlobalData = ref({
@@ -130,9 +130,9 @@ export default defineComponent({
         childPosition.value.y = currentItemEle.offsetTop + (options.value.yOffset || 0);
     }
     function hideChildItem() {
-      nextShouldHiveItem = activeItem.value;
+      nextShouldHideItem = activeItem.value;
       setTimeout(() => {
-        if(nextShouldHiveItem === activeItem.value)
+        if(nextShouldHideItem === activeItem.value)
           activeItem.value = null;
       });
     }
@@ -146,17 +146,17 @@ export default defineComponent({
     });
 
     //子菜单事件
-    function onChidrenClose(byUserClick : boolean) {
+    function onChildrenClose(byUserClick : boolean) {
       hideChildItem();
       if(byUserClick)
         context.emit('close', true);
     }
-    function onChidrenKeepOpen(item : MenuItem) {
-      if(nextShouldHiveItem === item)
-        nextShouldHiveItem = null; 
+    function onChildrenKeepOpen(item : MenuItem) {
+      if(nextShouldHideItem === item)
+        nextShouldHideItem = null; 
       context.emit('keepOpen', parentItem.value);
     }
-    function onChidrenUpdatePos(newPos: ContextMenuPositionData) {
+    function onChildrenUpdatePos(newPos: ContextMenuPositionData) {
       childPosition.value.x = newPos.x;
       childPosition.value.y = newPos.y;
     }
@@ -246,9 +246,9 @@ export default defineComponent({
       maxHeight,
       showChildItem,
       hideChildItem,
-      onChidrenClose,
-      onChidrenKeepOpen,
-      onChidrenUpdatePos,
+      onChildrenClose,
+      onChildrenKeepOpen,
+      onChildrenUpdatePos,
       onMenuMouseLeave,
       onMenuMouseEnter,
       onMouseClick,
@@ -305,9 +305,10 @@ export default defineComponent({
 .mx-context-menu-updown:active {
   background-color: #c9c8c8;
 }
-.mx-context-menu-updown img {
-  width: 13px;
+.mx-context-menu-updown .mx-right-arrow {
+  display: inline-block;
   position: absolute;
+  height: 12px;
   left: 50%;
   top: 0;
 }
@@ -317,10 +318,10 @@ export default defineComponent({
 .mx-context-menu-updown.down {
   bottom: 0;
 }
-.mx-context-menu-updown.up img {
+.mx-context-menu-updown.up .mx-right-arrow {
   transform: translateX(-50%) rotate(270deg);
 }
-.mx-context-menu-updown.down img {
+.mx-context-menu-updown.down .mx-right-arrow {
   transform: translateX(-50%) rotate(90deg);
 }
 
@@ -380,12 +381,18 @@ export default defineComponent({
   text-overflow: ellipsis;
   padding-right: 16px;
 }
-.mx-context-menu-item .text .right-arrow  {
+.mx-context-menu-item .text .mx-right-arrow  {
   position: absolute;
   display: inline-block;
-  right: 10px;
+  right: 2px;
   top: 50%;
-  margin-top: -7px;
+  margin-top: -5px;
+}
+.mx-right-arrow  {
   width: 14px;
+  height: 14px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjI1MjA3MjM5MzE1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjIxMjYzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0zMDcuMDE4IDQ5LjQ0NWMxMS41MTcgMCAyMy4wMzIgNC4zOTQgMzEuODE5IDEzLjE4TDc1Ni40MDQgNDgwLjE4YzguNDM5IDguNDM4IDEzLjE4MSAxOS44ODUgMTMuMTgxIDMxLjgycy00Ljc0MSAyMy4zOC0xMy4xODEgMzEuODJMMzM4LjgzOCA5NjEuMzc2Yy0xNy41NzQgMTcuNTczLTQ2LjA2NSAxNy41NzMtNjMuNjQtMC4wMDEtMTcuNTczLTE3LjU3My0xNy41NzMtNDYuMDY1IDAuMDAxLTYzLjY0TDY2MC45NDQgNTEyIDI3NS4xOTggMTI2LjI2NWMtMTcuNTc0LTE3LjU3My0xNy41NzQtNDYuMDY2LTAuMDAxLTYzLjY0QzI4My45ODUgNTMuODM5IDI5NS41MDEgNDkuNDQ1IDMwNy4wMTggNDkuNDQ1eiIgcC1pZD0iMjEyNjQiPjwvcGF0aD48L3N2Zz4=');
+  background-size: 12px;
+  background-repeat: no-repeat;
 }
 </style>

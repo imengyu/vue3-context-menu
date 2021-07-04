@@ -1,7 +1,7 @@
 
 vue3-context-menu
 ---
-一个使用 Vue3 制作的右键菜单组件
+一个使用 Vue3 制作的简洁美观简单的右键菜单组件
 
 ![截图](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/first.png)
 

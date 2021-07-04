@@ -24,7 +24,7 @@ const $contextmenu = (options : MenuOptions) => {
 }
 
 export default {
-  install(app: App<Element>) {
+  install(app: App<Element>) : void {
     app.config.globalProperties.$contextmenu = $contextmenu;
     app.component('ContextMenu', ContextMenuConstructor);
     app.component('ContextSubMenu', ContextSubMenuConstructor);
