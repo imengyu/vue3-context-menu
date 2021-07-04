@@ -21,6 +21,7 @@ npm install -save @imengyu/vue3-context-menu
 
 导入组件：
 ```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
 
 createApp(App)

@@ -97,5 +97,6 @@ export default defineComponent({
   right: 0;
   bottom: 0;
   z-index: 1024;
+  overflow: hidden;
 }
 </style>

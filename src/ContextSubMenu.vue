@@ -207,7 +207,7 @@ export default defineComponent({
         }
 
         //如果高度超出屏幕，那么限制最高高度
-        if(_menu.offsetHeight > _globalData.screenSize.h) {
+        if(_menu.offsetHeight > _globalData.screenSize.h - 30) {
           maxHeight.value = _globalData.screenSize.h - 30;
           //  强制限制Y坐标为0
           newPos.y = -_globalData.parentPosition.y;

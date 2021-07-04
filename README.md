@@ -23,6 +23,7 @@ npm install -save @imengyu/vue3-context-menu
 
 Import vue3-context-menu in main.js:
 ```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
 
 createApp(App)
