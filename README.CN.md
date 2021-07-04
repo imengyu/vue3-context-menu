@@ -107,6 +107,20 @@ methods: {
   },
 }
 ```
+### 菜单图标
+
+菜单组件不提供任何图标，如果您想添加图标，推荐使用 [iconfont](http://iconfont.cn) 图标库，导入后填写 MenuItem 的 icon 属性，即可在菜单项前面显示图标。
+
+*默认使用 `<i>` 元素来显示图标。*
+
+### 自定义样式
+
+如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 `/src/ContextSubMenu.vue` 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+
+```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import '你的样式css文件路径.css'
+```
 
 ### 参数说明
 
