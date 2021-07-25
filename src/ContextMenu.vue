@@ -38,7 +38,8 @@ export default defineComponent({
       style: {
         display: this.show ? 'block' : 'none'
       },
-      onMouseUp: this.onHostMouseUp,
+      onClick: this.onHostClick,
+      onContextmenu: (e: MouseEvent) => { e.preventDefault(); }
     }, [
       h(ContextSubMenuConstructor, {
         items: this.options.items,
@@ -69,7 +70,7 @@ export default defineComponent({
       this.currentShowPos.x = this.options.x;
       this.currentShowPos.y = this.options.y;
     },
-    onHostMouseUp(e : MouseEvent) {
+    onHostClick(e : MouseEvent) {
       if((e.target as HTMLElement).className === 'mx-context-menu-host') {
         this.$emit('update:show', false);
         this.$emit('close');

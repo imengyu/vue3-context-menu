@@ -162,12 +162,14 @@ export default defineComponent({
     }
     //鼠标事件
     function onMouseClick(item : MenuItem) {
-      if(typeof item.onClick === 'function') {
-        item.onClick();
-        context.emit('close', true);
-      }
-      else if(!item.children || item.children.length === 0) {
-        context.emit('close', true);
+      if(!item.disabled) {
+        if(typeof item.onClick === 'function') {
+          item.onClick();
+          context.emit('close', true);
+        }
+        else if(!item.children || item.children.length === 0) {
+          context.emit('close', true);
+        }
       }
     }
     function onMenuMouseEnter() {
