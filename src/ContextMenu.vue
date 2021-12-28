@@ -26,6 +26,13 @@ export default defineComponent({
   },
   mounted() {
     this.updateCurrentShowPos();
+    setTimeout(() => {
+      document.addEventListener("click", this.close)
+      document.addEventListener("contextmenu", this.close)
+    }, 100);
+  },
+  beforeUnmount() {
+    document.removeEventListener("click", this.close);
   },
   watch: {
     show(v : boolean) {
@@ -33,48 +40,39 @@ export default defineComponent({
     } 
   },
   render() {
-    return h('div', {
-      class: 'mx-context-menu-host',
-      style: {
-        display: this.show ? 'block' : 'none'
-      },
-      onClick: this.onHostClick,
-      onContextmenu: (e: MouseEvent) => { e.preventDefault(); }
-    }, [
-      h(ContextSubMenuConstructor, {
-        items: this.options.items,
-        parentItem: {
-          maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
-          minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
-        } as MenuItem,
-        options: this.options,
-        zIndex: this.options.zIndex || MenuConstOptions.defaultStartZindex,    
-        globalData: {
-          parentPosition: {
-            x: 0,
-            y: 0,
-          },
-          screenSize: {
-            w: window.innerWidth,
-            h: window.innerHeight,
-          }
-        } as ContextMenuGlobalData,
-        position: this.currentShowPos as ContextMenuPositionData,
-        onClose: this.onChildrenClose,
-        onPreUpdatePos: this.onChildrenUpdatePos,
-      })
-    ])
+    if (!this.show) return [];
+
+    return h(ContextSubMenuConstructor, {
+      items: this.options.items,
+      parentItem: {
+        maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
+        minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
+      } as MenuItem,
+      options: this.options,
+      zIndex: this.options.zIndex || MenuConstOptions.defaultStartZindex,
+      globalData: {
+        parentPosition: {
+          x: 0,
+          y: 0,
+        },
+        screenSize: {
+          w: window.innerWidth,
+          h: window.innerHeight,
+        },
+      } as ContextMenuGlobalData,
+      position: this.currentShowPos as ContextMenuPositionData,
+      onClose: this.onChildrenClose,
+      onPreUpdatePos: this.onChildrenUpdatePos,
+    });
   },
   methods: {
     updateCurrentShowPos() {
       this.currentShowPos.x = this.options.x;
       this.currentShowPos.y = this.options.y;
     },
-    onHostClick(e : MouseEvent) {
-      if((e.target as HTMLElement).className === 'mx-context-menu-host') {
-        this.$emit('update:show', false);
-        this.$emit('close');
-      }
+    close() {
+      this.$emit("update:show", false);
+      this.$emit("close");
     },
     onChildrenClose(byUserClick : boolean) {
       if(byUserClick) {
@@ -89,15 +87,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style>
-.mx-context-menu-host {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1024;
-  overflow: hidden;
-}
-</style>

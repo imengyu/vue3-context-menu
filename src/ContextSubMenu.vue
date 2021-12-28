@@ -231,7 +231,7 @@ export default defineComponent({
     }
 
     onMounted(() => {
-      solveOverflowTimeOut = setTimeout(() => doCheckPos(), 100)
+      solveOverflowTimeOut = window.setTimeout(() => doCheckPos(), 100)
     })
     onBeforeUnmount(() => {
       if(solveOverflowTimeOut > 0) {
