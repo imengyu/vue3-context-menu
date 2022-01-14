@@ -28,7 +28,9 @@ export default {
     app.config.globalProperties.$contextmenu = $contextmenu;
     app.component('ContextMenu', ContextMenuConstructor);
     app.component('ContextSubMenu', ContextSubMenuConstructor);
-  }
+  },
+  showContextMenu(options : MenuOptions) : void {
+    $contextmenu(options);
+  },
 }
-
 

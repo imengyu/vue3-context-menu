@@ -96,6 +96,11 @@ declare module '@vue/runtime-core' {
 
 declare const Plugin: {
   install: (app: App<Element>) => void
+  /**
+   * Show a ContextMenu in page, same as `this.$contextmenu`
+   * @param options The options of ContextMenu
+   */
+  showContextMenu(options : MenuOptions) : void;
 };
 
 export default Plugin;

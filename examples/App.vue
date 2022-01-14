@@ -5,6 +5,10 @@
       Right click to show contextmenu. (Use <code>$contextmenu</code>)
     </div>
 
+    <div class="box" @click="onContextMenuGlobal($event)">
+      Click to show contextmenu. (Use <code>showContextMenu</code>)
+    </div>
+
     <div class="box" @click="onButtonClick($event)">
       Click to show contextmenu. (Use component)
     </div>
@@ -84,6 +88,7 @@ createApp(App)
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { MenuOptions } from '../src/ContextMenuDefine'
+import ContextMenu from '../src/ContextMenuInstance'
 
 export default defineComponent({
   data() {
@@ -246,6 +251,12 @@ export default defineComponent({
       this.options.x = e.x;
       this.options.y = e.y;
       this.$contextmenu(this.options);
+    },
+    onContextMenuGlobal(e : MouseEvent) {
+      e.preventDefault();
+      this.options.x = e.x;
+      this.options.y = e.y;
+      ContextMenu.showContextMenu(this.options);
     },
     onContextMenu2(e : MouseEvent) {
       e.preventDefault();
