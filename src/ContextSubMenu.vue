@@ -220,8 +220,8 @@ export default defineComponent({
           maxHeight.value = 0;
           //如果Y绝对位置超出屏幕，那么减去超出的高度
           const absTop = _globalData.parentPosition.y + position.value.y + _menu.offsetHeight;
-          if(absTop >_globalData.screenSize.h + window.pageYOffset) {
-            newPos.y -= absTop - (_globalData.screenSize.h + window.pageYOffset) + 30;
+          if(absTop >_globalData.screenSize.h + window.scrollY) {
+            newPos.y -= absTop - (_globalData.screenSize.h + window.scrollY) + 30;
           }   
         }
 
