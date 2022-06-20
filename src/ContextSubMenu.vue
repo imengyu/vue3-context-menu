@@ -25,7 +25,7 @@
       }">
       <div v-for="(item, i) in items" :key="i" >
         <div
-          :class="'mx-context-menu-item' + (item.disabled ? ' disabled' : '')"
+          :class="'mx-context-menu-item' + (item.customClass ? ` ${item.customClass}` : '') + (item.disabled ? ' disabled' : '')"
           @mouseenter="showChildItem($event, item)"
           @mouseleave="hideChildItem()"
           @focus="showChildItem($event, item)"
