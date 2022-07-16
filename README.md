@@ -42,10 +42,10 @@ Then show your menu:
 onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
-  //shou our menu
+  //show our menu
   this.$contextmenu({
-    x: e.x,
-    y: e.y,
+    x: e.pageX,
+    y: e.pageY,
     items: [
       { 
         label: "A menu item", 
@@ -105,8 +105,8 @@ methods: {
   onButtonClick(e : MouseEvent) {
     //Show menu
     this.show = true;
-    this.options.x = e.x;
-    this.options.y = e.y;
+    this.options.x = e.pageX;
+    this.options.y = e.pageY;
   },
 }
 ```
