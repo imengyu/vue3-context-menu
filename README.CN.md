@@ -37,12 +37,12 @@ createApp(App)
 显示菜单：
 ```js
 onContextMenu(e : MouseEvent) {
-  //prevent the browser's default menu
+  //阻止浏览器的默认菜单
   e.preventDefault();
-  //shou our menu
+  //显示自定义菜单
   this.$contextmenu({
-    x: e.x,
-    y: e.y,
+    x: e.pageX,
+    y: e.pageY,
     items: [
       { 
         label: "A menu item", 
@@ -102,8 +102,8 @@ methods: {
   onButtonClick(e : MouseEvent) {
     //显示菜单
     this.show = true;
-    this.options.x = e.x;
-    this.options.y = e.y;
+    this.options.x = e.pageX;
+    this.options.y = e.pageY;
   },
 }
 ```
