@@ -37,7 +37,7 @@ export default defineComponent({
   watch: {
     show(v : boolean) {
       if(v) this.updateCurrentShowPos();
-    } 
+    }
   },
   render() {
     if (!this.show) return [];
@@ -56,8 +56,8 @@ export default defineComponent({
           y: 0,
         },
         screenSize: {
-          w: window.innerWidth,
-          h: window.innerHeight,
+          w: document.body.clientWidth,
+          h: document.body.clientHeight,
         },
       } as ContextMenuGlobalData,
       position: this.currentShowPos as ContextMenuPositionData,
