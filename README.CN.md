@@ -3,7 +3,7 @@ vue3-context-menu
 ---
 一个使用 Vue3 制作的简洁美观简单的右键菜单组件
 
-![截图](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/first.png)
+![截图](./screenshot/first.png)
 
 ---
 
@@ -18,6 +18,8 @@ npm install -save @imengyu/vue3-context-menu
 ```
 
 ### 使用
+
+#### 在选项式API中使用
 
 导入组件：
 ```js
@@ -107,6 +109,21 @@ methods: {
   },
 }
 ```
+#### 在组合式API中使用
+
+Use the Composition Api? Use this component like this:
+
+```vue
+<script setup>
+    import ContextMenu from "@imengyu/vue3-context-menu";
+    
+    // showContextMenu is same as `this.$contextmenu`
+    ContextMenu.showContextMenu({
+        ...
+    })
+</script>
+```
+
 ### 菜单图标
 
 菜单组件不提供任何图标，如果您想添加图标，推荐使用 [iconfont](http://iconfont.cn) 图标库，导入后填写 MenuItem 的 icon 属性，即可在菜单项前面显示图标。

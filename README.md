@@ -3,7 +3,7 @@ vue3-context-menu
 ---
 A context menu component for Vue3
 
-![Screenshot](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/first.png)
+![Screenshot](./screenshot/first.png)
 
 [中文说明](https://github.com/imengyu/vue3-context-menu/blob/main/README.CN.md)
 
@@ -19,7 +19,9 @@ A context menu component for Vue3
 npm install -save @imengyu/vue3-context-menu
 ```
 
-### Useage
+### Usage
+
+#### Options API
 
 Import vue3-context-menu in main.js:
 ```js
@@ -109,6 +111,21 @@ methods: {
     this.options.y = e.pageY;
   },
 }
+```
+
+#### Composition API with `setup`
+
+Use the Composition Api? Use this component like this:
+
+```vue
+<script setup>
+    import ContextMenu from "@imengyu/vue3-context-menu";
+    
+    // showContextMenu is same as `this.$contextmenu`
+    ContextMenu.showContextMenu({
+        ...
+    })
+</script>
 ```
 
 ### Parameter description
