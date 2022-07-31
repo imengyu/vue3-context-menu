@@ -5,7 +5,7 @@ A context menu component for Vue3
 
 ![Screenshot](./screenshot/first.png)
 
-[中文说明](./vue3-context-menu/blob/main/README.CN.md)
+[中文说明](./README.CN.md)
 
 ---
 
