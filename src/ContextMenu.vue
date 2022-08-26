@@ -1,88 +1,124 @@
 <script lang="ts">
 import { defineComponent, h, PropType } from 'vue'
-import { ContextMenuGlobalData, ContextMenuPositionData, MenuConstOptions, MenuItem, MenuOptions } from './ContextMenuDefine'
+import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 
+/**
+ * Context menu component
+ */
 export default defineComponent({
   name: 'ContextMenu',
   emits: [ 'update:show', 'close' ],
   props: {
+    /**
+     * Menu options
+     */
     options: {
       type: Object as PropType<MenuOptions>,
       default: null
     },
+    /**
+     * Show menu?
+     */
     show: {
       type: Boolean,
       default: false
     }
   },
-  data() {
+  provide() {
     return {
-      currentShowPos: {
-        x: 0,
-        y: 0,
-      } as ContextMenuPositionData
+      globalOptions: this.options,
+      globalCloseMenu: this.closeMenu,
+      //provide menuContext for child use
+      menuContext: {
+        zIndex: this.options.zIndex || MenuConstOptions.defaultStartZindex,
+        getMyPosition: () => {
+          return {
+            x: this.options.x,
+            y: this.options.y,
+          };
+        },
+        addOpenedSubMenu: () => {
+          //
+        },
+        closeOtherSubMenu: () => {
+          //
+        },
+      },
     }
   },
   mounted() {
-    this.updateCurrentShowPos();
-    setTimeout(() => {
-      document.addEventListener("click", this.close)
-      document.addEventListener("contextmenu", this.close)
-    }, 100);
+    if (this.show)
+      this.installBodyEvents();
   },
   beforeUnmount() {
-    document.removeEventListener("click", this.close);
+    this.removeBodyEvents();
   },
   watch: {
     show(v : boolean) {
-      if(v) this.updateCurrentShowPos();
+      if(v) {
+        this.installBodyEvents();
+      } else {
+        this.removeBodyEvents();
+      }
     } 
   },
   render() {
+    //Hidden
     if (!this.show) return [];
 
+    //Create SubMenu
     return h(ContextSubMenuConstructor, {
-      items: this.options.items,
-      parentItem: {
-        maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
-        minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
-      } as MenuItem,
-      options: this.options,
-      zIndex: this.options.zIndex || MenuConstOptions.defaultStartZindex,
-      globalData: {
-        parentPosition: {
-          x: 0,
-          y: 0,
-        },
-        screenSize: {
-          w: window.innerWidth,
-          h: window.innerHeight,
-        },
-      } as ContextMenuGlobalData,
-      position: this.currentShowPos as ContextMenuPositionData,
-      onClose: this.onChildrenClose,
-      onPreUpdatePos: this.onChildrenUpdatePos,
+      class: 'mx-menu-host',
+      items: this.options?.items,
+      maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
+      minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
+    }, {
+      default: this.$slots.default,
     });
   },
   methods: {
-    updateCurrentShowPos() {
-      this.currentShowPos.x = this.options.x;
-      this.currentShowPos.y = this.options.y;
+    installBodyEvents() {
+      setTimeout(() => {
+        document.addEventListener("click", this.onBodyClick);
+        document.addEventListener("wheel", this.onBodyWhell);
+        document.addEventListener("contextmenu", this.onBodyClick);
+      }, 400);
     },
-    close() {
+    removeBodyEvents() {
+      document.removeEventListener("contextmenu", this.onBodyClick);
+      document.removeEventListener("click", this.onBodyClick);
+      document.removeEventListener("wheel", this.onBodyWhell);
+    },
+    closeMenu() {
       this.$emit("update:show", false);
       this.$emit("close");
     },
+    onBodyWhell() {
+      this.closeMenu();
+    },
+    onBodyClick(e: MouseEvent) {
+      this.checkTargetAndClose(e.target as HTMLElement);
+    },
+    checkTargetAndClose(target: HTMLElement) {
+      //Loop target , Check whether the currently clicked element belongs to the current menu.
+      // If yes, it will not be closed
+      while (target) {
+        if (target.classList && target.classList.contains('mx-menu-host'))
+          return;
+        target = target.parentNode as HTMLElement;
+      }
+      
+      //Close menu
+      this.removeBodyEvents();
+      this.closeMenu();
+    },
+
     onChildrenClose(byUserClick : boolean) {
       if(byUserClick) {
         this.$emit('close');
         this.$emit('update:show', false);
       }
-    },
-    onChildrenUpdatePos(newPos: ContextMenuPositionData) {
-      this.currentShowPos.x = newPos.x;
-      this.currentShowPos.y = newPos.y;
     },
   }
 })

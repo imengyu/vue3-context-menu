@@ -1,265 +1,234 @@
 <template>
-  <div 
-    v-if="items" 
-    :class="'mx-context-menu ' + (options.customClass ? options.customClass : '') + (menuReady ? ' ready' : '')"
+  <div
+    :class="'mx-context-menu ' + (options.customClass ? options.customClass : '')"
     :style="{
-      maxWidth: parentItem && parentItem.maxWidth ? `${parentItem.maxWidth}px` : `${constOptions.defaultMaxWidth}px`,
-      minWidth: parentItem && parentItem.minWidth  ? `${parentItem.minWidth}px` : `${constOptions.defaultMinWidth}px`,
+      maxWidth: (maxWidth ? maxWidth : `${constOptions.defaultMaxWidth}px`),
+      minWidth: minWidth ? minWidth : `${constOptions.defaultMinWidth}px`,
+      maxHeight: overflow ? `${windowHeight - fillPadding * 2}px` : undefined,
       zIndex: zIndex,
       left: `${position.x}px`,
       top: `${position.y}px`,
     }"
-    @mouseenter="onMenuMouseEnter"
-    @mouseleave="onMenuMouseLeave($event)">
-    <div v-show="menuOverflow" class="mx-context-menu-updown up" @click="onScroll(false)">
-      <span class="mx-right-arrow" />
-    </div>
-    <div v-show="menuOverflow" class="mx-context-menu-updown down" @click="onScroll(true)">
-      <span class="mx-right-arrow" />
-    </div>
+  >
+    <!--Child menu items-->
     <div 
       class="mx-context-menu-items"
       ref="menu"
       :style="{
-        maxHeight: maxHeight > 0 ? `${maxHeight}px` : '',
-      }">
-      <div v-for="(item, i) in items" :key="i" >
-        <div
-          :class="'mx-context-menu-item' + (item.disabled ? ' disabled' : '')"
-          @mouseenter="showChildItem($event, item)"
-          @mouseleave="hideChildItem()"
-          @focus="showChildItem($event, item)"
-          @blur="hideChildItem()"
-          @click="onMouseClick(item)">
-          <span class="text">
-            <i :class="item.icon + ' icon '+ options.iconFontClass"></i>
-            <span>{{ item.label }}</span>
-            <span v-if="item.children && item.children.length > 0" class="mx-right-arrow" />
-          </span>
+        top: `${scrollValue}px`,
+      }"
+    >
+      <slot>
+        <div v-for="(item, i) in items" :key="i" >
+          <!--Menu Item-->
+          <ContextMenuItem
+            :clickHandler="item.onClick"
+            :disabled="item.disabled"
+            :iconFontClass="item.customClass"
+            :icon="item.icon"
+            :label="item.label"
+            :customRender="item.customRender"
+            :clickClose="item.clickClose"
+            :clickableWhenHasChildren="item.clickableWhenHasChildren"
+            :showRightArrow="item.children && item.children.length > 0"
+          >
+            <template v-if="item.children && item.children.length > 0" #submenu>
+              <!--Sub menu-->
+              <ContextSubMenu 
+                :items="item.children"
+                :maxWidth="item.maxWidth"
+                :minWidth="item.minWidth"
+                :adjustPosition="item.adjustSubMenuPosition"
+              />
+            </template>
+          </ContextMenuItem>
+          <!--sperator-->
+          <ContextMenuSperator v-if="item.divided" />
         </div>
-        <div v-if="item.divided" class="mx-context-menu-item-sperator"></div>
+      </slot>
+    </div>
+        
+    <!--Scroll button host-->
+    <div 
+      class="mx-context-menu-scroll"
+      ref="scroll"
+    >
+      <!--Updown scroll button-->
+      <div v-show="overflow && scrollValue < 0" class="mx-context-menu-updown mx-context-no-clickable up" @click="onScroll(false)">
+        <span class="mx-right-arrow" />
+      </div>
+      <div v-show="overflow && scrollValue > -scrollHeight" class="mx-context-menu-updown mx-context-no-clickable down" @click="onScroll(true)">
+        <span class="mx-right-arrow" />
       </div>
     </div>
-    <ContextSubMenu 
-      ref="childMenu"
-      v-if="activeItem && activeItem.children"
-      :zIndex="zIndex+1"
-      :items="activeItem.children"
-      :parentItem="activeItem"
-      :options="options"
-      :globalData="childGlobalData"
-      :position="childPosition"
-      @close="onChildrenClose"
-      @keepOpen="onChildrenKeepOpen"
-      @preUpdatePos="onChildrenUpdatePos"
-    ></ContextSubMenu>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, onBeforeUnmount, onMounted, PropType, ref, toRefs, watch } from 'vue'
-import { MenuOptions, MenuItem, ContextMenuGlobalData, ContextMenuPositionData, MenuConstOptions } from './ContextMenuDefine'
+import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, toRefs } from 'vue'
+import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions } from './ContextMenuDefine'
+import { getLeft, getTop } from './ContextMenuUtils'
+import ContextMenuItem from './ContextMenuItem.vue'
+import ContextMenuSperator from './ContextMenuSperator.vue'
 
+//The internal info context for submenu
+export interface SubMenuParentContext {
+  zIndex: number;
+  getMyPosition: () => ContextMenuPositionData;
+  getParentWidth: () => number;
+  addOpenedSubMenu: (closeFn: () => void) => void;
+  closeOtherSubMenu: () => void;
+  closeOtherSubMenuWithTimeOut: () => void;
+  checkCloseOtherSubMenuTimeOut: () => boolean;
+}
+
+const fillPadding = 10; //padding for submenu position adjust
+
+/**
+ * Submenu container
+ */
 export default defineComponent({
   name: 'ContextSubMenu',
+  components: {
+    ContextMenuItem,
+    ContextMenuSperator,
+  },
   props: {
+    /**
+     * Items from options
+     */
     items: { 
       type: Object as PropType<Array<MenuItem>>,
       default: null
     },
-    parentItem: {
-      type: Object as PropType<MenuItem>,
-      default: null
+    /**
+     * Max width for this submenu
+     */
+    maxWidth: {
+      type: [String, Number],
+      default: 0,
     },
-    options: { 
-      type: Object as PropType<MenuOptions>,
-      default: null
+    /**
+     * Min width for this submenu
+     */
+    minWidth: {
+      type: [String, Number],
+      default: 0,
     },
-    zIndex: {
-      type: Number,
-      default: 0
+    /**
+     * Specifies whether to adjust the position of the current submenu 
+     * after the menu exceeds the screen. The default is true
+     */
+    adjustPosition: {
+      type: Boolean,
+      default: true,
     },
-    globalData: {
-      type: Object as PropType<ContextMenuGlobalData>,
-      default: null
-    },
-    position: {
-      type: Object as PropType<ContextMenuPositionData>,
-      default: null
-    }
   },
-  emits: [ 'close', 'keepOpen', 'preUpdatePos' ],
-  setup(prop, context) {
-
-    const { globalData, position, options, parentItem } = toRefs(prop);
+  setup(props) {
+    const parentContext = inject('menuContext') as SubMenuParentContext;
+    const options = inject('globalOptions') as MenuOptions;
+    const { zIndex, getMyPosition, getParentWidth } = parentContext;
+    const { adjustPosition } = toRefs(props);
 
     const menu = ref<HTMLElement>();
-    const childMenu = ref();
-    const menuReady = ref(false);
-    const menuOverflow = ref(false);
+    const scroll = ref<HTMLElement>();
+    const openedSubMenuClose = [] as (() => void)[];
 
-    let nextShouldHideItem = null as MenuItem|null;
-    const maxHeight = ref(0);
-    const activeItem = ref<MenuItem|null>(null);
-    const childGlobalData = ref({
-      parentPosition: { x: 0, y: 0 },
-      screenSize: globalData.value.screenSize,
-    } as ContextMenuGlobalData);
-    const childPosition = ref<ContextMenuPositionData>({
-      x: 0,
-      y: 0
-    });
+    let leaveTimeout = 0;
 
-    //显示和隐藏子菜单
-    function showChildItem(e: Event, item : MenuItem) {
-      if(item.disabled || !item.children || item.children.length == 0) 
-        return;
-      if(activeItem.value === item)
-        return;
-      
-      //同步父菜单的位置
-      activeItem.value = item;
-      childGlobalData.value.parentPosition.x = globalData.value.parentPosition.x + position.value.x;
-      childGlobalData.value.parentPosition.y = globalData.value.parentPosition.y + position.value.y;
-
-      //计算子菜单的位置
-      if(menu.value) 
-        childPosition.value.x = menu.value.offsetWidth + (options.value.xOffset || 0);
-      const currentItemEle = e.target as HTMLElement;
-      if(currentItemEle) 
-        childPosition.value.y = currentItemEle.offsetTop + (options.value.yOffset || 0);
-    }
-    function hideChildItem() {
-      nextShouldHideItem = activeItem.value;
-      setTimeout(() => {
-        if(nextShouldHideItem === activeItem.value)
-          activeItem.value = null;
-      });
-    }
-
-    watch(activeItem, (newV : MenuItem|null, oldV : MenuItem|null) => {
-      if(newV && oldV) {
-        setTimeout(() => {
-          if(childMenu.value) childMenu.value.doCheckPos()
-        }, 50)
-      }
-    });
-
-    //子菜单事件
-    function onChildrenClose(byUserClick : boolean) {
-      hideChildItem();
-      if(byUserClick)
-        context.emit('close', true);
-    }
-    function onChildrenKeepOpen(item : MenuItem) {
-      if(nextShouldHideItem === item)
-        nextShouldHideItem = null; 
-      context.emit('keepOpen', parentItem.value);
-    }
-    function onChildrenUpdatePos(newPos: ContextMenuPositionData) {
-      childPosition.value.x = newPos.x;
-      childPosition.value.y = newPos.y;
-    }
-    //鼠标事件
-    function onMouseClick(item : MenuItem) {
-      if(!item.disabled) {
-        if(typeof item.onClick === 'function') {
-          item.onClick();
-          context.emit('close', true);
+    //provide menuContext for child use
+    const thisMenuContext = {
+      zIndex: zIndex + 1,
+      getMyPosition() {
+        const pos = { x: 0, y: 0 } as ContextMenuPositionData;
+        //计算子菜单的位置
+        if(menu.value) 
+          pos.x = menu.value.offsetWidth + (options.xOffset || 0);
+        if (options.yOffset)
+          pos.y = options.yOffset;
+        return pos;
+      },
+      getParentWidth: () => menu.value?.offsetWidth,
+      addOpenedSubMenu(closeFn: () => void) {
+        openedSubMenuClose.push(closeFn);
+      },
+      closeOtherSubMenu() {
+        openedSubMenuClose.forEach(k => k());
+        openedSubMenuClose.splice(0, openedSubMenuClose.length);
+      },
+      checkCloseOtherSubMenuTimeOut() {
+        if (leaveTimeout) {
+          clearTimeout(leaveTimeout);
+          leaveTimeout = 0;
+          return true;
         }
-        else if(!item.children || item.children.length === 0) {
-          context.emit('close', true);
-        }
-      }
-    }
-    function onMenuMouseEnter() {
-      context.emit('keepOpen', parentItem.value);
-    }
-    function onMenuMouseLeave(e : MouseEvent) {
-      if(e.relatedTarget != null)
-        context.emit('close', false);
-    }
+        return false;
+      },
+      closeOtherSubMenuWithTimeOut() {
+        leaveTimeout = setTimeout(() => {
+          leaveTimeout = 0;
+          this.closeOtherSubMenu();
+        }, 200) as unknown as number; //Add a delay, the user will not hide the menu when moving too fast
+      },
+    } as SubMenuParentContext;
+    provide('menuContext', thisMenuContext);
 
+    const scrollValue = ref(0);
+    const windowHeight = document.body.clientHeight;
+    const windowWidth = document.body.clientWidth;
+    const scrollHeight = ref(0);
 
-
-    //滚动
+    //Scroll the items
     function onScroll(down : boolean) {
-      if(menu.value) {
-        menu.value.scrollTop += down ? 30 : -30;
-      }
+      if (down)
+        scrollValue.value = Math.max(scrollValue.value - 50, -scrollHeight.value);
+      else 
+        scrollValue.value = Math.min(scrollValue.value + 50, 0);
     }
 
-    let solveOverflowTimeOut = 0;
+    const overflow = ref(false);
+    const position = ref({ x: 0, y: 0 } as ContextMenuPositionData)
 
-    //检查菜单是否超出屏幕
-    function doCheckPos() {
-      const _menu = menu.value;
-      const _globalData = globalData.value;
-      if(_menu) {
-
-        const newPos = {
-          x: position.value.x,
-          y: position.value.y
-        } as ContextMenuPositionData;
-
-        //如果X绝对位置超出屏幕，那么减去超出的宽度
-        const absRight = _globalData.parentPosition.x + position.value.x + _menu.offsetWidth;
-        if(absRight > _globalData.screenSize.w) {
-          newPos.x -= absRight - _globalData.screenSize.w;
-        }
-
-        //如果高度超出屏幕，那么限制最高高度
-        if(_menu.offsetHeight > _globalData.screenSize.h - 30) {
-          maxHeight.value = _globalData.screenSize.h - 30;
-          //  强制限制Y坐标为0
-          newPos.y = -_globalData.parentPosition.y;
-          menuOverflow.value = true;
-        }
-        else {
-          menuOverflow.value = false;
-          maxHeight.value = 0;
-          //如果Y绝对位置超出屏幕，那么减去超出的高度
-          const absTop = _globalData.parentPosition.y + position.value.y + _menu.offsetHeight;
-          if(absTop >_globalData.screenSize.h) {
-            newPos.y -= absTop - _globalData.screenSize.h + 30;
-          }   
-        }
-
-        context.emit('preUpdatePos', newPos);
-        menuReady.value = true;
-      }
-    }
 
     onMounted(() => {
-      solveOverflowTimeOut = window.setTimeout(() => doCheckPos(), 100)
-    })
-    onBeforeUnmount(() => {
-      if(solveOverflowTimeOut > 0) {
-        clearTimeout(solveOverflowTimeOut);
-        solveOverflowTimeOut = 0;
-      }
-    })
+      position.value = getMyPosition();
+        
+      nextTick(() => {
+        //adjust submenu position
+        if (adjustPosition.value && menu.value && scroll.value) {
+          const menuEl = menu.value;
+          scrollHeight.value = menuEl.offsetHeight - windowHeight + 20 /* Padding */;
+          overflow.value = menu.value.offsetHeight > windowHeight;
+          const absX = getLeft(menuEl), absY = getTop(menuEl);
+          const xOv = absX + menuEl.offsetWidth - windowWidth;
+          if (xOv > 0) //X overflow
+            position.value.x -= getParentWidth() + menuEl.offsetWidth - fillPadding; 
+          if (overflow.value) {
+            position.value.y = -(absY - fillPadding); //fill height
+            scroll.value.style.height = `${windowHeight}px`;
+          } else {
+            const yOv = absY + menuEl.offsetHeight - windowHeight;
+            if (yOv > 0) 
+              position.value.y -= yOv + fillPadding; //Y overflow
+          }
+        }
+      });
+    });
 
     return {
       menu,
-      menuOverflow,
-      childMenu,
-      menuReady,
-      maxHeight,
-      showChildItem,
-      hideChildItem,
-      onChildrenClose,
-      onChildrenKeepOpen,
-      onChildrenUpdatePos,
-      onMenuMouseLeave,
-      onMenuMouseEnter,
-      onMouseClick,
-      onScroll,
-      doCheckPos,
-      activeItem,
-      childGlobalData,
-      childPosition,
+      scroll,
+      options,
+      zIndex,
       constOptions: MenuConstOptions,
+      scrollValue,
+      overflow,
+      position,
+      windowHeight,
+      windowWidth,
+      fillPadding,
+      scrollHeight,
+      onScroll,
     }
   }
 })
@@ -274,24 +243,24 @@ export default defineComponent({
   border-radius: 10px;
   padding: 12px 0;
   box-shadow: 0px 10px 40px 10px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  transition: all 0.2s ease-in-out;
-}
-.mx-context-menu.ready {
   opacity: 1;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .mx-context-menu-items {
   position: relative;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow: visible;
 }
-
-.mx-context-menu-items::-webkit-scrollbar {
-  display: none;
+.mx-context-menu-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
 }
 
 .mx-context-menu-updown {
+  pointer-events: all;
   position: absolute;
   left: 0;
   right: 0;
@@ -307,31 +276,25 @@ export default defineComponent({
 .mx-context-menu-updown:active {
   background-color: #c9c8c8;
 }
-.mx-context-menu-updown .mx-right-arrow {
-  display: inline-block;
-  position: absolute;
-  height: 12px;
-  left: 50%;
-  top: 0;
-}
 .mx-context-menu-updown.up {
   top: 0;
 }
 .mx-context-menu-updown.down {
   bottom: 0;
 }
-.mx-context-menu-updown.up .mx-right-arrow {
-  transform: translateX(-50%) rotate(270deg);
-}
-.mx-context-menu-updown.down .mx-right-arrow {
-  transform: translateX(-50%) rotate(90deg);
-}
 
 .mx-context-menu-item {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
   position: relative;
   padding: 6px 20px;
   user-select: none;
+  overflow: visible;
+  color: #2e2e2e;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .mx-context-menu-item:hover {
@@ -340,7 +303,26 @@ export default defineComponent({
 .mx-context-menu-item:active {
   background-color: #dfdfdf;
 }
-
+.mx-context-menu-item .icon  {
+  display: inline-block;
+  width: 26px;
+  font-size: 16px;
+  color: #636363;
+}
+.mx-context-menu-item span {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 16px;
+}
+.mx-context-menu-item .mx-right-arrow  {
+  position: absolute;
+  display: inline-block;
+  right: 2px;
+  top: 50%;
+  margin-top: -5px;
+}
 .mx-context-menu-item.disabled {
   cursor: not-allowed;
 }
@@ -348,7 +330,7 @@ export default defineComponent({
 .mx-context-menu-item.disabled:active {
   background-color: transparent;
 }
-.mx-context-menu-item.disabled .text {
+.mx-context-menu-item.disabled {
   color: #9f9f9f;
 }
 
@@ -364,32 +346,21 @@ export default defineComponent({
   height: 1px;
 }
 
-.mx-context-menu-item .text  {
-  color: #2e2e2e;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.mx-context-menu-item .text .icon  {
+.mx-context-menu-updown .mx-right-arrow {
   display: inline-block;
-  width: 26px;
-  font-size: 16px;
-  color: #636363;
-}
-.mx-context-menu-item .text span {
-  font-size: 14px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding-right: 16px;
-}
-.mx-context-menu-item .text .mx-right-arrow  {
   position: absolute;
-  display: inline-block;
-  right: 2px;
-  top: 50%;
-  margin-top: -5px;
+  height: 12px;
+  left: 50%;
+  top: 5px;
+  padding: 0;
 }
+.mx-context-menu-updown.up .mx-right-arrow {
+  transform: translateX(-50%) rotate(270deg);
+}
+.mx-context-menu-updown.down .mx-right-arrow {
+  transform: translateX(-50%) rotate(90deg);
+}
+
 .mx-right-arrow  {
   width: 14px;
   height: 14px;

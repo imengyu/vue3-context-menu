@@ -1,6 +1,7 @@
 <template>
   <div class="test">
 
+    <!--Button-->
     <div class="box" @contextmenu="onContextMenu($event)">
       Right click to show contextmenu. (Use <code>$contextmenu</code>)
     </div>
@@ -10,13 +11,58 @@
     </div>
 
     <div class="box" @click="onButtonClick($event)">
-      Click to show contextmenu. (Use component)
+      Click to show contextmenu. (Use component mode)
     </div>
 
+    <!--this is component mode of context-menu-->
     <context-menu
       v-model:show="show"
-      :options="options" />
+      :options="optionsComopnent"
+    >
+      <context-menu-item label="Simple item" @click="onContextMenuItem1Clicked('Item1')" />
+      <context-menu-item label="Item with a icon (iconfont)" icon="icon-reload-1" @click="onContextMenuItem1Clicked('Item2')" />
+      <context-menu-item label="Item with custom icon slot" @click="onContextMenuItem1Clicked('Item3')">
+        <template #icon>
+          <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
+        </template>
+      </context-menu-item>
+      <context-menu-item :clickClose="false">
+        <template #icon>
+          <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
+        </template>
+        <template #label>
+          <div>Item with custom render</div>
+          <select placeholder="Select a fruit">
+            <option value="1">apple</option>
+            <option value="2">watermelon</option>
+            <option value="3">grape</option>
+          </select>
+        </template>
+      </context-menu-item>
+      <context-menu-group label="Menu with child">
+        <context-menu-item label="Item1" @click="onContextMenuItem1Clicked('Item1')" />
+        <context-menu-item label="Item1" @click="onContextMenuItem1Clicked('Item1')" />
+      </context-menu-group>
+      <context-menu-sperator />
+      <context-menu-group label="Menu with child child child">
+        <context-menu-item label="Item1" @click="onContextMenuItem1Clicked('Item1')" />
+        <context-menu-item label="Item2" @click="onContextMenuItem1Clicked('Item2')" />
+        <context-menu-group label="Child with v-for 50">
+          <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="onContextMenuItem1Clicked('Item3' + index)" />
+        </context-menu-group>
+        <context-menu-group label="Childs">
+          <context-menu-item label="Item1-1" @click="onContextMenuItem1Clicked('Item1-1')" />
+          <context-menu-item label="Item1-2" @click="onContextMenuItem1Clicked('Item1-2')" />
+          <context-menu-sperator />
+          <context-menu-group label="Childs">
+            <context-menu-item label="Item2-1" @click="onContextMenuItem1Clicked('Item2-1')" />
+            <context-menu-item label="Item2-2" @click="onContextMenuItem1Clicked('Item2-2')" />
+          </context-menu-group>
+        </context-menu-group>
+      </context-menu-group>
+    </context-menu>
 
+    <!--Demo scripts-->
     <div class="box2" @contextmenu="onContextMenu2($event)">
 
       <ol>
@@ -86,9 +132,9 @@ createApp(App)
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
 import { MenuOptions } from '../src/ContextMenuDefine'
-import ContextMenu from '../src/ContextMenuInstance'
+import ContextMenu from '../src/ContextMenuInstance' 
 
 export default defineComponent({
   data() {
@@ -97,37 +143,71 @@ export default defineComponent({
       options: {
         items: [
           {
-            label: "Back",
-            onClick: () => {
-              console.log("You click Back");
-            }
+            label: "Example",
+            children: [
+              {
+                label: "Back",
+                onClick: () => {
+                  console.log("You click Back");
+                }
+              },
+              { label: "Forward", disabled: true },
+              { 
+                label: "Reload", 
+                divided: true, 
+                icon: "icon-reload-1",
+                onClick: () => {
+                  alert("You click Reload");
+                }
+              },
+              { 
+                label: "Save as...",
+                icon: "icon-save",
+                onClick: () => {
+                  alert("You click Save as");
+                }
+              },
+              { 
+                label: "Print...", 
+                icon: "icon-print",
+                onClick: () => {
+                  alert("You click Print");
+                } 
+              },
+              
+              { label: "View source", icon: "icon-terminal" },
+              { label: "Inspect" }
+            ],
           },
-          { label: "Forward", disabled: true },
           { 
-            label: "Reload", 
-            divided: true, 
+            label: 'Simple item',
+            onClick: () => alert('Click Simple item'),
+          },
+          { 
+            label: 'Item with a icon (iconfont)',
             icon: "icon-reload-1",
-            onClick: () => {
-              alert("You click Reload");
-            }
           },
           { 
-            label: "Save as...",
-            icon: "icon-save",
-            onClick: () => {
-              alert("You click Save as");
-            }
+            label: "Item with custom icon render",
+            icon: h('img', {
+              src: 'https://imengyu.top/assets/images/test/icon.png',
+              style: {
+                width: '20px',
+                height: '20px',
+              }
+            }),
           },
           { 
-            label: "Print...", 
-            icon: "icon-print",
-            onClick: () => {
-              alert("You click Print");
-            } 
+            label: h('div', {
+              style: {
+                fontSize: '20px',
+                color: '#f98',
+              }
+            }, "Item with custom render"),
+            divided: true, 
           },
           {
             label: "A submenu",
-            divided: true, 
             children: [
               { 
                 label: "Reload2", 
@@ -198,9 +278,15 @@ export default defineComponent({
               { label: "Inspect" }
             ]
           },
-          { label: "View source", icon: "icon-terminal" },
-          { label: "Inspect" }
         ],
+        iconFontClass: 'iconfont',
+        customClass: "class-a",
+        zIndex: 3,
+        minWidth: 230,
+        x: 500,
+        y: 200
+      } as MenuOptions,
+      optionsComopnent: {
         iconFontClass: 'iconfont',
         customClass: "class-a",
         zIndex: 3,
@@ -260,11 +346,16 @@ export default defineComponent({
     },
     onContextMenu2(e : MouseEvent) {
       e.preventDefault();
-      if(document.getSelection().toString().length > 0) {
+      const selection = document.getSelection();
+      if(selection && selection.toString().length > 0) {
         this.optionsCopy.x = e.x;
         this.optionsCopy.y = e.y;
         this.$contextmenu(this.optionsCopy);
       }
+    },
+
+    onContextMenuItem1Clicked(name: string) {
+      alert('You clicked ' + name + ' !');
     },
 
   }

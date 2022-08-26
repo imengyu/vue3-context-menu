@@ -2,6 +2,9 @@ import { App, h, render } from "vue";
 import { MenuOptions } from "./ContextMenuDefine";
 import ContextMenuConstructor from './ContextMenu.vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue'
+import ContextMenuItemConstructor from './ContextMenuItem.vue'
+import ContextMenuGroupConstructor from './ContextMenuGroup.vue'
+import ContextMenuSperatorConstructor from './ContextMenuSperator.vue'
 
 const genContainer = () => {
   return document.createElement('div')
@@ -27,6 +30,9 @@ export default {
   install(app: App<Element>) : void {
     app.config.globalProperties.$contextmenu = $contextmenu;
     app.component('ContextMenu', ContextMenuConstructor);
+    app.component('ContextMenuItem', ContextMenuItemConstructor);
+    app.component('ContextMenuGroup', ContextMenuGroupConstructor);
+    app.component('ContextMenuSperator', ContextMenuSperatorConstructor);
     app.component('ContextSubMenu', ContextSubMenuConstructor);
   },
   showContextMenu(options : MenuOptions) : void {

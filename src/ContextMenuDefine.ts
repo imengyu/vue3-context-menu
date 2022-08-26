@@ -1,3 +1,5 @@
+import { VNode } from "vue";
+
 export const MenuConstOptions = {
   defaultMinWidth: 100,
   defaultMaxWidth: 600,
@@ -17,25 +19,22 @@ export interface MenuOptions {
   minWidth ?: number,
 }
 export interface MenuItem {
-  label ?: string,
-  icon ?: string,
+  label ?: string|VNode|(() => VNode),
+  icon ?: string|VNode|(() => VNode),
   disabled ?: boolean,
+  adjustSubMenuPosition ?: boolean,
+  clickableWhenHasChildren ?: boolean,
+  clickClose ?: boolean,
   divided ?: boolean,
   customClass ?: string,
   maxWidth ?: number,
   minWidth ?: number,
   onClick ?: () => void,
+  customRender ?: VNode|(() => VNode),
   children ?: MenuItem[],
 }
 
 export interface ContextMenuPositionData {
   x: number;
   y: number;
-}
-export interface ContextMenuGlobalData {
-  parentPosition: ContextMenuPositionData,
-  screenSize: {
-    w: number,
-    h: number
-  }
 }
