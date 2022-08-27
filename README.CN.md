@@ -156,6 +156,21 @@ methods: {
 </context-menu-item>
 ```
 
+自定义整个菜单的图标：
+
+```html
+<context-menu
+  v-model:show="show"
+  :options="options"
+>
+  <template #iconRender={ icon }>
+    <!--icon就是属性中传入的icon属性，你可以在这里使用自己的图标组件-->
+    <img :src="icon" style="width:20px;height:20px" />
+  </template>
+  ...
+</context-menu>
+```
+
 在函数模式自定义图标：
 
 ```js

@@ -146,7 +146,7 @@ The menu component does not provide any icons. If you want to add an icon, it is
 
 *By default, the `<i>`  element is used to display icons*
 
-你也可以通过菜单的插槽来完全自定义渲染图标，如：
+---
 
 You can also completely customize the rendering icon through the slot of the menu, such as:
 
@@ -156,6 +156,21 @@ You can also completely customize the rendering icon through the slot of the men
     <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
   </template>
 </context-menu-item>
+```
+
+Customize the icon of the entire menu:
+
+```html
+<context-menu
+  v-model:show="show"
+  :options="options"
+>
+  <template #iconRender={ icon }>
+    <!--icon is the icon attribute passed in the menu-item. You can use your own icon component here-->
+    <img :src="icon" style="width:20px;height:20px" />
+  </template>
+  ... menu items ...
+</context-menu>
 ```
 
 Customize icon in function mode:
