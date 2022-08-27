@@ -17,15 +17,19 @@ A context menu component for Vue3
 * Provide component mode and function mode
 * Customizable
 
+### ❗ Upgrade Note 
+
+Version 1.1.0 has been greatly upgraded and may be incompatible with the previous version. If there is a problem, please install version 1.0.9.
+
 ### Install
 
 ```
 npm install -save @imengyu/vue3-context-menu
 ```
 
-## 使用
+## Useage
 
-### 导入组件
+### Import
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
@@ -163,7 +167,7 @@ Menu component.
 
 ##### Props
 
-| Attribute | Description | Type | Optional value | Default |
+| Attribute | Description | Type | Default |
 | :----: | :----: | :----: | :----: |
 | show(v-model) | Controls whether the menu is displayed | `boolean` | — |
 | options | Menu options, See [MenuOptions](#MenuOptions) | `MenuOptions` | — |
