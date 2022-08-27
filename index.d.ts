@@ -96,13 +96,28 @@ export declare interface MenuItem {
    */
   onClick ?: () => void,
   /**
-   * A custom render that allows you to customize the rendering of the current item.
+   * A custom render callback that allows you to customize the rendering of the current item.
    */
-  customRender ?: VNode|((item: MenuItem) => VNode),
+  customRender ?: VNode|((item: MenuItemRenderData) => VNode),
   /**
    * Submenu items.
    */
   children ?: MenuItem[],
+}
+
+export declare interface MenuItemRenderData extends Omit<MenuItem, 'children'|'customRender'|'onClick'> {
+  /**
+   * Global theme
+   */
+  theme: 'light'|'dark',
+  /**
+   * Click event callback of custom element, which is used for menu internal event
+   */
+  onClick: () => void,
+  /**
+   * MouseEnter event callback of custom element, which is used for menu internal event
+   */
+  onMouseEnter: () => void,
 }
 
 declare module '@vue/runtime-core' {

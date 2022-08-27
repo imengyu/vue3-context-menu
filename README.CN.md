@@ -172,6 +172,25 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: |
 | close | 菜单关闭时触发此事件 | - |
 
+##### Slots
+
+| 插槽名 | 描述 | 参数 |
+| :----: | :----: | :----: |
+| itemRender | 当前菜单全局条目渲染插槽 | MenuItemRenderData |
+| itemIconRender | 当前菜单全局图标渲染插槽 | MenuItemRenderData |
+| itemLabelRender | 当前菜单全局文字渲染插槽 | MenuItemRenderData |
+| itemRightArrowRender | 当前菜单全局右侧箭头渲染插槽 | MenuItemRenderData |
+| speratorRender | 当前菜单分隔符渲染插槽 | - |
+
+##### MenuItemRenderData 结构
+
+| 属性名 | 描述 | 类型 |
+| :----: | :----: | :----: |
+| theme | 菜单主题 | `'light'|'dark'` |
+| onClick | 自定义元素的点击事件回调，它用于菜单内部事件处理，当自定义渲染时，请回调此函数，否则菜单无法正常响应事件 | - |
+| onMouseEnter | 自定义元素的鼠标移入事件回调，它用于菜单内部事件处理，当自定义渲染时，请回调此函数，否则菜单无法正常响应事件 | - |
+| ... | 其他参数与 `MenuItem` 一致 | - |
+
 #### ContextMenuItem
 
 菜单条目组件。
@@ -202,7 +221,7 @@ import '你的样式css文件路径.css'
 
 | 事件名 | 描述 | 参数 |
 | :----: | :----: | :----: |
-| click | 点击菜单关闭时触发此事件 | - |
+| click | 点击菜单时触发此事件 | - |
 
 #### ContextMenuGroup
 
@@ -250,13 +269,14 @@ import '你的样式css文件路径.css'
 | customClass | 自定义菜单类名 | `string` | — | — |
 | minWidth | 主菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
+| theme | 菜单的主题 | `string` | `'light'|'dark'` | `light` |
 
 #### MenuItem
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
-| label | 菜单项名称，可传入VNode | `string|VNode|(() => VNode)` | — | — |
-| icon | 菜单项图标，可传入VNode | `string|VNode|(() => VNode)` | — | — |
+| label | 菜单项名称，可传入VNode | `string|VNode|((label: string) => VNode)` | — | — |
+| icon | 菜单项图标，可传入VNode | `string|VNode|((icon: string) => VNode)` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
@@ -266,5 +286,5 @@ import '你的样式css文件路径.css'
 | minWidth | 子菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 子菜单最大宽度 | `number` | — | `600` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
-| customRender | 菜单项整体自定义渲染回调 | `() => VNode` | — | — |
+| customRender | 菜单项整体自定义渲染回调 | `VNode|((item: MenuItemRenderData) => VNode)` | — | — |
 | children | 子菜单结构信息 | `MenuItem[]` | — | — |
