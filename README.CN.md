@@ -163,7 +163,7 @@ methods: {
   v-model:show="show"
   :options="options"
 >
-  <template #iconRender={ icon }>
+  <template #itemIconRender={ icon }>
     <!--icon就是属性中传入的icon属性，你可以在这里使用自己的图标组件-->
     <img :src="icon" style="width:20px;height:20px" />
   </template>

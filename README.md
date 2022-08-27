@@ -165,7 +165,7 @@ Customize the icon of the entire menu:
   v-model:show="show"
   :options="options"
 >
-  <template #iconRender={ icon }>
+  <template #itemIconRender={ icon }>
     <!--icon is the icon attribute passed in the menu-item. You can use your own icon component here-->
     <img :src="icon" style="width:20px;height:20px" />
   </template>
