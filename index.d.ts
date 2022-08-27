@@ -1,4 +1,4 @@
-import { App } from "vue";
+import { App, Slot, VNode } from "vue";
 
 declare module 'vue3-context-menu' {
 }
@@ -44,20 +44,37 @@ export declare interface MenuOptions {
    * Minimum width of main menu (pixels)
    */
   minWidth ?: number,
+  /**
+   * Theme of the menu. Default is light.
+   */
+  theme ?: 'light'|'dark';
 }
 export declare interface MenuItem {
   /**
    * The label of menu.
    */
-  label ?: string,
+  label ?: string|VNode|((label: string) => VNode),
   /**
    * The icon for menu item.
    */
-  icon ?: string,
+  icon ?: string|VNode|((icon: string) => VNode),
   /**
    * Disable menu item?
    */
   disabled ?: boolean,
+  /**
+   * Specifies should submenu adjust it position 
+   * when the menu exceeds the screen. The default is true
+   */
+  adjustSubMenuPosition ?: boolean,
+  /**
+   * When there are subitems in this item, is it allowed to trigger its own click event? Default is false
+   */
+  clickableWhenHasChildren ?: boolean,
+  /**
+   * Should close menu when Click this menu item ?
+   */
+  clickClose ?: boolean,
   /**
    * Is this menu item separated from the menu item below?
    */
@@ -79,6 +96,10 @@ export declare interface MenuItem {
    */
   onClick ?: () => void,
   /**
+   * A custom render that allows you to customize the rendering of the current item.
+   */
+  customRender ?: VNode|((item: MenuItem) => VNode),
+  /**
    * Submenu items.
    */
   children ?: MenuItem[],
@@ -89,8 +110,9 @@ declare module '@vue/runtime-core' {
     /**
      * Show a ContextMenu .
      * @param options The options of this ContextMenu
+     * @param customSlots You can provide some custom slots to customize the rendering style of the menu. These slots are the same as the slots of component ContextMenu.
      */
-    $contextmenu: (options : MenuOptions) => void;
+    $contextmenu: (options : MenuOptions, customSlots?: Record<string, Slot>) => void;
   }
 }
 
@@ -99,8 +121,9 @@ declare const Plugin: {
   /**
    * Show a ContextMenu in page, same as `this.$contextmenu`
    * @param options The options of ContextMenu
+   * @param customSlots You can provide some custom slots to customize the rendering style of the menu. These slots are the same as the slots of component ContextMenu.
    */
-  showContextMenu(options : MenuOptions) : void;
+  showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : void;
 };
 
 export default Plugin;

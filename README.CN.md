@@ -32,12 +32,6 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 createApp(App).use(ContextMenu)     
 ```
 
-```html
-<div class="box" @contextmenu="onContextMenu($event)">
-  Right click to show contextmenu.
-</div>
-```
-
 ### 显示菜单
 
 显示菜单有两种方式：
@@ -155,73 +149,7 @@ import '你的样式css文件路径.css'
 
 ## 自定义渲染
 
-菜单提供了一些插槽，允许你自定义渲染某些部分，这分为两个部分，
-
-### 在函数模式中
-
-MenuItem 上提供了 label 和 icon 属性，支持传入一个 VNode 或者是回调函数，您可以通过 `createElement` 来渲染自定义内容，例如：
-
-```js
-import { h } from 'vue';
-
-this.$contextmenu({
-  items: [
-    { 
-      label: "Item with custom icon render",
-      icon: h('img', {
-        src: 'https://imengyu.top/assets/images/test/icon.png',
-        style: {
-          width: '20px',
-          height: '20px',
-        }
-      }),
-    },
-    { 
-      label: h('div', {
-        style: {
-          fontSize: '20px',
-          color: '#f98',
-        }
-      }, "Item with custom label render"),
-      divided: true, 
-    },
-  ],
-});
-```
-
-### 在组件模式中
-
-组件提供了插槽，您可以更方便的自定义菜单内容，例如：
-
-```html
-<context-menu-item label="Item with custom icon slot">
-  <template #icon>
-    <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
-  </template>
-</context-menu-item>
-<context-menu-item :clickClose="false">
-  <template #icon>
-    <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
-  </template>
-  <template #label>
-    <div>Item with custom render</div>
-    <select placeholder="Select a fruit">
-      <option value="1">apple</option>
-      <option value="2">watermelon</option>
-      <option value="3">grape</option>
-    </select>
-  </template>
-</context-menu-item>
-<context-menu-item label="Item with custom right arrow" >
-  <template #rightArrow>
-    <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
-  </template>
-</context-menu-item>
-<context-menu-item :clickClose="false">
-  <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
-  <div>Item custom render</div>
-</context-menu-item>
-```
+菜单提供了一些插槽，允许你自定义渲染某些部分，具体您可以参考案例源码 [examples\views\BasicCustomize.vue](examples\views\BasicCustomize.vue) [examples\views\ComponentCustomize.vue](examples\views\ComponentCustomize.vue)。
 
 ## API 参考
 

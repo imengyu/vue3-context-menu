@@ -27,9 +27,13 @@ export const VNodeRender = defineComponent({
       type: [ Object, Function ],
       default: null,
     },
+    data: {
+      type: Object,
+      default: null,
+    },
   },
   setup(props) {
-    const { vnode } = toRefs(props);
-    return () => typeof vnode.value === 'function' ? (vnode.value as unknown as () => VNode)() : vnode.value as unknown as VNode;
+    const { vnode, data } = toRefs(props);
+    return () => typeof vnode.value === 'function' ? (vnode.value as unknown as (data: unknown) => VNode)(data.value) : vnode.value as unknown as VNode;
   },
 })

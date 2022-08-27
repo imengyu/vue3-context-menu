@@ -80,6 +80,9 @@ export default defineComponent({
     return h(ContextMenuItemConstructor, {
       ...this.$props,
       showRightArrow: true,
+      maxWidth: undefined,
+      minWidth: undefined,
+      adjustSubMenuPosition: undefined,
     }, this.$slots.default ? {
       //Create SubMenu
       submenu: () => h(ContextSubMenuConstructor, {

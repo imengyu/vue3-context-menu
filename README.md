@@ -11,7 +11,11 @@ A context menu component for Vue3
 
 [View Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
 
----
+## features
+
+* Simple and easy to use, small size
+* Provide component mode and function mode
+* Customizable
 
 ### Install
 
@@ -26,16 +30,16 @@ Import vue3-context-menu in main.js:
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import ContextMenu from '@imengyu/vue3-context-menu'
 
-createApp(App)
-  .use(ContextMenu)     
+createApp(App).use(ContextMenu)     
 ```
 
-Add events to the elements that you want show contextmenu: 
 ```html
 <div class="box" @contextmenu="onContextMenu($event)">
   Right click to show contextmenu.
 </div>
 ```
+
+### 显示菜单
 
 Then show your menu:
 ```js

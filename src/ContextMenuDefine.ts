@@ -14,13 +14,14 @@ export interface MenuOptions {
   yOffset ?: number,
   zIndex ?: number,
   customClass	?:	string,
+  theme	?:	'dark'|'light',
   iconFontClass ?:	string,
   maxWidth ?: number,
   minWidth ?: number,
 }
 export interface MenuItem {
-  label ?: string|VNode|(() => VNode),
-  icon ?: string|VNode|(() => VNode),
+  label ?: string|VNode|((label: string) => VNode),
+  icon ?: string|VNode|((icon: string) => VNode),
   disabled ?: boolean,
   adjustSubMenuPosition ?: boolean,
   clickableWhenHasChildren ?: boolean,
@@ -30,7 +31,7 @@ export interface MenuItem {
   maxWidth ?: number,
   minWidth ?: number,
   onClick ?: () => void,
-  customRender ?: VNode|(() => VNode),
+  customRender ?: VNode|((item: MenuItem) => VNode),
   children ?: MenuItem[],
 }
 

@@ -1,7 +1,10 @@
 <script lang="ts">
-import { defineComponent, h, PropType } from 'vue'
+import { defineComponent, h, PropType, renderSlot, VNode } from 'vue'
 import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
+
+export type GlobalHasSlot = (name: string) => boolean;
+export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;
 
 /**
  * Context menu component
@@ -29,6 +32,15 @@ export default defineComponent({
     return {
       globalOptions: this.options,
       globalCloseMenu: this.closeMenu,
+      globalTheme: this.options?.theme || 'light',
+      globalHasSlot: (name: string) => {
+        return this.$slots[name] !== undefined;
+      },
+      globalRenderSlot: (name: string, params: Record<string, unknown>) => {
+        console.log(params);
+        
+        return renderSlot(this.$slots, name, { ...params })
+      },
       //provide menuContext for child use
       menuContext: {
         zIndex: this.options.zIndex || MenuConstOptions.defaultStartZindex,
@@ -68,14 +80,18 @@ export default defineComponent({
     if (!this.show) return [];
 
     //Create SubMenu
-    return h(ContextSubMenuConstructor, {
-      class: 'mx-menu-host',
-      items: this.options?.items,
-      maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
-      minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
-    }, {
-      default: this.$slots.default,
-    });
+    return h('div', {
+      class: 'mx-menu-ghost-host',
+    }, [
+      h(ContextSubMenuConstructor, {
+        class: 'mx-menu-host',
+        items: this.options?.items,
+        maxWidth: this.options.maxWidth || MenuConstOptions.defaultMaxWidth,
+        minWidth: this.options.minWidth || MenuConstOptions.defaultMinWidth,
+      }, {
+        default: this.$slots.default,
+      })
+    ]);
   },
   methods: {
     installBodyEvents() {
@@ -123,3 +139,15 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+.mx-menu-ghost-host {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  top: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+</style>
