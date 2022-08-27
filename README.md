@@ -9,7 +9,7 @@ A context menu component for Vue3
 
 ---
 
-[View Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
+[Click here View online Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
 
 ## features
 
@@ -28,6 +28,8 @@ npm install -save @imengyu/vue3-context-menu
 ```
 
 ## Useage
+
+It is recommended that you check the [examples source code](examples/) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
 
 ### Import
 
@@ -192,7 +194,7 @@ Menu component.
 
 | Property | Description | Type |
 | :----: | :----: | :----: |
-| theme | Menu theme | `'light'|'dark'` |
+| theme | Menu theme | `'light' 'dark'` |
 | onClick | Define the click event callback of the element, which is used for the internal event processing of the menu. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | onMouseEnter | Mouse in event callback of custom element. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | ... | Other arguments are same with `MenuItem` | - |
@@ -275,7 +277,7 @@ Menu separator component.
 | customClass | Custom menu class. | `string` | — | — |
 | minWidth | Minimum width of main menu (in pixels) | `number` | — | `100` |
 | maxWidth | Maximum width of main menu (in pixels) | `number` | — | `600` |
-| theme | Menu theme | `string` | `'light'|'dark'` | `light` |
+| theme | Menu theme | `string` | `'light' 'dark'` | `light` |
 
 #### MenuItem
 
