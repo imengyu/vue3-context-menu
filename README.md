@@ -146,6 +146,33 @@ The menu component does not provide any icons. If you want to add an icon, it is
 
 *By default, the `<i>`  element is used to display icons*
 
+你也可以通过菜单的插槽来完全自定义渲染图标，如：
+
+You can also completely customize the rendering icon through the slot of the menu, such as:
+
+```html
+<context-menu-item label="Item with custom icon slot">
+  <template #icon>
+    <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
+  </template>
+</context-menu-item>
+```
+
+Customize icon in function mode:
+
+```js
+{ 
+  label: "Item with custom icon render",
+  icon: h('img', {
+    src: 'https://imengyu.top/assets/images/test/icon.png',
+    style: {
+      width: '20px',
+      height: '20px',
+    }
+  }),
+},
+```
+
 ## Custom style
 
 If you think the menu style is not good-looking, you can rewrite the CSS style. All CSS style definitions are in `/src/ContextSubMenu.vue`. You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
@@ -283,8 +310,8 @@ Menu separator component.
 
 | Property | Description | Type | Optional value | Default |
 | :----: | :----: | :----: | :----: | :----: |
-| label | The label of menu. | `string|VNode|((label: string) => VNode)` | — | — |
-| icon | The icon for menu item. | `string|VNode|((icon: string) => VNode)` | — | — |
+| label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
+| icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | disabled | Disable menu item? | `boolean` | — | `false` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
@@ -294,5 +321,5 @@ Menu separator component.
 | minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
 | onClick | Menu item click event handler. | `Function()` | — | — |
-| customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode|((item: MenuItemRenderData) => VNode)` | — | — |
+| customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | Submenu items. | `MenuItem[]` | — | — |

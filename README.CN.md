@@ -144,6 +144,34 @@ methods: {
 
 *默认使用 `<i>` 元素来显示图标。*
 
+你也可以通过菜单的插槽来完全自定义渲染图标，如：
+
+在组件模式自定义图标：
+
+```html
+<context-menu-item label="Item with custom icon slot" @click="alertContextMenuItemClicked('Item3')">
+  <template #icon>
+    <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
+  </template>
+</context-menu-item>
+```
+
+在函数模式自定义图标：
+
+```js
+{ 
+  label: "Item with custom icon render",
+  icon: h('img', {
+    src: 'https://imengyu.top/assets/images/test/icon.png',
+    style: {
+      width: '20px',
+      height: '20px',
+    }
+  }),
+  divided: true, 
+},
+```
+
 ## 自定义样式
 
 如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 `/src/ContextSubMenu.vue` 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
@@ -281,8 +309,8 @@ import '你的样式css文件路径.css'
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
-| label | 菜单项名称，可传入VNode | `string|VNode|((label: string) => VNode)` | — | — |
-| icon | 菜单项图标，可传入VNode | `string|VNode|((icon: string) => VNode)` | — | — |
+| label | 菜单项名称，可传入VNode | `string` or `VNode` or `((label: string) => VNode)` | — | — |
+| icon | 菜单项图标，可传入VNode | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
@@ -292,5 +320,5 @@ import '你的样式css文件路径.css'
 | minWidth | 子菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 子菜单最大宽度 | `number` | — | `600` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
-| customRender | 菜单项整体自定义渲染回调 | `VNode|((item: MenuItemRenderData) => VNode)` | — | — |
+| customRender | 菜单项整体自定义渲染回调 | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | 子菜单结构信息 | `MenuItem[]` | — | — |
