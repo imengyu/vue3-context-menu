@@ -253,7 +253,6 @@ import '你的样式css文件路径.css'
 | disabled | 是否禁用菜单项 | `boolean` | `false` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | `true` |
-| divided | 是否显示分割线 | `boolean` | `false` |
 | customClass | 自定义子菜单class | `string` | — |
 | onClick | 菜单项点击事件 | `Function()` | — |
 
@@ -286,7 +285,6 @@ import '你的样式css文件路径.css'
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | `true` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | `true` |
-| divided | 是否显示分割线 | `boolean` | `false` |
 | customClass | 自定义子菜单class | `string` | — |
 | minWidth | 子菜单最小宽度 | `number` | `100` |
 | maxWidth | 子菜单最大宽度 | `number` | `600` |
@@ -319,6 +317,7 @@ import '你的样式css文件路径.css'
 | minWidth | 主菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
 | theme | 菜单的主题 | `string` | `'light' 'dark'` | `light` |
+| closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
 
 #### MenuItem
 

@@ -1,29 +1,33 @@
 import { App, h, render, Slot } from "vue";
-import { MenuOptions } from "./ContextMenuDefine";
+import { ContextMenuInstance, MenuOptions } from "./ContextMenuDefine";
+import { closeContextMenu } from "./ContextMenuMutex";
 import ContextMenuConstructor from './ContextMenu.vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue'
 import ContextMenuItemConstructor from './ContextMenuItem.vue'
 import ContextMenuGroupConstructor from './ContextMenuGroup.vue'
 import ContextMenuSperatorConstructor from './ContextMenuSperator.vue'
 
-const genContainer = () => {
-  return document.createElement('div')
+function genContainer() {
+  return document.createElement('div');
 }
-const initInstance = (options: MenuOptions, container: HTMLElement, customSlots?: Record<string, Slot>) => {
+function initInstance(options: MenuOptions, container: HTMLElement, customSlots?: Record<string, Slot>) {
   const vnode = h(ContextMenuConstructor, { 
     options: options,
     show: true,
     onClose: () => {
-      render(null, container)
+      render(null, container);
     }
-  }, customSlots)
-  render(vnode, container)
-  document.body.appendChild(container.firstElementChild as Node)
-  return vnode.component
+  }, customSlots);
+  render(vnode, container);
+  document.body.appendChild(container.firstElementChild as Node);
+  return vnode.component;
 }
-const $contextmenu = (options : MenuOptions, customSlots?: Record<string, Slot>) => {
-  const container = genContainer()
-  initInstance(options, container, customSlots)
+
+//Show global contextmenu
+function $contextmenu(options : MenuOptions, customSlots?: Record<string, Slot>) {
+  const container = genContainer();
+  const component = initInstance(options, container, customSlots);
+  return component as unknown as ContextMenuInstance;
 }
 
 export default {
@@ -38,8 +42,10 @@ export default {
   },
   //global function for show context menu
   //Same as this.$contextmenu
-  showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : void {
-    $contextmenu(options, customSlots);
+  showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : ContextMenuInstance {
+    return $contextmenu(options, customSlots);
   },
+  //Close the currently open menu
+  closeContextMenu: closeContextMenu,
 }
 

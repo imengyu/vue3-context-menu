@@ -1,10 +1,13 @@
 <template>
-  <div class="box1" @contextmenu="onContextMenu($event)">
-    Right click to show a Light theme contextmenu !
-  </div>
 
-  <div class="box1" @contextmenu="onContextMenu2($event)">
-    Right click to show a Dark theme contextmenu !
+  <div class="horbox">
+    <div class="box1" style="flex:1" @contextmenu="onContextMenu($event)">
+      Right click to show a Light theme contextmenu !
+    </div>
+
+    <div class="box1" style="flex:1" @contextmenu="onContextMenu2($event)">
+      Right click to show a Dark theme contextmenu !
+    </div>
   </div>
 
   <div class="box4">

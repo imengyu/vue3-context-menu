@@ -6,7 +6,7 @@
     <!--Default item-->
     <div 
       v-else
-      :class="'mx-context-menu-item' + (disabled ? ' disabled' : '')"
+      :class="'mx-context-menu-item' + (disabled ? ' disabled' : '') + (customClass ? (' ' + customClass) : '')"
       @click="onClick"
       @mouseenter="onMouseEnter"
     >
@@ -58,6 +58,10 @@ export default defineComponent({
     customRender: {
       type: Function,
       default: null
+    },
+    customClass: {
+      type: String,
+      default: ''
     },
     /**
      * Is this menu disabled? 

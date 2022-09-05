@@ -3,6 +3,17 @@ import { App, Slot, VNode } from "vue";
 declare module 'vue3-context-menu' {
 }
 
+/**
+ * ContextMenu Component ref interface, 
+ * You can use `(this.$refs.myMenu as ContextMenuInstance)` or `const mymenu = ref<ContextMenuInstance>()`
+ */
+export interface ContextMenuInstance {
+  /**
+   * Close this menu
+   */
+  closeMenu(): void;
+}
+
 export declare interface MenuOptions {
   /**
    * The items for this menu.
@@ -48,6 +59,10 @@ export declare interface MenuOptions {
    * Theme of the menu. Default is light.
    */
   theme ?: 'light'|'dark';
+  /**
+   * Close when user scroll mouse ? Default is true.
+   */
+  closeWhenScroll ?: boolean;
 }
 export declare interface MenuItem {
   /**
@@ -126,8 +141,9 @@ declare module '@vue/runtime-core' {
      * Show a ContextMenu .
      * @param options The options of this ContextMenu
      * @param customSlots You can provide some custom slots to customize the rendering style of the menu. These slots are the same as the slots of component ContextMenu.
+     * @returns Menu instance 
      */
-    $contextmenu: (options : MenuOptions, customSlots?: Record<string, Slot>) => void;
+    $contextmenu: (options : MenuOptions, customSlots?: Record<string, Slot>) => ContextMenuInstance;
   }
 }
 
@@ -137,8 +153,13 @@ declare const Plugin: {
    * Show a ContextMenu in page, same as `this.$contextmenu`
    * @param options The options of ContextMenu
    * @param customSlots You can provide some custom slots to customize the rendering style of the menu. These slots are the same as the slots of component ContextMenu.
+   * @returns Menu instance 
    */
-  showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : void;
+  showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : ContextMenuInstance;
+  /**
+   * Close the currently open menu
+   */
+  closeContextMenu() : void;
 };
 
 export default Plugin;

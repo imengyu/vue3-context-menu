@@ -27,7 +27,8 @@
             :iconFontClass="item.customClass"
             :icon="item.icon"
             :label="item.label"
-            :customRender="item.customRender"
+            :customRender="(item.customRender as Function)"
+            :customClass="item.customClass"
             :clickClose="item.clickClose"
             :clickableWhenHasChildren="item.clickableWhenHasChildren"
             :showRightArrow="item.children && item.children.length > 0"
@@ -207,7 +208,7 @@ export default defineComponent({
           const absX = getLeft(menuEl), absY = getTop(menuEl);
           const xOv = absX + menuEl.offsetWidth - windowWidth;
           if (xOv > 0) //X overflow
-            position.value.x -= getParentWidth() + menuEl.offsetWidth - fillPadding; 
+            position.value.x -= (getParentWidth ? getParentWidth() : 0) + menuEl.offsetWidth - fillPadding; 
           if (overflow.value) {
             position.value.y = -(absY - fillPadding); //fill height
             //scroll.value.style.height = `${windowHeight}px`;

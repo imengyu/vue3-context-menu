@@ -1,7 +1,15 @@
 <template>
   <div>
-    <div class="box1" @contextmenu="onContextMenu($event)">
-      Right click here to show contextmenu !
+    <div class="horbox">
+      <div class="box1" style="flex:1" @contextmenu="onContextMenu($event)">
+        Right click here to show contextmenu !
+      </div>
+      <div class="box1" style="flex:1;padding: 50px" @contextmenu="onContextMenu1($event)" @click.stop="test">
+        Contextmenu In parent
+        <div class="box2" style="width: 200px; height: 100px" @contextmenu="onContextMenu2($event)">
+          Contextmenu In child
+        </div>
+      </div>
     </div>
     <div class="box4">
       You can open examples\views\BasicUseage.vue file view complete source code.
@@ -86,6 +94,10 @@ export default defineComponent({
     }).hljs.highlightAll();
   },
   methods: {
+    test() {
+      console.log('test');
+      
+    },
     onContextMenu(e : MouseEvent) {
       //prevent the browser's default menu
       e.preventDefault();
@@ -193,6 +205,49 @@ export default defineComponent({
                 ]
               },
             ]
+          },
+        ],
+        iconFontClass: 'iconfont',
+        customClass: "class-a",
+        zIndex: 3,
+        minWidth: 230,
+        x: e.x,
+        y: e.y
+      } as MenuOptions);
+    },
+    onContextMenu1(e : MouseEvent) {
+      //prevent the browser's default menu
+      e.preventDefault();
+      //shou our menu
+      this.$contextmenu({
+        items: [
+          { 
+            label: 'This is menu in parent box',
+          },
+          { 
+            label: 'Simple item',
+          },
+        ],
+        iconFontClass: 'iconfont',
+        customClass: "class-a",
+        zIndex: 3,
+        minWidth: 230,
+        x: e.x,
+        y: e.y
+      } as MenuOptions);
+    },
+    onContextMenu2(e : MouseEvent) {
+      //prevent the browser's default menu
+      e.preventDefault();
+      e.stopPropagation();
+      //shou our menu
+      this.$contextmenu({
+        items: [
+          { 
+            label: 'This is menu in child box',
+          },
+          { 
+            label: 'Simple item',
           },
         ],
         iconFontClass: 'iconfont',

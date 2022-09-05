@@ -254,7 +254,6 @@ Menu item component.
 | disabled | Disable menu item? | `boolean` | `false` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | `true` |
-| divided | Is this menu item separated from the menu item below? | `boolean` | `false` |
 | customClass | Custom submenu class. | `string` | — |
 | onClick | Menu item click event handler. | `Function()` | — |
 
@@ -287,7 +286,6 @@ Submenu component.
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen.| `boolean` | `true` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | `true` |
-| divided | Is this menu item separated from the menu item below? | `boolean` | `false` |
 | customClass | Custom submenu class. | `string` | — |
 | minWidth | Submenu minimum width (in pixels). | `number` | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | `600` |
@@ -319,7 +317,8 @@ Menu separator component.
 | customClass | Custom menu class. | `string` | — | — |
 | minWidth | Minimum width of main menu (in pixels) | `number` | — | `100` |
 | maxWidth | Maximum width of main menu (in pixels) | `number` | — | `600` |
-| theme | Menu theme | `string` | `'light' 'dark'` | `light` |
+| theme | Menu theme | `string` | `'light'` or `'dark'` | `light` |
+| closeWhenScroll | Close when user scroll mouse ? | `boolean` | - | `true` |
 
 #### MenuItem
 
