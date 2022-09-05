@@ -2,7 +2,7 @@
 
 ## v1.1.1 - 2022/09/05
 
-* [Added] Added the closewhenscoll attribute, which is used to control whether to close the menu when scrolling the mouse.
+* [Added] Added the `closeWhenScoll` attribute, which is used to control whether to close the menu when scrolling the mouse.
 * Fixed the problem that the open menu would not disappear in the case of nested containers.
 
 ## v1.1.0 - 2022/08/27
