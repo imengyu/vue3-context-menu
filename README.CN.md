@@ -336,3 +336,7 @@ import '你的样式css文件路径.css'
 | onClick | 菜单项点击事件 | `Function()` | — | — |
 | customRender | 菜单项整体自定义渲染回调 | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | 子菜单结构信息 | `MenuItem[]` | — | — |
+
+## Changelog
+
+[查看](./CHANGELOG.md)

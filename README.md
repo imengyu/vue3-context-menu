@@ -337,3 +337,7 @@ Menu separator component.
 | onClick | Menu item click event handler. | `Function()` | — | — |
 | customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | Submenu items. | `MenuItem[]` | — | — |
+
+## Changelog
+
+[Changelog](./CHANGELOG.md)
