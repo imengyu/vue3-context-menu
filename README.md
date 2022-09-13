@@ -204,11 +204,9 @@ import 'your-style-file-path.css'
 
 ## Customize
 
-The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code [examples\views\BasicCustomize.vue](examples\views\BasicCustomize.vue) [examples\views\ComponentCustomize.vue](examples\views\ComponentCustomize.vue)。
+The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code [examples/views/BasicCustomize.vue](examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](examples/views/ComponentCustomize.vue)。
 
 ## API reference
-
----
 
 ### Component mode: component properties and description
 

@@ -203,11 +203,9 @@ import '你的样式css文件路径.css'
 
 ## 自定义渲染
 
-菜单提供了一些插槽，允许你自定义渲染某些部分，具体您可以参考案例源码 [examples\views\BasicCustomize.vue](examples\views\BasicCustomize.vue) [examples\views\ComponentCustomize.vue](examples\views\ComponentCustomize.vue)。
+菜单提供了一些插槽，允许你自定义渲染某些部分，具体您可以参考案例源码 [examples/views/BasicCustomize.vue](examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](examples/views/ComponentCustomize.vue)。
 
 ## API 参考
-
----
 
 ### 组件模式：组件属性与说明
 
