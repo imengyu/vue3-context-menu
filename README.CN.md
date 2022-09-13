@@ -42,9 +42,11 @@ createApp(App).use(ContextMenu)
 
 显示菜单有两种方式：
 
-第一种是函数模式，可以使用 `this.$contextmenu` 通过菜单数据显示一个右键菜单：
+第一种是函数模式，可以使用 `this.$contextmenu` 或者 `showContextMenu` 全局函数，通过菜单数据显示一个右键菜单：
 
 ```js
+import ContextMenu from '@imengyu/vue3-context-menu'
+
 onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
@@ -69,6 +71,9 @@ onContextMenu(e : MouseEvent) {
       },
     ]
   });
+
+  //这个函数与 this.$contextmenu 一致
+  ContextMenu.showContextMenu({ ... }); 
 }
 ```
 
@@ -202,6 +207,8 @@ import '你的样式css文件路径.css'
 
 ## API 参考
 
+---
+
 ### 组件模式：组件属性与说明
 
 #### ContextMenu
@@ -240,6 +247,8 @@ import '你的样式css文件路径.css'
 | onMouseEnter | 自定义元素的鼠标移入事件回调，它用于菜单内部事件处理，当自定义渲染时，请回调此函数，否则菜单无法正常响应事件 | - |
 | ... | 其他参数与 `MenuItem` 一致 | - |
 
+---
+
 #### ContextMenuItem
 
 菜单条目组件。
@@ -271,6 +280,8 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: |
 | click | 点击菜单时触发此事件 | - |
 
+---
+
 #### ContextMenuGroup
 
 子菜单组件。
@@ -296,11 +307,34 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: |
 | default | 子菜单渲染插槽 | - |
 
+---
+
 #### ContextMenuSperator
 
 菜单分隔符组件。
 
+---
+
 ### 函数模式：参数说明
+
+#### 全局函数
+
+* `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
+
+  显示菜单.
+
+  | 参数 | 说明 |
+  | :----: | :----: |
+  | options | 菜单的数据 |
+  | customSlots | 这些插槽允许您自定义当前菜单的样式，这些插槽的名称与 [组件模式](#ContextMenu) 中的插槽名称相同 |
+
+* `ContextMenu.closeContextMenu()`
+
+  手动关闭当前打开的菜单.
+
+* `this.$contextmenu`
+
+  与 `ContextMenu.showContextMenu` 相同，但此函数注册到 Vue 全局属性中，可以在Vue实例中直接使用。
 
 #### MenuOptions
 

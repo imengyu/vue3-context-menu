@@ -44,9 +44,11 @@ createApp(App).use(ContextMenu)
 
 There are two ways to display menus:
 
-The first is the function mode. You can use  `this.$contextmenu` displays a menu through menu data:
+The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu through menu data:
 
 ```js
+import ContextMenu from '@imengyu/vue3-context-menu'
+
 onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
@@ -71,6 +73,9 @@ onContextMenu(e : MouseEvent) {
       },
     ]
   });
+
+  //Same as this.$contextmenu
+  ContextMenu.showContextMenu({ ... }); 
 }
 ```
 
@@ -203,6 +208,8 @@ The menu provides some slots that allow you to customize some parts of the rende
 
 ## API reference
 
+---
+
 ### Component mode: component properties and description
 
 #### ContextMenu
@@ -241,6 +248,8 @@ Menu component.
 | onMouseEnter | Mouse in event callback of custom element. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | ... | Other arguments are same with `MenuItem` | - |
 
+---
+
 #### ContextMenuItem
 
 Menu item component.
@@ -272,6 +281,8 @@ Menu item component.
 | :----: | :----: | :----: |
 | click | This event is triggered when the click this menu item | - |
 
+---
+
 #### ContextMenuGroup
 
 Submenu component.
@@ -297,11 +308,34 @@ Submenu component.
 | :----: | :----: | :----: |
 | default | Submenu render slot | - |
 
+---
+
 #### ContextMenuSperator
 
 Menu separator component.
 
+---
+
 ### Function mode
+
+#### Global Function
+
+* `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
+
+  Show context menu.
+
+  | Param | Description |
+  | :----: | :----: |
+  | options | The options of menu. |
+  | customSlots | These slots to allow you to customize the style of the current menu, the names of these slots are the same as those in the [component mode](#ContextMenu). |
+
+* `ContextMenu.closeContextMenu()`
+
+  Manually close the currently open context menu.
+
+* `this.$contextmenu`
+
+  Same as `ContextMenu.showContextMenu` but this function is registered to vue global property.
 
 #### MenuOptions
 
