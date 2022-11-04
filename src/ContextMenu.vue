@@ -112,9 +112,9 @@ export default defineComponent({
       }, 400);
     },
     removeBodyEvents() {
-      document.removeEventListener("contextmenu", this.onBodyClick);
-      document.removeEventListener("click", this.onBodyClick);
-      document.removeEventListener("wheel", this.onBodyWhell);
+      document.removeEventListener("contextmenu", this.onBodyClick, true);
+      document.removeEventListener("click", this.onBodyClick, true);
+      document.removeEventListener("wheel", this.onBodyWhell, true);
     },
     onBodyWhell() {
       //close when mouse scroll
