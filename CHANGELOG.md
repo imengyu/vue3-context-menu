@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.2 - 2022/11/06
+
+* Fix the problem that the binding event was not removed correctly. (#14 Thanks @liumingye)
+
 ## v1.1.1 - 2022/09/05
 
 * [Added] Added the `closeWhenScoll` attribute, which is used to control whether to close the menu when scrolling the mouse.

@@ -100,30 +100,6 @@ onContextMenu(e : MouseEvent) {
 data() {
   return {
     show: false,
-    //For $contextmenu
-    options: {
-      items:[
-        {
-          label: "Copy",
-          onClick: () => {
-            document.execCommand('copy');
-          }
-        },
-        { label: "Paste", disabled: true },
-        {
-          label: "Print",
-          icon: 'icon-print',
-          onClick: () => {
-            document.execCommand('print');
-          }
-        },
-      ],
-      iconFontClass: 'iconfont',
-      customClass: "class-a",
-      minWidth: 230,
-      x: 0,
-      y: 0
-    },
     //For component
     optionsComopnent: {
       zIndex: 3,
@@ -179,6 +155,8 @@ methods: {
 在函数模式自定义图标：
 
 ```js
+import { h } from 'vue';
+
 { 
   label: "Item with custom icon render",
   icon: h('img', {

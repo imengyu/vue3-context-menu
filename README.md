@@ -102,31 +102,6 @@ The second is the component mode. You can use the component and template to disp
 data() {
   return {
     show: false,
-    //For $contextmenu
-    options: {
-      items:[
-        {
-          label: "Copy",
-          onClick: () => {
-            document.execCommand('copy');
-          }
-        },
-        { label: "Paste", disabled: true },
-        {
-          label: "Print",
-          icon: 'icon-print',
-          onClick: () => {
-            document.execCommand('print');
-          }
-        },
-      ],
-      iconFontClass: 'iconfont',
-      customClass: "class-a",
-      minWidth: 230,
-      x: 0,
-      y: 0
-    },
-    //For component
     optionsComopnent: {
       zIndex: 3,
       minWidth: 230,
@@ -181,6 +156,8 @@ Customize the icon of the entire menu:
 Customize icon in function mode:
 
 ```js
+import { h } from 'vue';
+
 { 
   label: "Item with custom icon render",
   icon: h('img', {
