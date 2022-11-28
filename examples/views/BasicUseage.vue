@@ -91,7 +91,7 @@ export default defineComponent({
       hljs: {
         highlightAll: () => void
       }
-    }).hljs.highlightAll();
+    }).hljs?.highlightAll?.();
   },
   methods: {
     test() {
@@ -140,7 +140,6 @@ export default defineComponent({
                   alert("You click Print");
                 } 
               },
-              
               { label: "View source", icon: "icon-terminal" },
               { label: "Inspect" }
             ],
@@ -205,6 +204,21 @@ export default defineComponent({
                 ]
               },
             ]
+          },
+          { 
+            label: 'Item with icon',
+            icon: "icon-reload-1",
+          },
+          { 
+            label: "Item with svg icon",
+            svgIcon: "#icon-clock",
+          },
+          { 
+            label: "Item with svg icon",
+            svgIcon: "#icon-multiply",
+            svgProps: {
+              fill: '#f60',
+            },
           },
         ],
         iconFontClass: 'iconfont',

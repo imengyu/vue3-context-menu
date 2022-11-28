@@ -6,14 +6,22 @@
     <!--Default item-->
     <div 
       v-else
-      :class="'mx-context-menu-item' + (disabled ? ' disabled' : '') + (customClass ? (' ' + customClass) : '')"
+      :class="[
+        'mx-context-menu-item',
+        (disabled ? 'disabled' : ''),
+        (customClass ? (' ' + customClass) : ''),
+        (showSubMenu ? 'open' : ''),
+      ]"
       @click="onClick"
       @mouseenter="onMouseEnter"
     >
       <slot>
         <slot name="icon">
           <VNodeRender v-if="globalHasSlot('itemIconRender')" :vnode="() => globalRenderSlot('itemIconRender', getItemDataForChildren())" />
-          <i v-else-if="typeof icon === 'string'" :class="icon + ' icon '+ iconFontClass"></i>
+          <svg v-else-if="typeof svgIcon === 'string' && svgIcon" class="icon svg" v-bind="svgProps">
+            <use :xlink:href="svgIcon"></use>
+          </svg>
+          <i v-else-if="typeof icon === 'string'" :class="icon + ' icon '+ iconFontClass + ' ' + globalIconFontClass"></i>
           <VNodeRender v-else :vnode="icon" :data="icon" />
         </slot>
         <slot name="label">
@@ -34,7 +42,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, PropType, ref, toRefs } from 'vue'
+import { defineComponent, inject, PropType, ref, SVGAttributes, toRefs } from 'vue'
 import { SubMenuParentContext } from './ContextSubMenu.vue'
 import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { VNodeRender } from './ContextMenuUtils'
@@ -89,9 +97,24 @@ export default defineComponent({
       default: 'iconfont'
     },
     /**
+     * Menu icon (for svg)
+     */
+    svgIcon: {
+      type: String,
+      default: ''
+    },
+    svgProps: {
+      type: Object as PropType<SVGAttributes>,
+      default: null
+    },
+    /**
      * Show right arrow on this menu?
      */
     showRightArrow: {
+      type: Boolean,
+      default: false
+    },
+    hasChildren: {
       type: Boolean,
       default: false
     },
@@ -119,6 +142,7 @@ export default defineComponent({
       clickHandler, clickClose, clickableWhenHasChildren, disabled,
       label, icon, iconFontClass,
       showRightArrow,
+      hasChildren,
     } = toRefs(props);
     const showSubMenu = ref(false);
 
@@ -130,8 +154,8 @@ export default defineComponent({
     function onClick(e: MouseEvent) {
       if ((e.target as HTMLElement).classList.contains('mx-context-no-clickable'))
         return;
-      if (context.slots.submenu) {//Has submenu
-        if (clickableWhenHasChildren && typeof clickHandler.value === 'function') 
+      if (hasChildren.value) {//Has submenu
+        if (clickableWhenHasChildren.value && typeof clickHandler.value === 'function') 
           clickHandler.value();
       } else {
         //Call hander from options
@@ -147,13 +171,16 @@ export default defineComponent({
     function onMouseEnter() {
       if (!menuContext.checkCloseOtherSubMenuTimeOut())
         menuContext.closeOtherSubMenu();
-      menuContext.addOpenedSubMenu(() => {
-        showSubMenu.value = false;
-      });
-      showSubMenu.value = true;
+      if (hasChildren.value) {
+        menuContext.addOpenedSubMenu(() => {
+          showSubMenu.value = false;
+        });
+        showSubMenu.value = true;
+      }
     }
 
     const globalTheme = inject('globalTheme') as string;
+    const globalIconFontClass = inject('globalIconFontClass') as string;
 
     return {
       //Data for custom render
@@ -167,6 +194,8 @@ export default defineComponent({
           clickClose: clickClose.value,
           clickableWhenHasChildren: clickableWhenHasChildren.value,
           theme: globalTheme,
+          isOpen: showSubMenu,
+          hasChildren: hasChildren,
           onClick,
           onMouseEnter,
         }
@@ -174,6 +203,7 @@ export default defineComponent({
       showSubMenu,
       globalHasSlot,
       globalRenderSlot,
+      globalIconFontClass,
       onMouseEnter,
       onClick,
     }

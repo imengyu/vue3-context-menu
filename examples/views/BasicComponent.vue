@@ -87,7 +87,7 @@ export default defineComponent({
       hljs: {
         highlightAll: () => void
       }
-    }).hljs.highlightAll();
+    }).hljs?.highlightAll?.();
   },
   data() {
     return {

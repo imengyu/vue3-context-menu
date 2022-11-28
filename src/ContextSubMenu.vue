@@ -24,14 +24,17 @@
           <ContextMenuItem
             :clickHandler="item.onClick"
             :disabled="item.disabled"
-            :iconFontClass="item.customClass"
             :icon="item.icon"
+            :iconFontClass="item.iconFontClass"
+            :svgIcon="item.svgIcon"
+            :svgProps="item.svgProps"
             :label="item.label"
             :customRender="(item.customRender as Function)"
             :customClass="item.customClass"
             :clickClose="item.clickClose"
             :clickableWhenHasChildren="item.clickableWhenHasChildren"
             :showRightArrow="item.children && item.children.length > 0"
+            :hasChildren="item.children && item.children.length > 0"
           >
             <template v-if="item.children && item.children.length > 0" #submenu>
               <!--Sub menu-->
@@ -133,6 +136,7 @@ export default defineComponent({
   setup(props) {
     const parentContext = inject('menuContext') as SubMenuParentContext;
     const options = inject('globalOptions') as MenuOptions;
+    
     const { zIndex, getMyPosition, getParentWidth } = parentContext;
     const { adjustPosition } = toRefs(props);
 
@@ -224,7 +228,6 @@ export default defineComponent({
     const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
     const globalTheme = inject('globalTheme') as string;
-
     return {
       menu,
       scroll,
@@ -339,12 +342,20 @@ export default defineComponent({
   &:active {
     background-color: #dfdfdf;
   }
+  &.open {
+    background-color: #f1f1f1;
+  }
 
   .icon  {
     display: inline-block;
-    width: 26px;
+    width: 16px;
     font-size: 16px;
     color: #636363;
+    margin-right: 8px;
+
+    &.svg {
+      height: 16px;
+    }
   }
   span {
     font-size: 14px;
@@ -428,6 +439,9 @@ export default defineComponent({
     }
     &:active {
       background-color: #7a7a7a;
+    }
+    &.open {
+      background-color: #636363;
     }
 
     .icon  {

@@ -1,4 +1,4 @@
-import { App, Slot, VNode } from "vue";
+import { App, Slot, SVGAttributes, VNode } from "vue";
 
 declare module 'vue3-context-menu' {
 }
@@ -44,7 +44,7 @@ export declare interface MenuOptions {
    */
   customClass	?:	string,
   /**
-   * Custom icon library font class name.
+   * Custom icon library font class name. (global)
    */
   iconFontClass ?:	string,
   /**
@@ -73,6 +73,18 @@ export declare interface MenuItem {
    * The icon for menu item.
    */
   icon ?: string|VNode|((icon: string) => VNode),
+  /**
+   * Custom icon library font class name.
+   */
+  iconFontClass ?:	string,
+  /**
+   * Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty.
+   */
+  svgIcon ?: string,
+  /**
+   * The user-defined attribute of the svg tag, which is valid when using `svgIcon`.
+   */
+  svgProps ?: SVGAttributes,
   /**
    * Disable menu item?
    */
@@ -125,6 +137,14 @@ export declare interface MenuItemRenderData extends Omit<MenuItem, 'children'|'c
    * Global theme
    */
   theme: 'light'|'dark',
+  /**
+   * This value indicates whether the current menu submenu is open
+   */
+  isOpen: boolean,
+  /**
+   * This value indicates whether the current menu has submenus
+   */
+  hasChildren: boolean,
   /**
    * Click event callback of custom element, which is used for menu internal event
    */

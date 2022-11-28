@@ -122,11 +122,42 @@ methods: {
 
 ## Menu icon
 
-The menu component does not provide any icons. If you want to add an icon, it is recommended to use [iconfont](http://iconfont.cn) Icon library. After importing, fill in the `icon` attribute of MenuItem to display the icon in front of the menu item.
+The menu component does not provide any icons. If you want to add an icon, it is recommended to use [iconfont](http://iconfont.cn) Icon library.
 
-*By default, the `<i>`  element is used to display icons*
+### Font icon
 
----
+Use iconfont library: After importing, fill in the `icon` attribute of `MenuItem` to display the icon in front of the menu item.
+
+* If the font names are different, you can specify other fonts by writing the `iconFontClass` attribute of `MenuItem` or `MenuOptions`.
+* By default, the `<i>`  element is used to display icons
+
+### SVG Icon
+
+Support the use of svg `<symbol>` to display icons:
+
+```js
+//Function mode
+this.$contextmenu({
+  items: [
+    { 
+      label: "Item with svg icon",
+      svgIcon: "#icon-multiply",
+      svgProps: {
+        fill: '#f60',
+      },
+    },
+  ],
+  //...省略
+} as MenuOptions);
+```
+
+```js
+//Component mode
+<context-menu-item label="Item with svg icon" svgIcon="#icon-multiply" :svgProps="{ fill: '#f60' }" />
+```
+
+
+### Customize icon
 
 You can also completely customize the rendering icon through the slot of the menu, such as:
 
@@ -219,6 +250,8 @@ Menu component.
 | Property | Description | Type |
 | :----: | :----: | :----: |
 | theme | Menu theme | `'light' 'dark'` |
+| isOpen | This value indicates whether the current menu submenu is open | `boolean` |
+| hasChildren | This value indicates whether the current menu has submenus | `boolean` |
 | onClick | Define the click event callback of the element, which is used for the internal event processing of the menu. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | onMouseEnter | Mouse in event callback of custom element. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | ... | Other arguments are same with `MenuItem` | - |

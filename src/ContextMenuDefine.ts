@@ -1,4 +1,4 @@
-import { VNode } from "vue";
+import { SVGAttributes, VNode } from "vue";
 
 export const MenuConstOptions = {
   defaultMinWidth: 100,
@@ -25,6 +25,9 @@ export interface MenuOptions {
 export interface MenuItem {
   label ?: string|VNode|((label: string) => VNode),
   icon ?: string|VNode|((icon: string) => VNode),
+  iconFontClass ?: string,
+  svgIcon ?: string,
+  svgProps ?: SVGAttributes,
   disabled ?: boolean,
   adjustSubMenuPosition ?: boolean,
   clickableWhenHasChildren ?: boolean,

@@ -61,7 +61,7 @@ export default defineComponent({
       hljs: {
         highlightAll: () => void
       }
-    }).hljs.highlightAll();
+    }).hljs?.highlightAll?.();
   },
   methods: {
     onContextMenu(e : MouseEvent) {

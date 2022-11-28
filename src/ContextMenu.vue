@@ -34,6 +34,7 @@ export default defineComponent({
       globalOptions: this.options,
       globalCloseMenu: this.closeMenu,
       globalTheme: this.options?.theme || 'light',
+      globalIconFontClass: this.options?.iconFontClass || 'iconfont',
       //check slot exists
       globalHasSlot: (name: string) => {
         return this.$slots[name] !== undefined;

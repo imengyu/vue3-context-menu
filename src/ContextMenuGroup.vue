@@ -83,6 +83,7 @@ export default defineComponent({
       maxWidth: undefined,
       minWidth: undefined,
       adjustSubMenuPosition: undefined,
+      hasChildren: typeof this.$slots.default !== undefined,
     }, this.$slots.default ? {
       //Create SubMenu
       submenu: () => h(ContextSubMenuConstructor, {
