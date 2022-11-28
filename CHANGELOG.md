@@ -3,7 +3,7 @@
 ## v1.1.3 - 2022/11/28
 
 * [Added] Added the submenu open state.
-  * Added the css `.mx-context-menu-item.open` indicates that the submenu of the current menu is open.
+  * Added the css `.mx-context-menu-item.open` indicates that the submenu of the current menu is open. (#15)
   * Added the property `isOpen` in render slot data (`MenuItemRenderData`) indicates that the submenu of the current menu is open.
   * Added the property `hasChildren` in render slot data (`MenuItemRenderData`) indicates whether the current menu has submenus.
 * [Added] Added the svg icon support. (`svgIcon` and `svgProps` property).
