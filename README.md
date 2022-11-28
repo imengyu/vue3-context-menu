@@ -276,6 +276,9 @@ Menu item component.
 | :----: | :----: | :----: | :----: |
 | label | The label of menu. | `string` | — |
 | icon | The icon for menu item. | `string` | — |
+| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
+| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
+| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
 | disabled | Disable menu item? | `boolean` | `false` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | `true` |
@@ -309,6 +312,9 @@ Submenu component.
 | :----: | :----: | :----: | :----: |
 | label | The label of menu. | `string` | — |
 | icon | The icon for menu item. | `string` | — |
+| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
+| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
+| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
 | disabled | Disable menu item? | `boolean` | `false` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen.| `boolean` | `true` |
@@ -376,6 +382,9 @@ Menu separator component.
 | :----: | :----: | :----: | :----: | :----: |
 | label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
+| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
+| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
+| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
 | disabled | Disable menu item? | `boolean` | — | `false` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |

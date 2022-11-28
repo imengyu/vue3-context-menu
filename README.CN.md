@@ -274,6 +274,9 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: | :----: |
 | label | 菜单项名称 | `string` | — |
 | icon | 菜单项图标 | `string` | — |
+| iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
+| svgIcon | 菜单项图标 svg，仅在 icon 为空时有效 | `string` | — | — |
+| svgProps | 当使用 svg 图标时，自定义 svg 标签属性 | `SVGAttributes` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | `false` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | `true` |
@@ -307,6 +310,9 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: | :----: |
 | label | 菜单项名称 | `string` | — |
 | icon | 菜单项图标 | `string` | — |
+| iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
+| svgIcon | 菜单项图标 svg，仅在 icon 为空时有效 | `string` | — | — |
+| svgProps | 当使用 svg 图标时，自定义 svg 标签属性 | `SVGAttributes` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | `false` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | `true` |
@@ -374,6 +380,9 @@ import '你的样式css文件路径.css'
 | :----: | :----: | :----: | :----: | :----: |
 | label | 菜单项名称，可传入VNode | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | 菜单项图标，可传入VNode | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
+| iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
+| svgIcon | 菜单项图标 svg，仅在 icon 为空时有效 | `string` | — | — |
+| svgProps | 当使用 svg 图标时，自定义 svg 标签属性 | `SVGAttributes` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
