@@ -71,9 +71,6 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    /**
-     * Is this menu disabled? 
-     */
     clickHandler: {
       type: Function as PropType<() => void>,
       default: null
@@ -152,7 +149,10 @@ export default defineComponent({
     const globalCloseMenu = inject('globalCloseMenu') as () => void;
 
     function onClick(e: MouseEvent) {
-      if ((e.target as HTMLElement).classList.contains('mx-context-no-clickable'))
+      if (
+        (e.target as HTMLElement).classList.contains('mx-context-no-clickable')
+        || disabled.value
+      )
         return;
       if (hasChildren.value) {//Has submenu
         if (clickableWhenHasChildren.value && typeof clickHandler.value === 'function') 
@@ -171,7 +171,7 @@ export default defineComponent({
     function onMouseEnter() {
       if (!menuContext.checkCloseOtherSubMenuTimeOut())
         menuContext.closeOtherSubMenu();
-      if (hasChildren.value) {
+      if (!disabled.value && hasChildren.value) {
         menuContext.addOpenedSubMenu(() => {
           showSubMenu.value = false;
         });
