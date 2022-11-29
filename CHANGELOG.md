@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.4 - 2022/11/29
+
+* Fixed #16.
+
 ## v1.1.3 - 2022/11/28
 
 * [Added] Added the submenu open state.
