@@ -4,7 +4,7 @@
     :style="{
       maxWidth: (maxWidth ? maxWidth : `${constOptions.defaultMaxWidth}px`),
       minWidth: minWidth ? minWidth : `${constOptions.defaultMinWidth}px`,
-      maxHeight: overflow ? `${windowHeight - fillPadding * 2}px` : undefined,
+      maxHeight: overflow && maxHeight > 0 ? `${maxHeight}px` : undefined,
       zIndex: zIndex,
       left: `${position.x}px`,
       top: `${position.y}px`,
@@ -184,8 +184,6 @@ export default defineComponent({
     provide('menuContext', thisMenuContext);
 
     const scrollValue = ref(0);
-    const windowHeight = document.body.clientHeight;
-    const windowWidth = document.body.clientWidth;
     const scrollHeight = ref(0);
 
     //Scroll the items
@@ -198,7 +196,7 @@ export default defineComponent({
 
     const overflow = ref(false);
     const position = ref({ x: 0, y: 0 } as ContextMenuPositionData)
-
+    const maxHeight = ref(0);
 
     onMounted(() => {
       position.value = getMyPosition();
@@ -207,6 +205,8 @@ export default defineComponent({
         //adjust submenu position
         if (adjustPosition.value && menu.value && scroll.value) {
           const menuEl = menu.value;
+          const windowHeight = window.innerHeight;
+          const windowWidth = window.innerWidth;
           scrollHeight.value = menuEl.offsetHeight - windowHeight + 20 /* Padding */;
           overflow.value = menu.value.offsetHeight > windowHeight;
           const absX = getLeft(menuEl), absY = getTop(menuEl);
@@ -216,10 +216,12 @@ export default defineComponent({
           if (overflow.value) {
             position.value.y = -(absY - fillPadding); //fill height
             //scroll.value.style.height = `${windowHeight}px`;
+            maxHeight.value = Math.max(scrollHeight.value, windowHeight - fillPadding * 2);
           } else {
             const yOv = absY + menuEl.offsetHeight - windowHeight;
             if (yOv > 0) 
               position.value.y -= yOv + fillPadding; //Y overflow
+            maxHeight.value = 0;
           }
         }
       });
@@ -237,10 +239,9 @@ export default defineComponent({
       scrollValue,
       overflow,
       position,
-      windowHeight,
-      windowWidth,
       fillPadding,
       scrollHeight,
+      maxHeight,
       globalHasSlot,
       globalRenderSlot,
       globalTheme,

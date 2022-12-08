@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.5 - 2022/12/8
+
+* Fix the problem that get window height is incorrect, which causes the adjust menu height incorrect.
+
 ## v1.1.4 - 2022/11/29
 
 * Fixed #16.
