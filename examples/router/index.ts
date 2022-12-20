@@ -4,6 +4,7 @@ import BasicCustomize from '../views/BasicCustomize.vue'
 import BasicUseage from '../views/BasicUseage.vue'
 import Theme from '../views/Theme.vue'
 import ComponentCustomize from '../views/ComponentCustomize.vue'
+import InScaledBody from '../views/InScaledBody.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/Theme',
     name: 'Theme',
     component: Theme,
+  },
+  {
+    path: '/InScaledBody',
+    name: 'InScaledBody',
+    component: InScaledBody,
   },
 ]
 

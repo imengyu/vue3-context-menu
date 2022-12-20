@@ -184,6 +184,32 @@ declare const Plugin: {
    * Close the currently open menu
    */
   closeContextMenu() : void;
+  /**
+   * If your `body` element is in a scaled state (e.g. `transform: scale(0.5)`), 
+   * this may lead to the wrong position of the menu display. 
+   * You can use this function to convert the correct menu display position:
+   * 
+   * ```ts
+   * 
+    import ContextMenu from '@imengyu/vue3-context-menu'
+
+    function onContextMenu(e: MouseEvent) {
+      const scaledPosition = ContextMenu.transformMenuPosition(e.target as HTMLElement, e.offsetX, e.offsetY);
+      //Full code of menuData is in `/examples/views/InScaledBody.vue`
+      menuData.x = scaledPosition.x;
+      menuData.y = scaledPosition.y;
+      //shou menu
+      ContextMenu.showContextMenu(menuData);
+    }
+   * ```
+   * @param e Current click element
+   * @param offsetX MouseEvent.offsetX
+   * @param offsetY MouseEvent.offsetY
+   */
+  transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: number): {
+    x: number,
+    y: number,
+  };
 };
 
 export default Plugin;

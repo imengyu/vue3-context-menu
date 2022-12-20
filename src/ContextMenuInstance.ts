@@ -1,6 +1,7 @@
 import { App, h, render, Slot } from "vue";
 import { ContextMenuInstance, MenuOptions } from "./ContextMenuDefine";
 import { closeContextMenu } from "./ContextMenuMutex";
+import { transformMenuPosition } from "./ContextMenuUtils";
 import ContextMenuConstructor from './ContextMenu.vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue'
 import ContextMenuItemConstructor from './ContextMenuItem.vue'
@@ -46,6 +47,7 @@ export default {
     return $contextmenu(options, customSlots);
   },
   //Close the currently open menu
-  closeContextMenu: closeContextMenu,
+  closeContextMenu,
+  transformMenuPosition,
 }
 

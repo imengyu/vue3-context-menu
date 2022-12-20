@@ -2,8 +2,8 @@
 
 ## v1.1.6 - 2022/12/20
 
-* [Added] Added the `MenuItem.hidden` property to dynamically control the display and hide of menu item. (#20)
-
+* [Added] Added the `MenuItem.hidden` property to dynamically control the display and hide of menu item in fuction mode. (#20)
+* [Added] Added the `ContextMenu.transformMenuPosition` function to solve the problem that the menu position is incorrect when the body is zoomed. (#17, #19)
 
 ## v1.1.5 - 2022/12/8
 

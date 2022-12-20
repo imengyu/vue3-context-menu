@@ -18,6 +18,16 @@ export function getLeft(e: HTMLElement): number {
   return offset;
 }
 
+export function transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: number): {
+  x: number,
+  y: number,
+} {
+  return {
+    x: getLeft(e) + offsetX,
+    y: getTop(e) + offsetY,
+  };
+}
+
 /**
  * Render a VNode
  */

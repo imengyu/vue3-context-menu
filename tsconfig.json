@@ -8,6 +8,8 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "declaration": true,
+    "declarationDir": "lib",
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
