@@ -33,7 +33,7 @@ After changing the mount container, the menu display area has changed, so the me
 * The MenuOptions.x is the distance from the menu to the left edge of the container;
 * The MenuOptions.y is the distance from the menu to the top edge of the container;
 
-You may need to use the `ContextMenu. transformMenuPosition` Display position of the transformation menu:
+You may need to use the `ContextMenu.transformMenuPosition` to transform coordinates of the menu position:
 
 ```ts
 function onContextMenu(e: MouseEvent) {
