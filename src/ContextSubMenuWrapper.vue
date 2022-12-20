@@ -2,7 +2,6 @@
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, renderSlot, toRefs, VNode, watch } from 'vue'
 import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
-import { getLeft, getTop } from './ContextMenuUtils';
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 
 export type GlobalHasSlot = (name: string) => boolean;

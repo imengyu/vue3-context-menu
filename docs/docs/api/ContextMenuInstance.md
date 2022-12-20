@@ -4,9 +4,13 @@ title: 函数模式
 
 # 函数模式
 
-## ContextMenuInstance
+## ContextMenu
 
-菜单主体组件。
+```ts
+import ContextMenu from '@imengyu/vue3-context-menu'
+```
+
+菜单全局函数，
 
 * `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
 

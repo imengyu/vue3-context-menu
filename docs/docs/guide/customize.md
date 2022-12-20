@@ -15,6 +15,8 @@ import '你的样式css文件路径.css'
 
 菜单提供了一些插槽，允许你自定义渲染某些部分。
 
+完整案例可在这里查看 [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。
+
 ### 函数模式
 
 ```js

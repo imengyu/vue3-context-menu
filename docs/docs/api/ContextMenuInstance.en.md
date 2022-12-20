@@ -5,7 +5,11 @@ title: 函数模式
 
 # Function mode
 
-## ContextMenuInstance
+## ContextMenu
+
+```ts
+import ContextMenu from '@imengyu/vue3-context-menu'
+```
 
 Global Function
 
