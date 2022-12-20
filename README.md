@@ -27,7 +27,7 @@ Version 1.1.0 has been greatly upgraded and may be incompatible with the previou
 npm install -save @imengyu/vue3-context-menu
 ```
 
-## Useage
+## Usage
 
 It is recommended that you check the [examples source code](examples/) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
 
@@ -52,7 +52,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
-  //shou your menu
+  //show your menu
   this.$contextmenu({
     x: e.x,
     y: e.y,
@@ -84,7 +84,7 @@ The second is the component mode. You can use the component and template to disp
 ```html
 <context-menu
   v-model:show="show"
-  :options="optionsComopnent"
+  :options="optionsComponent"
 >
   <context-menu-item label="Simple item" @click="onMenuClick(1)" />
   <context-menu-sperator /><!--use this to add sperator-->
@@ -102,7 +102,7 @@ The second is the component mode. You can use the component and template to disp
 data() {
   return {
     show: false,
-    optionsComopnent: {
+    optionsComponent: {
       zIndex: 3,
       minWidth: 230,
       x: 500,
@@ -251,7 +251,7 @@ Menu component.
 | itemIconRender | Global menu item icon render slot | MenuItemRenderData |
 | itemLabelRender | Global menu item label render slot  | MenuItemRenderData |
 | itemRightArrowRender | Global menu item right arrow render slot  | MenuItemRenderData |
-| speratorRender | Global menu sperator render slot  | - |
+| separatorRender | Global menu separator render slot  | - |
 
 ##### `MenuItemRenderData`
 
@@ -332,8 +332,7 @@ Submenu component.
 
 ---
 
-#### ContextMenuSperator
-
+#### ContextMenuSeparator
 Menu separator component.
 
 ---

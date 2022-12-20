@@ -249,7 +249,7 @@ import '你的样式css文件路径.css'
 | itemIconRender | 当前菜单全局图标渲染插槽 | MenuItemRenderData |
 | itemLabelRender | 当前菜单全局文字渲染插槽 | MenuItemRenderData |
 | itemRightArrowRender | 当前菜单全局右侧箭头渲染插槽 | MenuItemRenderData |
-| speratorRender | 当前菜单分隔符渲染插槽 | - |
+| separatorRender | 当前菜单分隔符渲染插槽 | - |
 
 ##### MenuItemRenderData 结构
 
