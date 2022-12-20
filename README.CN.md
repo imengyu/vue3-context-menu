@@ -357,6 +357,45 @@ import '你的样式css文件路径.css'
 
   与 `ContextMenu.showContextMenu` 相同，但此函数注册到 Vue 全局属性中，可以在Vue实例中直接使用。
 
+* `ContextMenu.transformMenuPosition`
+
+  如果你的 `body` 元素处于缩放状态 (例如添加了样式 `transform: scale(0.5)`), 这可能会导致菜单显示位置不正确。
+  你可以使用此函数来转换至正确的菜单显示位置:
+
+  ```ts
+  import ContextMenu from '@imengyu/vue3-context-menu'
+
+  function onContextMenu(e: MouseEvent) {
+    const scaledPosition = ContextMenu.transformMenuPosition(e.target as HTMLElement, e.offsetX, e.offsetY);
+    //完整示例代码位于 `/examples/views/InScaledBody.vue`
+    menuData.x = scaledPosition.x;
+    menuData.y = scaledPosition.y;
+    //显示菜单
+    ContextMenu.showContextMenu(menuData);
+  }
+  ```
+
+#### 在函数模式下动态控制菜单
+
+你只需要将菜单数据声明为响应式数据，即可动态修改菜单：
+
+```ts
+const menuData = reactive<MenuOptions>({
+  items: [
+    { 
+      label: 'Simple item',
+      onClick: () => alert('Click Simple item'),
+    },
+  ]
+});
+
+ContextMenu.showContextMenu(menuData);
+
+//可以在显示菜单后随时更改属性：
+menuData.items[0].label = 'My label CHANGED!'; //更改文本
+menuData.items[0].hidden = true; //更改是否隐藏
+```
+
 #### MenuOptions
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
@@ -384,6 +423,7 @@ import '你的样式css文件路径.css'
 | svgIcon | 菜单项图标 svg，仅在 icon 为空时有效 | `string` | — | — |
 | svgProps | 当使用 svg 图标时，自定义 svg 标签属性 | `SVGAttributes` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
+| hidden | 是否隐藏单项 | `boolean` | — | `false` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |

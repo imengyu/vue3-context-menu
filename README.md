@@ -359,6 +359,45 @@ Menu separator component.
 
   Same as `ContextMenu.showContextMenu` but this function is registered to vue global property.
 
+* `ContextMenu.transformMenuPosition`
+
+  If your `body` element is in a scaled state (e.g. `transform: scale(0.5)`), this may lead to the wrong position of the menu display.
+  You can use this function to convert the correct menu display position:
+
+  ```ts
+  import ContextMenu from '@imengyu/vue3-context-menu'
+
+  function onContextMenu(e: MouseEvent) {
+    const scaledPosition = ContextMenu.transformMenuPosition(e.target as HTMLElement, e.offsetX, e.offsetY);
+    //Full code of menuData is in `/examples/views/InScaledBody.vue`
+    menuData.x = scaledPosition.x;
+    menuData.y = scaledPosition.y;
+    //shou menu
+    ContextMenu.showContextMenu(menuData);
+  }
+  ```
+
+#### Dynamic change menu in function mode
+
+You only need to declare the menu data as responsive data, so that you can dynamically modify the menu:
+
+```ts
+const menuData = reactive<MenuOptions>({
+  items: [
+    { 
+      label: 'Simple item',
+      onClick: () => alert('Click Simple item'),
+    },
+  ]
+});
+
+ContextMenu.showContextMenu(menuData);
+
+//You can change properties at any time after the menu is displayed:
+menuData.items[0].label = 'My label CHANGED!'; //Change label
+menuData.items[0].hidden = true; //Change hidden
+```
+
 #### MenuOptions
 
 | Property | Description | Type | Optional value | Default |
@@ -386,6 +425,7 @@ Menu separator component.
 | svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
 | svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
 | disabled | Disable menu item? | `boolean` | — | `false` |
+| hidden | Hide menu item? | `boolean` | — | `false` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |
