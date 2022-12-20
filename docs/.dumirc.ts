@@ -8,6 +8,4 @@ export default defineConfig({
     { id: 'zh-CN', name: '中文' },
     { id: 'en', name: 'English' },
   ],
-  base: '/pages/vue3-context-menu-docs/',
-  publicPath: '/pages/vue3-context-menu-docs/',
 });
