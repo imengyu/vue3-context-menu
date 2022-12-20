@@ -6,9 +6,9 @@ nav:
   order: 1
 ---
 
-### Upgrade Note
+## Upgrade Note
 
-❗Version 1.1.0 has been greatly upgraded and may be incompatible with the previous version. If there is a problem, please install version 1.0.9.
+❗ Version 1.1.0 has been greatly upgraded and may be incompatible with the previous version. If there is a problem, please install version 1.0.9.
 
 ## Install
 

@@ -63,6 +63,8 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
 | theme | 菜单的主题 | `string` | `'light' 'dark'` | `light` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
+| adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |
+| getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 
 ## MenuItem
 

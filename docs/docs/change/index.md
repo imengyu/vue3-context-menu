@@ -5,8 +5,6 @@ nav:
   order: 5
 ---
 
-# Changelog
-
 ## v1.1.7 - 2022/12/20
 
 * [Added] 添加了 `MenuOptions.getContainer` 允许你自定义菜单所挂载的容器。 (#17, #19)

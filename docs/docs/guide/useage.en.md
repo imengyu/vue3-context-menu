@@ -5,7 +5,7 @@ order: 1
 
 ## Usage
 
-It is recommended that you check the [examples source code](examples/) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
+It is recommended that you check the [examples source code](https://github.com/imengyu/vue3-context-menu/tree/main/examples/views) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
 
 ## Import
 

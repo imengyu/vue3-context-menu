@@ -1,5 +1,5 @@
 ---
-title: 函数模式
+title: Function mode
 
 ---
 
@@ -49,6 +49,30 @@ Global Function
   ```
 
 ## MenuOptions
+
+| Property | Description | Type | Optional value | Default |
+| :----: | :----: | :----: | :----: | :----: |
+| label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
+| icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
+| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
+| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
+| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
+| disabled | Disable menu item? | `boolean` | — | `false` |
+| hidden | Hide menu item? | `boolean` | — | `false` |
+| adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
+| clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
+| clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |
+| divided | Is this menu item separated from the menu item below? | `boolean` | — | `false` |
+| customClass | Custom submenu class. | `string` | — | — |
+| minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
+| maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
+| onClick | Menu item click event handler. | `Function()` | — | — |
+| customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
+| children | Submenu items. | `MenuItem[]` | — | — |
+| adjustPadding | Padding for submenu position adjust. | `number` | — | `10` |
+| getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
+
+## MenuItem
 
 | Property | Description | Type | Optional value | Default |
 | :----: | :----: | :----: | :----: | :----: |
