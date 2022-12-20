@@ -1,55 +1,74 @@
+---
+title: Customize Styles and Rendering
+---
+
+## Custom style
+
+If you think the menu style is not good-looking, you can rewrite the CSS style. All CSS style definitions are in `/src/ContextSubMenu.vue`. You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
+
+```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import 'your-style-file-path.css'
+```
+
+## Customize
+
+The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code [examples/views/BasicCustomize.vue](examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](examples/views/ComponentCustomize.vue)。
+
+### Functional mode
+
+```js
+this.$contextmenu({
+  items: [
+    { 
+      label: "Item with custom icon render",
+      //The icon attribute supports passing VNode rendering custom content
+      icon: h('img', {
+        src: 'https://imengyu.top/assets/images/test/icon.png',
+        style: {
+          width: '20px',
+          height: '20px',
+        }
+      }),
+      divided: true, 
+    },
+    { 
+      //The label attribute supports passing VNode rendering custom content
+      label: h('div', {
+        style: {
+          fontSize: '20px',
+          color: '#f98',
+        }
+      }, "Item with custom render"),
+    },
+  ],
+  zIndex: 3,
+  minWidth: 230,
+  x: e.x,
+  y: e.y
+} as MenuOptions)
+```
+
+### Component mode
+
+Component mode supports more custom slots.
+
+| Slot name | Description | Arguments |
+| :----: | :----: | :----: |
+| itemRender | Global menu item render slot | MenuItemRenderData |
+| itemIconRender | Global menu item icon render slot | MenuItemRenderData |
+| itemLabelRender | Global menu item label render slot  | MenuItemRenderData |
+| itemRightArrowRender | Global menu item right arrow render slot  | MenuItemRenderData |
+| separatorRender | Global menu separator render slot  | - |
+
+The following is a case of fully customized menus. You can use this case to encapsulate your own menu components.
+
+```vue
 <template>
-
-  <div class="horbox">
-    <div class="box1" style="flex: 1" @contextmenu="onContextMenu($event)">
-      Right click to show contextmenu with custom content !
-    </div>
-
-    <div class="box1" style="flex: 1" @contextmenu="onContextMenu2($event)">
-      Right click to show FullCustomize contextmenu !
-    </div>
-  </div>
-
-  <div class="box3">
-    <span v-if="clickItem">You clicked {{ clickItem }} !</span> 
-    <span v-else>Try click a menu item</span> 
-  </div>
-
-  <div class="box4">
-    You can open examples\views\ComponentCustomize.vue file view complete source code.
-  </div>
-
-  <!--this is component mode of context-menu-->
+  <!--this is Full Customized context-menu-->
   <context-menu
     v-model:show="show"
     :options="options"
-  >
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon (iconfont)" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-item label="Item with custom icon slot" @click="alertContextMenuItemClicked('Item3')">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
-      </template>
-    </context-menu-item>
-    <context-menu-item :clickClose="false">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
-      </template>
-      <template #label>
-        <div>Item with custom render</div>
-        <select placeholder="Select a fruit">
-          <option value="1">apple</option>
-          <option value="2">watermelon</option>
-          <option value="3">grape</option>
-        </select>
-      </template>
-    </context-menu-item>
-  </context-menu>
-
-  <!--this is Full Customized context-menu-->
-  <context-menu
-    v-model:show="show2"
-    :options="options2"
   >
     <!--itemRender slot can customize the rendering of the entire menu item-->
     <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
@@ -92,6 +111,7 @@
   </context-menu>
 </template>
 
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { MenuOptions } from '../..';
@@ -99,17 +119,8 @@ import { MenuOptions } from '../..';
 export default defineComponent({
   data() {
     return {
-      clickItem: '',
       show: false,
-      show2: false,
       options: {
-        iconFontClass: 'iconfont',
-        zIndex: 3,
-        minWidth: 230,
-        x: 500,
-        y: 200
-      } as MenuOptions,
-      options2: {
         // The slot rendering submenu container is temporarily unavailable, 
         // but the custom class can be used to customize the style of the container
         customClass: "my-menu-box", 
@@ -129,16 +140,8 @@ export default defineComponent({
       //Show menu
       this.show = true;
     },
-    onContextMenu2(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.options2.x = e.x;
-      this.options2.y = e.y;
-      //Show menu
-      this.show2 = true;
-    },
     alertContextMenuItemClicked(name: string) {
-      this.clickItem = name;
+      alert(name);
     },
   }
 });
@@ -184,3 +187,4 @@ export default defineComponent({
   border-bottom: 1px dashed #f00;
 }
 </style>
+```

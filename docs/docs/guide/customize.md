@@ -1,55 +1,74 @@
+---
+title: 自定义样式和渲染
+---
+
+## 自定义样式
+
+如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 `/src/ContextSubMenu.vue` 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+
+```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import '你的样式css文件路径.css'
+```
+
+## 自定义渲染
+
+菜单提供了一些插槽，允许你自定义渲染某些部分。
+
+### 函数模式
+
+```js
+this.$contextmenu({
+  items: [
+    { 
+      label: "Item with custom icon render",
+      //Icon 属性支持传入 VNode 自定义渲染内容
+      icon: h('img', {
+        src: 'https://imengyu.top/assets/images/test/icon.png',
+        style: {
+          width: '20px',
+          height: '20px',
+        }
+      }),
+      divided: true, 
+    },
+    { 
+      //Label 属性支持传入 VNode 自定义渲染内容
+      label: h('div', {
+        style: {
+          fontSize: '20px',
+          color: '#f98',
+        }
+      }, "Item with custom render"),
+    },
+  ],
+  zIndex: 3,
+  minWidth: 230,
+  x: e.x,
+  y: e.y
+} as MenuOptions)
+```
+
+### 组件模式
+
+组件模式支持更多的自定义插槽。
+
+| 插槽名 | 描述 | 参数 |
+| :----: | :----: | :----: |
+| itemRender | 当前菜单全局条目渲染插槽 | MenuItemRenderData |
+| itemIconRender | 当前菜单全局图标渲染插槽 | MenuItemRenderData |
+| itemLabelRender | 当前菜单全局文字渲染插槽 | MenuItemRenderData |
+| itemRightArrowRender | 当前菜单全局右侧箭头渲染插槽 | MenuItemRenderData |
+| separatorRender | 当前菜单分隔符渲染插槽 | - |
+
+下方是一个完全自定义菜单的案例，你可以参考此案例封装自己的菜单组件使用。
+
+```vue
 <template>
-
-  <div class="horbox">
-    <div class="box1" style="flex: 1" @contextmenu="onContextMenu($event)">
-      Right click to show contextmenu with custom content !
-    </div>
-
-    <div class="box1" style="flex: 1" @contextmenu="onContextMenu2($event)">
-      Right click to show FullCustomize contextmenu !
-    </div>
-  </div>
-
-  <div class="box3">
-    <span v-if="clickItem">You clicked {{ clickItem }} !</span> 
-    <span v-else>Try click a menu item</span> 
-  </div>
-
-  <div class="box4">
-    You can open examples\views\ComponentCustomize.vue file view complete source code.
-  </div>
-
-  <!--this is component mode of context-menu-->
+  <!--this is Full Customized context-menu-->
   <context-menu
     v-model:show="show"
     :options="options"
-  >
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon (iconfont)" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-item label="Item with custom icon slot" @click="alertContextMenuItemClicked('Item3')">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
-      </template>
-    </context-menu-item>
-    <context-menu-item :clickClose="false">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
-      </template>
-      <template #label>
-        <div>Item with custom render</div>
-        <select placeholder="Select a fruit">
-          <option value="1">apple</option>
-          <option value="2">watermelon</option>
-          <option value="3">grape</option>
-        </select>
-      </template>
-    </context-menu-item>
-  </context-menu>
-
-  <!--this is Full Customized context-menu-->
-  <context-menu
-    v-model:show="show2"
-    :options="options2"
   >
     <!--itemRender slot can customize the rendering of the entire menu item-->
     <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
@@ -92,6 +111,7 @@
   </context-menu>
 </template>
 
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { MenuOptions } from '../..';
@@ -99,17 +119,8 @@ import { MenuOptions } from '../..';
 export default defineComponent({
   data() {
     return {
-      clickItem: '',
       show: false,
-      show2: false,
       options: {
-        iconFontClass: 'iconfont',
-        zIndex: 3,
-        minWidth: 230,
-        x: 500,
-        y: 200
-      } as MenuOptions,
-      options2: {
         // The slot rendering submenu container is temporarily unavailable, 
         // but the custom class can be used to customize the style of the container
         customClass: "my-menu-box", 
@@ -129,16 +140,8 @@ export default defineComponent({
       //Show menu
       this.show = true;
     },
-    onContextMenu2(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.options2.x = e.x;
-      this.options2.y = e.y;
-      //Show menu
-      this.show2 = true;
-    },
     alertContextMenuItemClicked(name: string) {
-      this.clickItem = name;
+      alert(name);
     },
   }
 });
@@ -184,3 +187,4 @@ export default defineComponent({
   border-bottom: 1px dashed #f00;
 }
 </style>
+````
