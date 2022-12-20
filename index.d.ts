@@ -56,13 +56,41 @@ export declare interface MenuOptions {
    */
   minWidth ?: number,
   /**
-   * Theme of the menu. Default is light.
+   * Theme of the menu. Default is 'light'.
    */
   theme ?: 'light'|'dark';
   /**
    * Close when user scroll mouse ? Default is true.
    */
   closeWhenScroll ?: boolean;
+  /**
+   * Padding for submenu position adjust. Default is 10.
+   */
+  adjustPadding?: number,
+  /**
+   * Return the mounted node for MenuRoot.
+   * 
+   * Note: After you change the mount node, the menu display position may be incorrect. 
+   * 
+   * * The MenuOptions.x is the distance from the menu to the left edge of the container (container should `position: relative;`);
+   * * The MenuOptions.y is the distance from the menu to the top edge of the container (container should `position: relative;`);;
+   * 
+   * So, you need to change the x and y values you passed in to ensure that the display position is correct.
+   * 
+   * You may need to use `ContextMenu.transformMenuPosition` to transform the menu display position:
+   * 
+   * ```
+   * function onContextMenu(e: MouseEvent) {
+      //MyContainerElement is the MenuRoot
+      const scaledPosition = ContextMenu.transformMenuPosition(e.target as HTMLElement, e.offsetX, e.offsetY, MyContainerElement);
+      menuData.x = scaledPosition.x;
+      menuData.y = scaledPosition.y;
+      //show menu
+      ContextMenu.showContextMenu(menuData);
+    }
+   * ```
+   */
+  getContainer ?: HTMLElement | (() => HTMLElement);
 }
 export declare interface MenuItem {
   /**
@@ -187,7 +215,7 @@ declare const Plugin: {
   /**
    * If your `body` element is in a scaled state (e.g. `transform: scale(0.5)`), 
    * this may lead to the wrong position of the menu display. 
-   * You can use this function to convert the correct menu display position:
+   * You can use this function to transform the menu display position:
    * 
    * ```ts
    * 
@@ -198,7 +226,7 @@ declare const Plugin: {
       //Full code of menuData is in `/examples/views/InScaledBody.vue`
       menuData.x = scaledPosition.x;
       menuData.y = scaledPosition.y;
-      //shou menu
+      //show menu
       ContextMenu.showContextMenu(menuData);
     }
    * ```
@@ -206,7 +234,7 @@ declare const Plugin: {
    * @param offsetX MouseEvent.offsetX
    * @param offsetY MouseEvent.offsetY
    */
-  transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: number): {
+  transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: number, container?: HTMLElement): {
     x: number,
     y: number,
   };

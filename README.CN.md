@@ -50,7 +50,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
-  //shou your menu
+  //show your menu
   this.$contextmenu({
     x: e.x,
     y: e.y,
@@ -82,7 +82,7 @@ onContextMenu(e : MouseEvent) {
 ```html
 <context-menu
   v-model:show="show"
-  :options="optionsComopnent"
+  :options="optionsComponent"
 >
   <context-menu-item label="Simple item" @click="onMenuClick(1)" />
   <context-menu-sperator /><!--use this to add sperator-->
@@ -101,7 +101,7 @@ data() {
   return {
     show: false,
     //For component
-    optionsComopnent: {
+    optionsComponent: {
       zIndex: 3,
       minWidth: 230,
       x: 500,

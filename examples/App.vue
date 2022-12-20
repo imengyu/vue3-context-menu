@@ -8,6 +8,7 @@
       <router-link :to="{ name: 'ComponentCustomize' }">Component customize</router-link>
       <router-link :to="{ name: 'Theme' }">Dark Theme</router-link>
       <router-link :to="{ name: 'InScaledBody' }">Use In scaled</router-link>
+      <router-link :to="{ name: 'ChangeContainer' }">Change container</router-link>
     </div>
     <div class="test-host">
       <router-view />
@@ -88,6 +89,7 @@ html, body, #app {
   background-color: #89bffc;
 }
 .box3 {
+  position: relative;
   padding: 60px 0;
   text-align: center;
   font-size: 18px;

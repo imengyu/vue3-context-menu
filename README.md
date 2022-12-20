@@ -371,7 +371,7 @@ Menu separator component.
     //Full code of menuData is in `/examples/views/InScaledBody.vue`
     menuData.x = scaledPosition.x;
     menuData.y = scaledPosition.y;
-    //shou menu
+    //show menu
     ContextMenu.showContextMenu(menuData);
   }
   ```

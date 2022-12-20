@@ -50,7 +50,7 @@
           <!--Separator-->
           <!--Custom render-->
           <VNodeRender v-if="item.divided && globalHasSlot('separatorRender')" :vnode="() => globalRenderSlot('separatorRender', {})" />
-          <ContextMenuSperator v-else-if="item.divided" />
+          <ContextMenuSeparator v-else-if="item.divided" />
         </div>
       </slot>
     </div>
@@ -76,22 +76,23 @@ import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, t
 import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions } from './ContextMenuDefine'
 import { getLeft, getTop } from './ContextMenuUtils'
 import ContextMenuItem from './ContextMenuItem.vue'
-import ContextMenuSperator from './ContextMenuSperator.vue'
+import ContextMenuSeparator from './ContextMenuSeparator.vue'
 import { VNodeRender } from './ContextMenuUtils'
 import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 
 //The internal info context for submenu
 export interface SubMenuParentContext {
+  container: HTMLElement;
   zIndex: number;
+  adjustPadding: number,
   getMyPosition: () => ContextMenuPositionData;
   getParentWidth: () => number;
+  getParentAbsY: () => number;
   addOpenedSubMenu: (closeFn: () => void) => void;
   closeOtherSubMenu: () => void;
   closeOtherSubMenuWithTimeOut: () => void;
   checkCloseOtherSubMenuTimeOut: () => boolean;
 }
-
-const fillPadding = 10; //padding for submenu position adjust
 
 /**
  * Submenu container
@@ -100,7 +101,7 @@ export default defineComponent({
   name: 'ContextSubMenu',
   components: {
     ContextMenuItem,
-    ContextMenuSperator,
+    ContextMenuSeparator,
     VNodeRender,
   },
   props: {
@@ -150,6 +151,8 @@ export default defineComponent({
     //provide menuContext for child use
     const thisMenuContext = {
       zIndex: zIndex + 1,
+      container: parentContext.container,
+      adjustPadding: parentContext.adjustPadding,
       getMyPosition() {
         const pos = { x: 0, y: 0 } as ContextMenuPositionData;
         //计算子菜单的位置
@@ -160,6 +163,7 @@ export default defineComponent({
         return pos;
       },
       getParentWidth: () => menu.value?.offsetWidth,
+      getParentAbsY: () => menu.value ? getTop(menu.value, parentContext.container) : 0,
       addOpenedSubMenu(closeFn: () => void) {
         openedSubMenuClose.push(closeFn);
       },
@@ -206,22 +210,28 @@ export default defineComponent({
         //adjust submenu position
         if (adjustPosition.value && menu.value && scroll.value) {
           const menuEl = menu.value;
-          const windowHeight = window.innerHeight;
-          const windowWidth = window.innerWidth;
-          scrollHeight.value = menuEl.offsetHeight - windowHeight + 20 /* Padding */;
-          overflow.value = menu.value.offsetHeight > windowHeight;
-          const absX = getLeft(menuEl), absY = getTop(menuEl);
-          const xOv = absX + menuEl.offsetWidth - windowWidth;
-          if (xOv > 0) //X overflow
+          const { container, adjustPadding: fillPadding } = parentContext;
+          const windowHeight = window.innerHeight, windowWidth = window.innerWidth;
+
+          const avliableWidth = Math.min(windowWidth, container.offsetWidth);
+          const avliableHeight = Math.min(windowHeight, container.offsetHeight);
+
+          const absX = getLeft(menuEl, container), absY = getTop(menuEl, container);
+          
+          const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
+          const yOverflow = (absY + menuEl.offsetHeight) - (avliableHeight);
+
+          scrollHeight.value = menuEl.offsetHeight - avliableHeight + fillPadding * 2 /* Padding */;
+          overflow.value = yOverflow > 0;
+
+          if (xOverflow > 0) //X overflow
             position.value.x -= (getParentWidth ? getParentWidth() : 0) + menuEl.offsetWidth - fillPadding; 
+
           if (overflow.value) {
-            position.value.y = -(absY - fillPadding); //fill height
-            //scroll.value.style.height = `${windowHeight}px`;
-            maxHeight.value = Math.max(scrollHeight.value, windowHeight - fillPadding * 2);
+            const oy = Math.min(absY - fillPadding, yOverflow + fillPadding);
+            position.value.y -= oy;
+            maxHeight.value = (avliableHeight - fillPadding * 2);
           } else {
-            const yOv = absY + menuEl.offsetHeight - windowHeight;
-            if (yOv > 0) 
-              position.value.y -= yOv + fillPadding; //Y overflow
             maxHeight.value = 0;
           }
         }
@@ -240,7 +250,6 @@ export default defineComponent({
       scrollValue,
       overflow,
       position,
-      fillPadding,
       scrollHeight,
       maxHeight,
       globalHasSlot,

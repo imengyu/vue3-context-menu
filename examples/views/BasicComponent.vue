@@ -9,7 +9,7 @@
   <!--this is component mode of context-menu-->
   <context-menu
     v-model:show="show"
-    :options="optionsComopnent"
+    :options="optionsComponent"
   >
     <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
     <context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
@@ -45,7 +45,7 @@
 &lt;!--this is component mode of context-menu--&gt;
 &lt;context-menu
 v-model:show="show"
-:options="optionsComopnent"
+:options="optionsComponent"
 &gt;
 &lt;context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" /&gt;
 &lt;context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" /&gt;
@@ -92,7 +92,7 @@ export default defineComponent({
   data() {
     return {
       show: false,
-      optionsComopnent: {
+      optionsComponent: {
         iconFontClass: 'iconfont',
         customClass: "class-a",
         zIndex: 3,
@@ -106,8 +106,8 @@ export default defineComponent({
     onContextMenu(e : MouseEvent) {
       e.preventDefault();
       //Set the mouse position
-      this.optionsComopnent.x = e.x;
-      this.optionsComopnent.y = e.y;
+      this.optionsComponent.x = e.x;
+      this.optionsComponent.y = e.y;
       //Show menu
       this.show = true;
     },

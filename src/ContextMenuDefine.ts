@@ -4,12 +4,13 @@ export const MenuConstOptions = {
   defaultMinWidth: 100,
   defaultMaxWidth: 600,
   defaultZindex: 100,
+  defaultAdjustPadding: 10,
 }
 export interface ContextMenuInstance {
   closeMenu(): void;
 }
 export interface MenuOptions {
-  items	:	MenuItem[];
+  items	?:	MenuItem[];
   x: number;
   y: number;
   xOffset	?: number;
@@ -21,6 +22,8 @@ export interface MenuOptions {
   maxWidth ?: number;
   minWidth ?: number;
   closeWhenScroll ?: boolean;
+  adjustPadding?: number,
+  getContainer ?: HTMLElement | (() => HTMLElement);
 }
 export interface MenuItem {
   label ?: string|VNode|((label: string) => VNode),

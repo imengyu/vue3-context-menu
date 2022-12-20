@@ -5,7 +5,7 @@
         Right click here to show contextmenu !
       </div>
       <div class="box1" style="flex:1;padding: 50px" @contextmenu="onContextMenu1($event)">
-        Contextmenu In parent
+        Test nested menus: Contextmenu In parent
         <div class="box2" style="width: 200px; height: 100px" @contextmenu="onContextMenu2($event)">
           Contextmenu In child
         </div>
@@ -51,7 +51,7 @@ createApp(App)
   onContextMenu(e : MouseEvent) {
     //prevent the browser's default menu
     e.preventDefault();
-    //shou our menu
+    //show our menu
     this.$contextmenu({
       x: e.x,
       y: e.y,
@@ -247,14 +247,14 @@ function onContextMenu(e : MouseEvent) {
   e.preventDefault();
   menuData.x = e.x;
   menuData.y = e.y;
-  //shou our menu
+  //show our menu
   ContextMenu.showContextMenu(menuData);
 }
 
 function onContextMenu1(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
-  //shou our menu
+  //show our menu
   ContextMenu.showContextMenu({
     items: [
       { 
@@ -276,7 +276,7 @@ function onContextMenu2(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
   e.stopPropagation();
-  //shou our menu
+  //show our menu
   ContextMenu.showContextMenu({
     items: [
       { 

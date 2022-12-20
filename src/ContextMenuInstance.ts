@@ -1,33 +1,31 @@
 import { App, h, render, Slot } from "vue";
 import { ContextMenuInstance, MenuOptions } from "./ContextMenuDefine";
 import { closeContextMenu } from "./ContextMenuMutex";
-import { transformMenuPosition } from "./ContextMenuUtils";
+import { genContainer, transformMenuPosition } from "./ContextMenuUtils";
 import ContextMenuConstructor from './ContextMenu.vue'
+import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue'
 import ContextMenuItemConstructor from './ContextMenuItem.vue'
 import ContextMenuGroupConstructor from './ContextMenuGroup.vue'
-import ContextMenuSperatorConstructor from './ContextMenuSperator.vue'
+import ContextMenuSeparatorConstructor from './ContextMenuSeparator.vue'
 
-function genContainer() {
-  return document.createElement('div');
-}
-function initInstance(options: MenuOptions, container: HTMLElement, customSlots?: Record<string, Slot>) {
-  const vnode = h(ContextMenuConstructor, { 
+function initInstance(options: MenuOptions, container: HTMLElement, isNew: boolean, customSlots?: Record<string, Slot>) {
+  const vnode = h(ContextSubMenuWrapperConstructor, { 
     options: options,
     show: true,
+    container: container,
     onClose: () => {
       render(null, container);
     }
   }, customSlots);
   render(vnode, container);
-  document.body.appendChild(container.firstElementChild as Node);
   return vnode.component;
 }
 
 //Show global contextmenu
 function $contextmenu(options : MenuOptions, customSlots?: Record<string, Slot>) {
-  const container = genContainer();
-  const component = initInstance(options, container, customSlots);
+  const container = genContainer(options);
+  const component = initInstance(options, container.container, container.isNew, customSlots);
   return component as unknown as ContextMenuInstance;
 }
 
@@ -38,7 +36,8 @@ export default {
     app.component('ContextMenu', ContextMenuConstructor);
     app.component('ContextMenuItem', ContextMenuItemConstructor);
     app.component('ContextMenuGroup', ContextMenuGroupConstructor);
-    app.component('ContextMenuSperator', ContextMenuSperatorConstructor);
+    app.component('ContextMenuSperator', ContextMenuSeparatorConstructor);
+    app.component('ContextMenuSeparator', ContextMenuSeparatorConstructor);
     app.component('ContextSubMenu', ContextSubMenuConstructor);
   },
   //global function for show context menu

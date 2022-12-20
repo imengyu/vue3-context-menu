@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.7 - 2022/12/20
+
+* [Added] Added the `MenuOptions.getContainer` that you can mount menu to custom containers. (#17, #19)
+* [Added] Added the `MenuOptions.adjustPadding` to set padding for submenu position adjust.
+* Fixed the problem that adjust menu height incorrect.
+
 ## v1.1.6 - 2022/12/20
 
 * [Added] Added the `MenuItem.hidden` property to dynamically control the display and hide of menu item in fuction mode. (#20)
@@ -7,7 +13,7 @@
 
 ## v1.1.5 - 2022/12/8
 
-* Fix the problem that get window height is incorrect, which causes the adjust menu height incorrect.
+* Fixed the problem that get window height is incorrect, which causes the adjust menu height incorrect.
 
 ## v1.1.4 - 2022/11/29
 
