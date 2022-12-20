@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-context-menu-item-wrapper">
+  <div v-if="!hidden" class="mx-context-menu-item-wrapper">
     <!--Custom render-->
     <VNodeRender v-if="globalHasSlot('itemRender')" :vnode="() => globalRenderSlot('itemRender', getItemDataForChildren())" />
     <VNodeRender v-else-if="customRender" :vnode="customRender" :data="getItemDataForChildren()" />
@@ -60,6 +60,13 @@ export default defineComponent({
      * Is this menu disabled? 
      */
     disabled: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * Is this menu hidden? 
+     */
+    hidden: {
       type: Boolean,
       default: false
     },

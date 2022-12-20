@@ -86,6 +86,10 @@ export declare interface MenuItem {
    */
   svgProps ?: SVGAttributes,
   /**
+   * Hide menu item?
+   */
+  hidden ?: boolean,
+  /**
    * Disable menu item?
    */
   disabled ?: boolean,

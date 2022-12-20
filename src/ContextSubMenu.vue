@@ -24,6 +24,7 @@
           <ContextMenuItem
             :clickHandler="item.onClick"
             :disabled="item.disabled"
+            :hidden="item.hidden"
             :icon="item.icon"
             :iconFontClass="item.iconFontClass"
             :svgIcon="item.svgIcon"

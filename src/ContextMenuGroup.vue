@@ -13,6 +13,13 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+     /**
+     * Is this menu hidden? 
+     */
+    hidden: {
+      type: Boolean,
+      default: false
+    },
     /**
      * Is this menu disabled? 
      */

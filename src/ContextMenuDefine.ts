@@ -29,6 +29,7 @@ export interface MenuItem {
   svgIcon ?: string,
   svgProps ?: SVGAttributes,
   disabled ?: boolean,
+  hidden ?: boolean,
   adjustSubMenuPosition ?: boolean,
   clickableWhenHasChildren ?: boolean,
   clickClose ?: boolean,
