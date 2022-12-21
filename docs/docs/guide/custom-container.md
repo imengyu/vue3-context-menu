@@ -15,14 +15,14 @@ order: 4
 
 只需要在 MenuOptions 上指定 getContainer 属性，即可设置挂载容器：
 
-> 注意： myMenuContainer 需要设置 `position: relative;` 样式，否则菜单无法定位。
-
 ```ts
 ContextMenu.showContextMenu({
   getContainer: () => myMenuContainer, //myMenuContainer 是挂载容器
   //...
 })
 ```
+
+> 注意： myMenuContainer 需要设置 `position: relative;` 样式，否则菜单无法定位。
 
 ## 坐标设置
 

@@ -7,7 +7,7 @@ order: 4
 
 Allows you to mount the menu to any container. If not specified, it is mounted to the body by default.
 
-Usually, it can be used in an editor like environment. You only need to display the menu in one area, but not the other.
+Usually, it can be used in an editor like environment: You only need to display the menu in one area, but not the other.
 
 After the mount container is modified, the menu will be displayed inside the specified container and will not exceed it.
 
@@ -15,14 +15,14 @@ After the mount container is modified, the menu will be displayed inside the spe
 
 Just specify the getContainer property on MenuOptions to set the mount container:
 
-> Note: myMenuContainer needs to set 'position: relative` Style, otherwise the menu cannot be located.
-
 ```ts
 ContextMenu.showContextMenu({
   getContainer: () => myMenuContainer, //myMenuContainer is the container
   //...
 })
 ```
+
+> Note: myMenuContainer needs to set 'position: relative` Style, otherwise the display position of the menu may be incorrect.
 
 ## Coordinate Settings
 
