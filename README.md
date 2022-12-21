@@ -15,7 +15,7 @@ English | [简体中文](https://github.com/imengyu/vue3-context-menu/blob/main/
 * Provide component mode and function mode
 * Customizable
 
-### Install
+### Useage
 
 ```
 npm install -save @imengyu/vue3-context-menu

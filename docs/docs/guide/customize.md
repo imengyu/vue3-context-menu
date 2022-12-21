@@ -4,7 +4,7 @@ title: 自定义样式和渲染
 
 ## 自定义样式
 
-如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 `/src/ContextSubMenu.vue` 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 [`/src/ContextSubMenu.vue`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextSubMenu.vue) 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'

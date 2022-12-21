@@ -13,7 +13,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 
 Global Function
 
-* `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
+### `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
 
   Show context menu.
 
@@ -22,15 +22,15 @@ Global Function
   | options | The options of menu. |
   | customSlots | These slots to allow you to customize the style of the current menu, the names of these slots are the same as those in the [component mode](#ContextMenu). |
 
-* `ContextMenu.closeContextMenu()`
+### `ContextMenu.closeContextMenu()`
 
   Manually close the currently open context menu.
 
-* `this.$contextmenu`
+### `this.$contextmenu`
 
   Same as `ContextMenu.showContextMenu` but this function is registered to vue global property.
 
-* `ContextMenu.transformMenuPosition`
+### `ContextMenu.transformMenuPosition`
 
   If your `body` element is in a scaled state (e.g. `transform: scale(0.5)`), this may lead to the wrong position of the menu display.
   You can use this function to convert the correct menu display position:

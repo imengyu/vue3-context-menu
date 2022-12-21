@@ -12,7 +12,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 
 菜单全局函数，
 
-* `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
+### `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
 
   显示菜单.
 
@@ -21,15 +21,15 @@ import ContextMenu from '@imengyu/vue3-context-menu'
   | options | 菜单的数据 |
   | customSlots | 这些插槽允许您自定义当前菜单的样式，这些插槽的名称与 [组件模式 ContextMenu](./ContextMenu.md) 中的插槽名称相同 |
 
-* `ContextMenu.closeContextMenu()`
+### `ContextMenu.closeContextMenu()`
 
   手动关闭当前打开的菜单.
 
-* `this.$contextmenu`
+### `this.$contextmenu`
 
   与 `ContextMenu.showContextMenu` 相同，但此函数注册到 Vue 全局属性中，可以在Vue实例中直接使用。
 
-* `ContextMenu.transformMenuPosition`
+### `ContextMenu.transformMenuPosition`
 
   如果你的 `body` 元素处于缩放状态 (例如添加了样式 `transform: scale(0.5)`), 这可能会导致菜单显示位置不正确。
   你可以使用此函数来转换至正确的菜单显示位置:

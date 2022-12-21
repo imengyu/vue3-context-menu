@@ -13,7 +13,7 @@
 * 提供组件模式和函数模式，调用方便
 * 可自定义
 
-### 安装
+### 用法
 
 ```
 npm install -save @imengyu/vue3-context-menu
