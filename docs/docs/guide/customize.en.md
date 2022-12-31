@@ -12,6 +12,26 @@ import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import 'your-style-file-path.css'
 ```
 
+## Custom Fonts
+
+You can customize fonts through css:
+
+```scss
+//Set fonts for all menus
+.mx-context-menu {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+//Set the font of the specified customClass menu
+//this.$contextmenu({
+//  customClass: 'my-menu',
+//  ...
+//});
+.my-menu {
+  font-family: 'Times New Roman', Times, serif;
+}
+```
+
 ## Customize
 
 The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。

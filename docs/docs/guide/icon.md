@@ -1,5 +1,6 @@
 ---
 title: 菜单图标
+order: 3
 ---
 
 菜单组件不提供任何图标，如果您想添加图标，推荐使用 [iconfont](http://iconfont.cn) 图标库。

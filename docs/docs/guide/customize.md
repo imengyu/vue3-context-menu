@@ -1,5 +1,6 @@
 ---
 title: 自定义样式和渲染
+order: 5
 ---
 
 ## 自定义样式
@@ -9,6 +10,28 @@ title: 自定义样式和渲染
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 import '你的样式css文件路径.css'
+```
+
+## 自定义字体
+
+你可以通过 css 自定义设置字体：
+
+```scss
+//设置所有菜单的字体
+.mx-context-menu {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+//设置指定菜单的字体
+.my-menu {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+//自定义类
+//this.$contextmenu({
+//  customClass: 'my-menu',
+//  ...
+//});
 ```
 
 ## 自定义渲染
@@ -21,6 +44,7 @@ import '你的样式css文件路径.css'
 
 ```js
 this.$contextmenu({
+  customClass
   items: [
     { 
       label: "Item with custom icon render",

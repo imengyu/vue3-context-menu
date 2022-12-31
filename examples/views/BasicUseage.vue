@@ -295,3 +295,9 @@ function onContextMenu2(e : MouseEvent) {
   } as MenuOptions);
 }
 </script>
+
+<style>
+.class-a {
+  font-family: 'Times New Roman', Times, serif;
+}
+</style>
