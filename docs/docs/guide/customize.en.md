@@ -3,6 +3,8 @@ title: Customize Styles and Rendering
 order: 3
 ---
 
+# Customize Styles and Rendering
+
 ## Custom style
 
 If you think the menu style is not good-looking, you can rewrite the CSS style. All CSS style definitions are in [`/src/ContextSubMenu.vue`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextSubMenu.vue). You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
