@@ -27,7 +27,7 @@ const config = {
       {
         text: '语言',
         items: [
-          { text: '中文', link: 'https://imengyu.top/pages/vue3-context-menu-docs/' },
+          { text: '中文', link: '/' },
           { text: 'English', link: 'https://imengyu.top/pages/vue3-context-menu-docs/en/' }
         ]
       },

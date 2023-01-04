@@ -2,7 +2,7 @@
   <div class="big-home-area">
     <div class="big-title">
       <h1>vue3-context-menu</h1>
-      <p>A simple, beautiful and simple context menu component</p>
+      <p>A simple, beautiful context menu component</p>
       <p></p>
     </div>
     <div class="big-start">
