@@ -1,9 +1,13 @@
 ---
-title: 如何使用
-order: 2
+title: Usage
+order: 1
 ---
 
-## 导入组件
+# Usage
+
+It is recommended that you check the [examples source code](https://github.com/imengyu/vue3-context-menu/tree/main/examples/views) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
+
+## Import
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
@@ -12,11 +16,11 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 createApp(App).use(ContextMenu)     
 ```
 
-## 显示菜单
+## Show menu
 
-显示菜单有两种方式：
+There are two ways to display menus:
 
-第一种是函数模式，可以使用 `this.$contextmenu` 或者 `showContextMenu` 全局函数，通过菜单数据显示一个右键菜单：
+The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu through menu data:
 
 ```js
 import ContextMenu from '@imengyu/vue3-context-menu'
@@ -46,12 +50,12 @@ onContextMenu(e : MouseEvent) {
     ]
   });
 
-  //这个函数与 this.$contextmenu 一致
+  //Same as this.$contextmenu
   ContextMenu.showContextMenu({ ... }); 
 }
 ```
 
-第二种是组件模式，可以使用vue组件显示菜单：
+The second is the component mode. You can use the component and template to display the menu:
 
 ```html
 <context-menu
@@ -74,7 +78,6 @@ onContextMenu(e : MouseEvent) {
 data() {
   return {
     show: false,
-    //For component
     optionsComponent: {
       zIndex: 3,
       minWidth: 230,
@@ -85,7 +88,7 @@ data() {
 },
 methods: {
   onButtonClick(e : MouseEvent) {
-    //显示组件菜单
+    //Show component mode menu
     this.show = true;
     this.options.x = e.x;
     this.options.y = e.y;
@@ -93,9 +96,9 @@ methods: {
 }
 ```
 
-## 在函数模式下动态控制菜单
+## Dynamic change menu
 
-你只需要将菜单数据声明为响应式数据，即可动态修改菜单：
+You only need to declare the menu data as responsive data, so that you can dynamically modify the menu:
 
 ```ts
 const menuData = reactive<MenuOptions>({
@@ -107,9 +110,10 @@ const menuData = reactive<MenuOptions>({
   ]
 });
 
+//Use in function mode
 ContextMenu.showContextMenu(menuData);
 
-//可以在显示菜单后随时更改属性：
-menuData.items[0].label = 'My label CHANGED!'; //更改文本
-menuData.items[0].hidden = true; //更改是否隐藏
+//You can change properties at any time after the menu is displayed:
+menuData.items[0].label = 'My label CHANGED!'; //Change label
+menuData.items[0].hidden = true; //Change hidden
 ```

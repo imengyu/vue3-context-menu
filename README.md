@@ -15,6 +15,12 @@ English | [简体中文](https://github.com/imengyu/vue3-context-menu/blob/main/
 * Provide component mode and function mode
 * Customizable
 
+## Documentation
+
+[View Documentation](https://imengyu.top/pages/vue3-context-menu-docs/en/)
+
+[Click here View online Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
+
 ### Useage
 
 ```
@@ -102,12 +108,6 @@ methods: {
   },
 }
 ```
-
-## Documentation
-
-[View Documentation](http://vue3-context-menu-docs.imengyu.top/en)
-
-[Click here View online Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
 
 ## Development
 

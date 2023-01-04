@@ -3,6 +3,8 @@ title: Menu icon
 order: 2
 ---
 
+# Menu icon
+
 The menu component does not provide any icons. If you want to add an icon, it is recommended to use [iconfont](http://iconfont.cn) Icon library.
 
 ## Font icon

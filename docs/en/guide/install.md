@@ -1,16 +1,9 @@
 ---
 title: Install
 order: 0
-nav:
-  title: Guide
-  order: 1
 ---
 
-## Upgrade Note
-
-❗ Version 1.1.0 has been greatly upgraded and may be incompatible with the previous version. If there is a problem, please install version 1.0.9.
-
-## Install
+# Install
 
 ```shell
 npm install -save @imengyu/vue3-context-menu

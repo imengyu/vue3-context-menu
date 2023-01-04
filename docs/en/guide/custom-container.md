@@ -3,7 +3,7 @@ title: Customize the menu mount container
 order: 4
 ---
 
-## Customize the menu mount container
+# Customize the menu mount container
 
 Allows you to mount the menu to any container. If not specified, it is mounted to the body by default.
 
@@ -22,7 +22,7 @@ ContextMenu.showContextMenu({
 })
 ```
 
-> Note: myMenuContainer needs to set 'position: relative` Style, otherwise the display position of the menu may be incorrect.
+> Note: myMenuContainer needs to set `position: relative` style, otherwise the display position of the menu may be incorrect.
 
 ## Coordinate Settings
 

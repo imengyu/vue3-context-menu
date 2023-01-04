@@ -1,13 +1,11 @@
 ---
-title: Usage
-order: 1
+title: 如何使用
+order: 2
 ---
 
-## Usage
+# 如何使用
 
-It is recommended that you check the [examples source code](https://github.com/imengyu/vue3-context-menu/tree/main/examples/views) before use. It provides a variety of detailed usage methods, which may be very helpful to you. 😀
-
-## Import
+## 导入组件
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
@@ -16,11 +14,11 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 createApp(App).use(ContextMenu)     
 ```
 
-## Show menu
+## 显示菜单
 
-There are two ways to display menus:
+显示菜单有两种方式：
 
-The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu through menu data:
+第一种是函数模式，可以使用 `this.$contextmenu` 或者 `showContextMenu` 全局函数，通过菜单数据显示一个右键菜单：
 
 ```js
 import ContextMenu from '@imengyu/vue3-context-menu'
@@ -50,12 +48,14 @@ onContextMenu(e : MouseEvent) {
     ]
   });
 
-  //Same as this.$contextmenu
+  //这个函数与 this.$contextmenu 一致
   ContextMenu.showContextMenu({ ... }); 
 }
 ```
 
-The second is the component mode. You can use the component and template to display the menu:
+> 注：`this.$contextmenu` 只能在模板或者选项式函数中使用。
+
+第二种是组件模式，可以使用组件显示菜单：
 
 ```html
 <context-menu
@@ -78,6 +78,7 @@ The second is the component mode. You can use the component and template to disp
 data() {
   return {
     show: false,
+    //For component
     optionsComponent: {
       zIndex: 3,
       minWidth: 230,
@@ -88,7 +89,7 @@ data() {
 },
 methods: {
   onButtonClick(e : MouseEvent) {
-    //Show component mode menu
+    //显示组件菜单
     this.show = true;
     this.options.x = e.x;
     this.options.y = e.y;
@@ -96,9 +97,9 @@ methods: {
 }
 ```
 
-## Dynamic change menu in function mode
+## 动态控制菜单
 
-You only need to declare the menu data as responsive data, so that you can dynamically modify the menu:
+你只需要将菜单数据声明为响应式数据，即可动态修改菜单：
 
 ```ts
 const menuData = reactive<MenuOptions>({
@@ -110,9 +111,10 @@ const menuData = reactive<MenuOptions>({
   ]
 });
 
+//也可以在函数模式下动态控制菜单
 ContextMenu.showContextMenu(menuData);
 
-//You can change properties at any time after the menu is displayed:
-menuData.items[0].label = 'My label CHANGED!'; //Change label
-menuData.items[0].hidden = true; //Change hidden
+//可以在显示菜单后随时更改属性：
+menuData.items[0].label = 'My label CHANGED!'; //更改文本
+menuData.items[0].hidden = true; //更改是否隐藏
 ```
