@@ -49,8 +49,8 @@
           </ContextMenuItem>
           <!--Separator-->
           <!--Custom render-->
-          <VNodeRender v-if="item.divided && globalHasSlot('separatorRender')" :vnode="() => globalRenderSlot('separatorRender', {})" />
-          <ContextMenuSeparator v-else-if="item.divided" />
+          <VNodeRender v-if="item.hidden !== true && item.divided && globalHasSlot('separatorRender')" :vnode="() => globalRenderSlot('separatorRender', {})" />
+          <ContextMenuSeparator v-else-if="item.hidden !== true && item.divided" />
         </div>
       </slot>
     </div>

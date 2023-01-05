@@ -32,6 +32,9 @@ export function transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: 
 export function removeContainer(container: HTMLElement) :void {
   container.parentNode?.removeChild(container);
 }
+
+const DEFAULT_CONTAINER_ID = 'mx-menu-default-container';
+
 export function genContainer(options: MenuOptions) : {
   container: HTMLElement,
   isNew: boolean,
@@ -49,7 +52,11 @@ export function genContainer(options: MenuOptions) : {
     }
   }
 
-  const container = document.createElement('div');
+  let container = document.getElementById(DEFAULT_CONTAINER_ID);
+  if (!container)  {
+    container = document.createElement('div');
+    container.setAttribute('id', DEFAULT_CONTAINER_ID);
+  }
   container.setAttribute('class', 'mx-menu-ghost-host');
   container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
   document.body.appendChild(container);

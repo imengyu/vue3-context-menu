@@ -47,6 +47,7 @@ export default {
   },
   //Close the currently open menu
   closeContextMenu,
+  //Tools
   transformMenuPosition,
 }
 

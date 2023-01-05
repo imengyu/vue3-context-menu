@@ -207,6 +207,7 @@ const menuData = reactive<MenuOptions>({
     },
     { 
       label: 'Click the item above to show/hide me',
+      divided: true,
     },
     { 
       label: 'Test item dynamic change the label',

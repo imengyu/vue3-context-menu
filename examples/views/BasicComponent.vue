@@ -13,14 +13,16 @@
   >
     <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
     <context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
+    <context-menu-item label="Test item dynamic show and hide" :clickClose="false" @click="showItem=!showItem" />
+    <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
+    <context-menu-sperator v-if="showItem" />
+    <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
     <context-menu-group label="Menu with child">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-1')" />
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-2')" />
     </context-menu-group>
-    <context-menu-sperator />
     <context-menu-group label="Menu with child child child">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
-      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2-2')" />
       <context-menu-sperator />
       <context-menu-group label="Child with v-for 50">
         <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item2-3-' + index)" />
@@ -92,6 +94,8 @@ export default defineComponent({
   data() {
     return {
       show: false,
+      showItem: true,
+      itemText: 'Test item dynamic change label',
       optionsComponent: {
         iconFontClass: 'iconfont',
         customClass: "class-a",
@@ -110,6 +114,9 @@ export default defineComponent({
       this.optionsComponent.y = e.y;
       //Show menu
       this.show = true;
+    },
+    changeLabelText() {
+      this.itemText = (this.itemText == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');
     },
     alertContextMenuItemClicked(name: string) {
       alert('You clicked ' + name + ' !');
