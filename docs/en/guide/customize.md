@@ -69,7 +69,7 @@ this.$contextmenu({
   minWidth: 230,
   x: e.x,
   y: e.y
-} as MenuOptions)
+})
 ```
 
 ### Component mode
@@ -137,7 +137,7 @@ The following is a case of fully customized menus. You can use this case to enca
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { MenuOptions } from '../..';
+import type { MenuOptions } from '@imengyu/vue3-context-menu';
 
 export default defineComponent({
   data() {

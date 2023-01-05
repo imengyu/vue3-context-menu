@@ -5,15 +5,6 @@ order: 2
 
 # 如何使用
 
-## 导入组件
-
-```js
-import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import ContextMenu from '@imengyu/vue3-context-menu'
-
-createApp(App).use(ContextMenu)     
-```
-
 ## 显示菜单
 
 显示菜单有两种方式：
@@ -99,10 +90,12 @@ methods: {
 
 ## 动态控制菜单
 
+### 函数模式
+
 你只需要将菜单数据声明为响应式数据，即可动态修改菜单：
 
-```ts
-const menuData = reactive<MenuOptions>({
+```js
+const menuData = reactive({
   items: [
     { 
       label: 'Simple item',
@@ -117,4 +110,55 @@ ContextMenu.showContextMenu(menuData);
 //可以在显示菜单后随时更改属性：
 menuData.items[0].label = 'My label CHANGED!'; //更改文本
 menuData.items[0].hidden = true; //更改是否隐藏
+```
+
+### 组件模式
+
+组件模式动态控制就更简单了，你可以使用 v-if 指令动态控制显示，也可以直接绑定菜单参数至变量上，更改就和普通组件一样。
+
+下面的示例展示了组件模式下动态显示/隐藏菜单，动态修改菜单项文字：
+
+```vue
+<template>
+  <context-menu
+    v-model:show="show"
+    :options="optionsComponent"
+  >
+    <context-menu-item label="Test item dynamic show and hide" :clickClose="false" @click="showItem=!showItem" />
+    <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
+    <context-menu-sperator v-if="showItem" />
+    <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
+  </context-menu>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import type { MenuOptions } from '@imengyu/vue3-context-menu';
+
+export default defineComponent({
+  data() {
+    return {
+      show: false,
+      showItem: true,
+      itemText: 'Test item dynamic change label',
+      optionsComponent: {
+        x: 500,
+        y: 200
+      } as MenuOptions,
+    }
+  },
+  methods: {
+    onContextMenu(e : MouseEvent) {
+      e.preventDefault();
+      //Set the mouse position
+      this.optionsComponent.x = e.x;
+      this.optionsComponent.y = e.y;
+      //Show menu
+      this.show = true;
+    },
+    changeLabelText() {
+      this.itemText = (this.itemText == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');
+    },
+  }
+});
 ```

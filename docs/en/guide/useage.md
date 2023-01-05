@@ -20,7 +20,7 @@ createApp(App).use(ContextMenu)
 
 There are two ways to display menus:
 
-The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu through menu data:
+The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu with menu data:
 
 ```js
 import ContextMenu from '@imengyu/vue3-context-menu'
@@ -54,6 +54,8 @@ onContextMenu(e : MouseEvent) {
   ContextMenu.showContextMenu({ ... }); 
 }
 ```
+
+> Note: `this.$contextmenu` can only be used in templates or optional api.
 
 The second is the component mode. You can use the component and template to display the menu:
 
@@ -100,8 +102,10 @@ methods: {
 
 You only need to declare the menu data as responsive data, so that you can dynamically modify the menu:
 
-```ts
-const menuData = reactive<MenuOptions>({
+### Function mode
+
+```js
+const menuData = reactive({
   items: [
     { 
       label: 'Simple item',
@@ -116,4 +120,55 @@ ContextMenu.showContextMenu(menuData);
 //You can change properties at any time after the menu is displayed:
 menuData.items[0].label = 'My label CHANGED!'; //Change label
 menuData.items[0].hidden = true; //Change hidden
+```
+
+### Component mode
+
+The dynamic control of component mode is simpler. You can use the `v-if` directive to dynamically control the display, or you can directly bind menu parameters to variables. The changes are just like normal components.
+
+The following example shows how to dynamically display/hide menus and dynamically modify menu item text in component mode:
+
+```vue
+<template>
+  <context-menu
+    v-model:show="show"
+    :options="optionsComponent"
+  >
+    <context-menu-item label="Test item dynamic show and hide" :clickClose="false" @click="showItem=!showItem" />
+    <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
+    <context-menu-sperator v-if="showItem" />
+    <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
+  </context-menu>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import type { MenuOptions } from '@imengyu/vue3-context-menu';
+
+export default defineComponent({
+  data() {
+    return {
+      show: false,
+      showItem: true,
+      itemText: 'Test item dynamic change label',
+      optionsComponent: {
+        x: 500,
+        y: 200
+      } as MenuOptions,
+    }
+  },
+  methods: {
+    onContextMenu(e : MouseEvent) {
+      e.preventDefault();
+      //Set the mouse position
+      this.optionsComponent.x = e.x;
+      this.optionsComponent.y = e.y;
+      //Show menu
+      this.show = true;
+    },
+    changeLabelText() {
+      this.itemText = (this.itemText == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');
+    },
+  }
+});
 ```

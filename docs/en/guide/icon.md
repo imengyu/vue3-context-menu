@@ -40,7 +40,7 @@ this.$contextmenu({
     },
   ],
   //...
-} as MenuOptions);
+});
 ```
 
 ```js

@@ -74,7 +74,7 @@ this.$contextmenu({
   minWidth: 230,
   x: e.x,
   y: e.y
-} as MenuOptions)
+})
 ```
 
 ### 组件模式
@@ -89,7 +89,7 @@ this.$contextmenu({
 | itemRightArrowRender | 当前菜单全局右侧箭头渲染插槽 | MenuItemRenderData |
 | separatorRender | 当前菜单分隔符渲染插槽 | - |
 
-下方是一个完全自定义菜单的案例，你可以参考此案例封装自己的菜单组件使用。
+下方是一个完全自定义菜单的案例，你可以参考此案例二次封装自己的菜单组件使用。
 
 ```vue
 <template>
@@ -142,7 +142,7 @@ this.$contextmenu({
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { MenuOptions } from '../..';
+import type { MenuOptions } from '@imengyu/vue3-context-menu';
 
 export default defineComponent({
   data() {

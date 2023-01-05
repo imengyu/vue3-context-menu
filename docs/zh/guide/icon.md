@@ -39,7 +39,7 @@ this.$contextmenu({
     },
   ],
   //...省略
-} as MenuOptions);
+});
 ```
 
 > 注：使用 iconfont 库导出的图标库，会附带 `iconfont.js` ，你只需要在 html 中引入这个js，他会自动为你导入所有的 svg symbol，你可直接复制图标名称使用。
