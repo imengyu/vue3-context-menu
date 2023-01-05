@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.8 - 2023/1/5
+
+* Fix The Separator is not hidden when hidden is true. (#24)
+* Fixed duplicate creation of default containers. (#24)
+
 ## v1.1.7 - 2022/12/20
 
 * [Added] Added the `MenuOptions.getContainer` that you can mount menu to custom containers. (#17, #19)
