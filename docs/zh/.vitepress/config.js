@@ -37,6 +37,7 @@ const config = {
         {
           text: '起步',
           items: [
+            { text: '开始之前', link: '/guide/start' },
             { text: '安装', link: '/guide/install' },
             { text: '如何使用', link: '/guide/useage' },
             { text: '菜单图标', link: '/guide/icon' },

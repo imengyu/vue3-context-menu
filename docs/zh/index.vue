@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 function goStart() {
-  location.href = './guide/install.html'
+  location.href = './guide/start.html'
 }
 function goView() {
   window.open('https://imengyu.top/pages/vue3-context-menu-demo/');

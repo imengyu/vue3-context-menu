@@ -37,65 +37,21 @@ import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
 然后在你需要使用的地方导入组件使用：
 
 ```vue
-<template>
-  <div @contextmenu="onContextMenu($event)">
-    Right click to show contextmenu !
-  </div>
-  <!--this is component mode of context-menu-->
-  <context-menu
-    v-model:show="show"
-    :options="optionsComponent"
-  >
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-sperator />
-    <context-menu-group label="Menu with child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-2')" />
-      <context-menu-group label="Child with v-for 50">
-        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3-' + index)" />
-      </context-menu-group>
-    </context-menu-group>
-  </context-menu>
-</template>
-
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { type MenuOptions, ContextMenu, ContextMenuGroup, ContextMenuSeparator, ContextMenuItem } from '@imengyu/vue3-context-menu';
+
+//导入组件
+import { ContextMenu, ContextMenuGroup, ContextMenuSeparator, ContextMenuItem } from '@imengyu/vue3-context-menu';
 
 export default defineComponent({
-  data() {
-    return {
-      show: false,
-      optionsComponent: {
-        iconFontClass: 'iconfont',
-        customClass: "class-a",
-        zIndex: 3,
-        minWidth: 230,
-        x: 500,
-        y: 200
-      } as MenuOptions,
-    }
-  },
+  //注册组件
   components: {
     ContextMenu,
     ContextMenuGroup,
     ContextMenuSeparator,
     ContextMenuItem,
   },
-  methods: {
-    onContextMenu(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.optionsComponent.x = e.x;
-      this.optionsComponent.y = e.y;
-      //Show menu
-      this.show = true;
-    },
-    alertContextMenuItemClicked(name: string) {
-      alert('You clicked ' + name + ' !');
-    },
-  }
+  //省略其他代码
 });
 </script>
 ```
