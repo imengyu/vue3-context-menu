@@ -84,7 +84,7 @@ this.$contextmenu({
 
 组件模式支持更多的自定义插槽。
 
-> 注：函数模式也同样支持这些插槽，只需要在 [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) 函数传入第三个参数，提供插槽渲染函数，案例可参考 [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) 112行。
+> 注：函数模式也同样支持这些插槽，只需要在 [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) 函数传入第二个参数，提供插槽渲染函数，案例可参考 [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) 112行。
 
 | 插槽名 | 描述 | 参数 |
 | :----: | :----: | :----: |

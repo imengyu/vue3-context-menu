@@ -87,7 +87,7 @@ Component mode supports more custom slots.
 | itemRightArrowRender | Global menu item right arrow render slot  | MenuItemRenderData |
 | separatorRender | Global menu separator render slot  | - |
 
-> Note: The function mode also supports these slots. You only need to pass the third parameter into the [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) funvtion and provide the slot rendering function, For the case, refer to sample code [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) line 112.
+> Note: The function mode also supports these slots. You only need to pass the second parameter into the [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) funvtion and provide the slot rendering function, For the case, refer to sample code [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) line 112.
 
 The following is a case of fully customized menus. You can use this case to encapsulate your own menu components.
 
