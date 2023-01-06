@@ -68,6 +68,7 @@ export default defineComponent({
     function closeMenu() {
       ctx.emit("update:show", false);
       ctx.emit("close");
+      
       removeOpenedContextMenu(instance);
     }
     function installBodyEvents() {
@@ -75,7 +76,7 @@ export default defineComponent({
         document.addEventListener("click", onBodyClick, true);
         document.addEventListener("contextmenu", onBodyClick, true);
         document.addEventListener("wheel", onBodyWhell, true);
-      }, 400);
+      }, 100);
     }
     function removeBodyEvents() {
       document.removeEventListener("contextmenu", onBodyClick, true);

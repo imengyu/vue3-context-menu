@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, onBeforeUnmount, PropType, ref, render, toRefs, VNode, watch } from 'vue'
+import { defineComponent, h, PropType, render, toRefs, VNode, watch } from 'vue'
 import { MenuOptions } from './ContextMenuDefine'
 import { genContainer, removeContainer } from "./ContextMenuUtils";
 import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
@@ -43,7 +43,7 @@ export default defineComponent({
       const { container, isNew } = genContainer(options.value);
       const vnode = h(ContextSubMenuWrapperConstructor as unknown as string, { 
         options: options,
-        show: show.value,
+        show: true,
         container: container,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
         onClose: () => {
@@ -56,7 +56,7 @@ export default defineComponent({
       currentContainer = container;
       render(vnode, container);
     }
-    function closeMenu() {            
+    function closeMenu() {
       if (currentContainer) {
         if (currentContainerIsNew)
           removeContainer(currentContainer);
@@ -70,11 +70,13 @@ export default defineComponent({
       else
         closeMenu();
     });
-    watch(options, () => {
-      if (show.value) {
-        closeMenu();
-        openMenu();
-      }
+
+    //watch(() => options.value.x, () => checkAndRecreate());
+    //watch(() => options.value.y, () => checkAndRecreate());
+
+    ctx.expose({
+      open: openMenu,
+      close: closeMenu,
     });
 
     return () => {      

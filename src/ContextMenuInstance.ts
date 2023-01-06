@@ -14,9 +14,7 @@ function initInstance(options: MenuOptions, container: HTMLElement, isNew: boole
     options: options,
     show: true,
     container: container,
-    onClose: () => {
-      render(null, container);
-    }
+    onClose: () => render(null, container),
   }, customSlots);
   render(vnode, container);
   return vnode.component;
