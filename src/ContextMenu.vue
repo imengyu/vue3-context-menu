@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, onBeforeUnmount, PropType, render, toRefs, VNode, watch } from 'vue'
+import { defineComponent, h, onBeforeUnmount, PropType, ref, render, toRefs, VNode, watch } from 'vue'
 import { MenuOptions } from './ContextMenuDefine'
 import { genContainer, removeContainer } from "./ContextMenuUtils";
 import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
@@ -36,34 +36,49 @@ export default defineComponent({
       show,
     } = toRefs(props);
 
-    let { container, isNew } = genContainer(options.value);
+    let currentContainer = null as HTMLElement|null; 
+    let currentContainerIsNew = false; 
 
-    watch(show, (v) => {
-      if (v) {
-        if (isNew)
-          removeContainer(container);
-        const v = genContainer(options.value);
-        container = v.container;
-        isNew = v.isNew;
-      }
-    });
-
-    onBeforeUnmount(() => {
-      render(null, container);
-      if (isNew)
-        removeContainer(container);
-    })
-
-    return () => {
+    function openMenu() {
+      const { container, isNew } = genContainer(options.value);
       const vnode = h(ContextSubMenuWrapperConstructor as unknown as string, { 
         options: options,
         show: show.value,
         container: container,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
-        onClose: () => ctx.emit('close'),
+        onClose: () => {
+          render(null, container);
+          ctx.emit('close')
+        },
       }, ctx.slots);
 
-      return render(vnode, container);
+      currentContainerIsNew = isNew;
+      currentContainer = container;
+      render(vnode, container);
+    }
+    function closeMenu() {            
+      if (currentContainer) {
+        if (currentContainerIsNew)
+          removeContainer(currentContainer);
+        currentContainer = null;
+      }
+    }
+
+    watch(show, (v) => {
+      if (v)
+        openMenu();
+      else
+        closeMenu();
+    });
+    watch(options, () => {
+      if (show.value) {
+        closeMenu();
+        openMenu();
+      }
+    });
+
+    return () => {      
+      return [];
     }
   },
 })

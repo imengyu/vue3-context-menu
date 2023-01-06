@@ -19,77 +19,81 @@
     You can open examples\views\ComponentCustomize.vue file view complete source code.
   </div>
 
-  <!--this is component mode of context-menu-->
-  <context-menu
-    v-model:show="show"
-    :options="options"
-  >
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon (iconfont)" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-item label="Item with custom icon slot" @click="alertContextMenuItemClicked('Item3')">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
-      </template>
-    </context-menu-item>
-    <context-menu-item :clickClose="false">
-      <template #icon>
-        <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
-      </template>
-      <template #label>
-        <div>Item with custom render</div>
-        <select placeholder="Select a fruit">
-          <option value="1">apple</option>
-          <option value="2">watermelon</option>
-          <option value="3">grape</option>
-        </select>
-      </template>
-    </context-menu-item>
-  </context-menu>
+  <div>
 
-  <!--this is Full Customized context-menu-->
-  <context-menu
-    v-model:show="show2"
-    :options="options2"
-  >
-    <!--itemRender slot can customize the rendering of the entire menu item-->
-    <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
-      <div 
-        :class="'my-menu-item'+(disabled?' disabled':'')"
-        @click="onClick"
-        @mouseenter="onMouseEnter"
-      >
-        <img v-if="icon" :src="icon" />
-        <div v-else class="icon-place-holder"></div>
-        <span>{{label}}</span>
-        <span v-if="showRightArrow" class="right-arraw">>></span>
-      </div>
-    </template>
+    <!--this is component mode of context-menu-->
+    <context-menu
+      v-model:show="show"
+      :options="options"
+    >
+      <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item with a icon (iconfont)" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
+      <context-menu-item label="Item with custom icon slot" @click="alertContextMenuItemClicked('Item3')">
+        <template #icon>
+          <img src="https://imengyu.top/assets/images/test/icon.png" style="width:20px;height:20px" />
+        </template>
+      </context-menu-item>
+      <context-menu-item :clickClose="false">
+        <template #icon>
+          <img src="https://imengyu.top/assets/images/test/icon.png" style="width:16px;height:16px" />
+        </template>
+        <template #label>
+          <div>Item with custom render</div>
+          <select placeholder="Select a fruit">
+            <option value="1">apple</option>
+            <option value="2">watermelon</option>
+            <option value="3">grape</option>
+          </select>
+        </template>
+      </context-menu-item>
+    </context-menu>
 
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-group label="Menu with child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-    </context-menu-group>
-    <div class="my-menu-sperator"></div>
-    <context-menu-group label="Menu with child child child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
-      <context-menu-group label="Child with v-for 50">
-        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
+    <!--this is Full Customized context-menu-->
+    <context-menu
+      v-model:show="show2"
+      :options="options2"
+    >
+      <!--itemRender slot can customize the rendering of the entire menu item-->
+      <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
+        <div 
+          :class="'my-menu-item'+(disabled?' disabled':'')"
+          @click="onClick"
+          @mouseenter="onMouseEnter"
+        >
+          <img v-if="icon" :src="icon" />
+          <div v-else class="icon-place-holder"></div>
+          <span>{{label}}</span>
+          <span v-if="showRightArrow" class="right-arraw">>></span>
+        </div>
+      </template>
+
+      <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
+      <context-menu-group label="Menu with child">
+        <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+        <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
       </context-menu-group>
       <div class="my-menu-sperator"></div>
-      <context-menu-group label="Childs">
-        <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
-        <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
+      <context-menu-group label="Menu with child child child">
+        <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+        <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
+        <context-menu-group label="Child with v-for 50">
+          <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
+        </context-menu-group>
         <div class="my-menu-sperator"></div>
         <context-menu-group label="Childs">
-          <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
-          <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
+          <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
+          <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
+          <div class="my-menu-sperator"></div>
+          <context-menu-group label="Childs">
+            <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
+            <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
+          </context-menu-group>
         </context-menu-group>
       </context-menu-group>
-    </context-menu-group>
-  </context-menu>
+    </context-menu>
+
+  </div>
 </template>
 
 <script lang="ts">

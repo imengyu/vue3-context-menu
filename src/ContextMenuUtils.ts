@@ -53,10 +53,11 @@ export function genContainer(options: MenuOptions) : {
   }
 
   let container = document.getElementById(DEFAULT_CONTAINER_ID);
-  if (!container)  {
-    container = document.createElement('div');
-    container.setAttribute('id', DEFAULT_CONTAINER_ID);
-  }
+  if (container) 
+    document.body.removeChild(container);
+    
+  container = document.createElement('div');
+  container.setAttribute('id', DEFAULT_CONTAINER_ID);
   container.setAttribute('class', 'mx-menu-ghost-host');
   container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
   document.body.appendChild(container);

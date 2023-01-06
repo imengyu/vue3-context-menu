@@ -142,7 +142,7 @@ export default defineComponent({
         h('div', {
           class: 'mx-menu-ghost-host', 
         }, [
-            h(ContextSubMenuConstructor, {
+          h(ContextSubMenuConstructor, {
             class: 'mx-menu-host',
             items: options.value?.items,
             maxWidth: options.value.maxWidth || MenuConstOptions.defaultMaxWidth,
