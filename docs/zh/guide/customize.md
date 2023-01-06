@@ -103,7 +103,7 @@ this.$contextmenu({
   <context-menu
     :show="show"
     :options="{ ...options, x, y }"
-    @update:show="(v: boolean) => $emit('show', v)"
+    @update:show="(v: boolean) => $emit('update:show', v)"
   >
     <!--itemRender slot can customize the rendering of the entire menu item-->
     <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
