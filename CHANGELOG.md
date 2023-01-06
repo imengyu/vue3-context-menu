@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.1.9 - 2023/1/6
+
+* Fix global slot missing problem (#25)
+
 ## v1.1.8 - 2023/1/5
 
 * Fix The Separator is not hidden when hidden is true. (#24)
