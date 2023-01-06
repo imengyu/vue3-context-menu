@@ -61,7 +61,7 @@ export default defineComponent({
         container: container,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
         onClose: () => ctx.emit('close'),
-      }, ctx.slots.default);
+      }, ctx.slots);
 
       return render(vnode, container);
     }

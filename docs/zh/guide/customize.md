@@ -40,7 +40,10 @@ import '你的样式css文件路径.css'
 
 菜单提供了一些插槽，允许你自定义渲染某些部分。
 
-完整案例可在这里查看 [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。
+完整案例可在这里查看
+
+* 函数模式 [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue)
+* 组件模式 [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。
 
 ### 函数模式
 
@@ -81,6 +84,8 @@ this.$contextmenu({
 
 组件模式支持更多的自定义插槽。
 
+> 注：函数模式也同样支持这些插槽，只需要在 [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) 函数传入第三个参数，提供插槽渲染函数，案例可参考 [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) 112行。
+
 | 插槽名 | 描述 | 参数 |
 | :----: | :----: | :----: |
 | itemRender | 当前菜单全局条目渲染插槽 | MenuItemRenderData |
@@ -92,11 +97,13 @@ this.$contextmenu({
 下方是一个完全自定义菜单的案例，你可以参考此案例二次封装自己的菜单组件使用。
 
 ```vue
+//MyContextMenu.vue
 <template>
   <!--this is Full Customized context-menu-->
   <context-menu
-    v-model:show="show"
-    :options="options"
+    :show="show"
+    :options="{ ...options, x, y }"
+    @update:show="(v: boolean) => $emit('show', v)"
   >
     <!--itemRender slot can customize the rendering of the entire menu item-->
     <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
@@ -112,33 +119,9 @@ this.$contextmenu({
       </div>
     </template>
 
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-group label="Menu with child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-    </context-menu-group>
-    <div class="my-menu-sperator"></div>
-    <context-menu-group label="Menu with child child child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
-      <context-menu-group label="Child with v-for 50">
-        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
-      </context-menu-group>
-      <div class="my-menu-sperator"></div>
-      <context-menu-group label="Childs">
-        <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
-        <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
-        <div class="my-menu-sperator"></div>
-        <context-menu-group label="Childs">
-          <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
-          <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
-        </context-menu-group>
-      </context-menu-group>
-    </context-menu-group>
+    <slot />
   </context-menu>
 </template>
-
 
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -154,24 +137,23 @@ export default defineComponent({
         customClass: "my-menu-box", 
         zIndex: 3,
         minWidth: 230,
-        x: 500,
-        y: 200
       } as MenuOptions,
     }
   },
-  methods: {
-    onContextMenu(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.options.x = e.x;
-      this.options.y = e.y;
-      //Show menu
-      this.show = true;
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
     },
-    alertContextMenuItemClicked(name: string) {
-      alert(name);
+    x: {
+      type: Number,
+      required: true,
     },
-  }
+    y: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -215,4 +197,76 @@ export default defineComponent({
   border-bottom: 1px dashed #f00;
 }
 </style>
+```
+
+封装之后的使用方法：
+
+```vue
+//TestMyMenu.vue
+<template>
+  <!--使用方法与之前的一样-->
+  <MyContextMenu
+    v-model:show="show"
+    :x="x"
+    :y="y"
+  >
+    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
+    <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
+    <context-menu-group label="Menu with child">
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+    </context-menu-group>
+    <div class="my-menu-sperator"></div>
+    <context-menu-group label="Menu with child child child">
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
+      <context-menu-group label="Child with v-for 50">
+        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
+      </context-menu-group>
+      <div class="my-menu-sperator"></div>
+      <context-menu-group label="Childs">
+        <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
+        <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
+        <div class="my-menu-sperator"></div>
+        <context-menu-group label="Childs">
+          <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
+          <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
+        </context-menu-group>
+      </context-menu-group>
+    </context-menu-group>
+  </MyContextMenu>
+</template>
+
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import MyContextMenu from './MyContextMenu.vue';//导入上面的组件
+
+export default defineComponent({
+  data() {
+    return {
+      show: false,
+      x: 500,
+      y: 200
+    }
+  },
+  component: {
+    //注册组件
+    MyContextMenu
+  },
+  methods: {
+    onContextMenu(e : MouseEvent) {
+      e.preventDefault();
+      //Set the mouse position
+      this.x = e.x;
+      this.y = e.y;
+      //Show menu
+      this.show = true;
+    },
+    alertContextMenuItemClicked(name: string) {
+      alert(name);
+    },
+  }
+});
+</script>
 ```

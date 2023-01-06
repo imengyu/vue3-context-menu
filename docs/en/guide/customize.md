@@ -36,7 +36,10 @@ You can customize fonts through css:
 
 ## Customize
 
-The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。
+The menu provides some slots that allow you to customize some parts of the rendering. For details, please refer to the example source code:
+
+* Functional mode [examples/views/BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue)
+* Component mode [examples/views/ComponentCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/ComponentCustomize.vue)。
 
 ### Functional mode
 
@@ -84,14 +87,18 @@ Component mode supports more custom slots.
 | itemRightArrowRender | Global menu item right arrow render slot  | MenuItemRenderData |
 | separatorRender | Global menu separator render slot  | - |
 
+> Note: The function mode also supports these slots. You only need to pass the third parameter into the [showContextMenu](../api/ContextMenuInstance.md#contextmenushowcontextmenuoptions-menuoptions-customslots-recordstring-slot) funvtion and provide the slot rendering function, For the case, refer to sample code [examples\views\BasicCustomize.vue](https://github.com/imengyu/vue3-context-menu/blob/main/examples/views/BasicCustomize.vue) line 112.
+
 The following is a case of fully customized menus. You can use this case to encapsulate your own menu components.
 
 ```vue
+//MyContextMenu.vue
 <template>
   <!--this is Full Customized context-menu-->
   <context-menu
-    v-model:show="show"
-    :options="options"
+    :show="show"
+    :options="{ ...options, x, y }"
+    @update:show="(v: boolean) => $emit('show', v)"
   >
     <!--itemRender slot can customize the rendering of the entire menu item-->
     <template #itemRender="{ disabled, label, icon, showRightArrow, onClick, onMouseEnter }">
@@ -107,33 +114,9 @@ The following is a case of fully customized menus. You can use this case to enca
       </div>
     </template>
 
-    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
-    <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-group label="Menu with child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-    </context-menu-group>
-    <div class="my-menu-sperator"></div>
-    <context-menu-group label="Menu with child child child">
-      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
-      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
-      <context-menu-group label="Child with v-for 50">
-        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
-      </context-menu-group>
-      <div class="my-menu-sperator"></div>
-      <context-menu-group label="Childs">
-        <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
-        <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
-        <div class="my-menu-sperator"></div>
-        <context-menu-group label="Childs">
-          <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
-          <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
-        </context-menu-group>
-      </context-menu-group>
-    </context-menu-group>
+    <slot />
   </context-menu>
 </template>
-
 
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -149,24 +132,23 @@ export default defineComponent({
         customClass: "my-menu-box", 
         zIndex: 3,
         minWidth: 230,
-        x: 500,
-        y: 200
       } as MenuOptions,
     }
   },
-  methods: {
-    onContextMenu(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.options.x = e.x;
-      this.options.y = e.y;
-      //Show menu
-      this.show = true;
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
     },
-    alertContextMenuItemClicked(name: string) {
-      alert(name);
+    x: {
+      type: Number,
+      required: true,
     },
-  }
+    y: {
+      type: Number,
+      required: true,
+    },
+  },
 });
 </script>
 
@@ -210,4 +192,76 @@ export default defineComponent({
   border-bottom: 1px dashed #f00;
 }
 </style>
+```
+
+Usage after encapsulation:
+
+```vue
+//TestMyMenu.vue
+<template>
+  <!--The usage is the same as before-->
+  <MyContextMenu
+    v-model:show="show"
+    :x="x"
+    :y="y"
+  >
+    <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
+    <context-menu-item label="Item with a icon" icon="https://imengyu.top/assets/images/test/icon.png" @click="alertContextMenuItemClicked('Item2')" />
+    <context-menu-group label="Menu with child">
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+    </context-menu-group>
+    <div class="my-menu-sperator"></div>
+    <context-menu-group label="Menu with child child child">
+      <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
+      <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
+      <context-menu-group label="Child with v-for 50">
+        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
+      </context-menu-group>
+      <div class="my-menu-sperator"></div>
+      <context-menu-group label="Childs">
+        <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
+        <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
+        <div class="my-menu-sperator"></div>
+        <context-menu-group label="Childs">
+          <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
+          <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
+        </context-menu-group>
+      </context-menu-group>
+    </context-menu-group>
+  </MyContextMenu>
+</template>
+
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import MyContextMenu from './MyContextMenu.vue';//Import the menu component above 
+
+export default defineComponent({
+  data() {
+    return {
+      show: false,
+      x: 500,
+      y: 200
+    }
+  },
+  component: {
+    //Register component
+    MyContextMenu
+  },
+  methods: {
+    onContextMenu(e : MouseEvent) {
+      e.preventDefault();
+      //Set the mouse position
+      this.x = e.x;
+      this.y = e.y;
+      //Show menu
+      this.show = true;
+    },
+    alertContextMenuItemClicked(name: string) {
+      alert(name);
+    },
+  }
+});
+</script>
 ```
