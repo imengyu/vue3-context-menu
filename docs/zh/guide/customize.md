@@ -130,7 +130,6 @@ import type { MenuOptions } from '@imengyu/vue3-context-menu';
 export default defineComponent({
   data() {
     return {
-      show: false,
       options: {
         // The slot rendering submenu container is temporarily unavailable, 
         // but the custom class can be used to customize the style of the container
