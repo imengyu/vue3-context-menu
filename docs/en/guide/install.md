@@ -194,67 +194,6 @@ After registration, it can be used as a normal project. The following is a compl
                     { label: "Inspect" }
                   ],
                 },
-                {
-                  label: "Submenu with Submenu",
-                  children: [
-                    {
-                      label: "Very long submenu",
-                      divided: true, 
-                      children: [
-                        { label: "Test1" },
-                        { label: "Test2" },
-                        { label: "Test3" },
-                        { label: "Test4" },
-                        { label: "Test5" },
-                        { label: "Test6" },
-                        { label: "Test7" },
-                        { label: "Test8" },
-                        { label: "Test9" },
-                        { label: "Test10" },
-                        { label: "Test11" },
-                        { label: "Test12" },
-                        { label: "Test13" },
-                        { label: "Test14" },
-                        { label: "Test15" },
-                        { label: "Test16" },
-                        { label: "Test17" },
-                        { label: "Test18" },
-                        { label: "Test19" },
-                        { label: "Test20" },
-                        { label: "Test21" },
-                        { label: "Test22" },
-                        { label: "Test23" },
-                        { label: "Test24" },
-                        { label: "Test25" },
-                        { label: "Test26" },
-                      ]
-                    },
-                    { 
-                      label: "A submenu", 
-                      children: [
-                        { label: "Item1" },
-                        { label: "Item2" },
-                        { label: "Item3" },
-                      ]
-                    },
-                    { 
-                      label: "A submenu2", 
-                      children: [
-                        { label: "Item1" },
-                        { label: "Item2" },
-                        { label: "Item3" },
-                        { 
-                          label: "A submenu", 
-                          children: [
-                            { label: "Item1" },
-                            { label: "Item2" },
-                            { label: "Item3" },
-                          ]
-                        },
-                      ]
-                    },
-                  ]
-                },
               ],
               iconFontClass: 'iconfont',
               customClass: "class-a",

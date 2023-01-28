@@ -5,13 +5,131 @@ order: 3
 
 # Customize Styles and Rendering
 
-## Custom style
+## Theme
 
-If you think the menu style is not good-looking, you can rewrite the CSS style. All CSS style definitions are in [`/src/ContextSubMenu.vue`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextSubMenu.vue). You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
+The menu contains the following themes, which you can choose to use.
+
+Just set the 'theme' field in the menu options:
+
+```js
+this.$contextmenu({
+  theme: 'mac dark',
+  items: [
+  ],
+  //...
+});
+```
+
+|Theme|Explain|Image|
+|--|--|--|
+|`default`|Default theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-default.jpg)|
+|`default dark`|Default theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-default-dark.jpg)|
+|`flat`|Simple flat theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-flat.jpg)|
+|`flat dark`|Simple flat theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-flat-dark.jpg)|
+|`win10`|Win10 like theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10.jpg)|
+|`win10 dark`|Win10 like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10-dark.jpg)|
+|`mac`|Mac like theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac.jpg)|
+|`mac dark`|Mac like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac-dark.jpg)|
+
+## CSS variables
+
+The style of the menu has extracted some css variables for you to use. You can easily change the color without specifying each state.
+
+```scss
+//Backgroud
+--mx-menu-backgroud: #fff; //Menu background color
+--mx-menu-hover-backgroud: #f1f1f1; //The background color of the menu item when hovering
+--mx-menu-active-backgroud: #dfdfdf; //The background color of the menu item when the mouse is pressed
+--mx-menu-open-backgroud: #f1f1f1; //The background color of the menu item when the menu item submenu is opened
+--mx-menu-divider: #f0f0f0; //Menu divider color
+
+//Text
+--mx-menu-text: #2e2e2e; //Menu text color
+--mx-menu-hover-text: #2e2e2e; //Menu text color when hovering
+--mx-menu-active-text: #2e2e2e; //Menu text color when the mouse is pressed
+--mx-menu-open-text: #2e2e2e; //Menu text color when the menu item submenu is opened
+--mx-menu-disabled-text: #c9c8c8; //Menu text color when the menu item is disabled
+
+//Shadow
+--mx-menu-shadow-color: rgba(0, 0, 0, 0.1); //Menu Background Shadow Color
+--mx-menu-backgroud-radius: 10px; //Menu background radius size
+
+//Shortcut badge
+--mx-menu-shortcut-backgroud: #ebebeb; //The background color of the menu shortcut key badge, and its four states
+--mx-menu-shortcut-backgroud-hover:#ebebeb;
+--mx-menu-shortcut-backgroud-active:#ebebeb;
+--mx-menu-shortcut-backgroud-open:#ebebeb;
+--mx-menu-shortcut-backgroud-disabled:#fdfdfd;
+--mx-menu-shortcut-text: #424242; //The text color of the menu shortcut key badge, and its four states
+--mx-menu-shortcut-text-hover: #424242;
+--mx-menu-shortcut-text-active: #424242;
+--mx-menu-shortcut-text-open: #424242;
+--mx-menu-shortcut-text-disabled: #a5a5a5;
+
+//Focus border color
+--mx-menu-focus-color: #0085f1; //The color of the outline when the menu item is activated by keyboard
+
+//Icon placeholder width
+--mx-menu-placeholder-width: 24px; //Width of icon placeholder area
+```
+
+## Custom Theme
+
+You can write your own theme, just make sure that the theme name is different from the built-in name.
+
+All CSS style definitions are in [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss). You can copy all the styles, modify them as needed, and store them in your file.
+
+### Custom Theme Example
+
+For example, the following is the implementation of an example theme `my-theme-name. Your own theme can also be implemented in this way:
+
+```scss
+.mx-context-menu.my-theme-name {
+  & {
+    //Overwrite the value of the default css variable here
+    --mx-menu-backgroud: #ececec;
+    --mx-menu-hover-backgroud: #0165e1;
+  }
+  
+  //Customize menu outer style
+  padding: 8px 0;
+  box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
+  border: 1px solid var(--mx-menu-border-color);
+
+  //Customize the style of menu item
+  .mx-context-menu-item {
+    border-radius: 5px;
+    margin: 0 6px;
+    padding: 3px 6px;
+  }
+
+  //Please view the complete style of each part in ContextMenu.scss
+}
+```
+
+Then import the theme file and use it in theme:
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import 'your-style-file-path.css'
+import 'your-style-file-path.scss'
+```
+
+```js
+this.$contextmenu({
+  theme: 'my-theme-name',
+  items: [
+  ],
+  //...
+});
+```
+
+## Custom style
+
+However, it is still recommended that you use a custom theme, If you think the menu default style is not good-looking, you can rewrite the CSS style. All CSS style definitions are in [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss). You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
+
+```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import 'your-style-file-path.scss'
 ```
 
 ## Custom Fonts

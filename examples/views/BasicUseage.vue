@@ -122,6 +122,7 @@ const menuData = reactive<MenuOptions>({
         { 
           label: "Save as...",
           icon: "icon-save",
+          shortcut: "Ctrl + S",
           onClick: () => {
             alert("You click Save as");
           }
@@ -129,9 +130,16 @@ const menuData = reactive<MenuOptions>({
         { 
           label: "Print...", 
           icon: "icon-print",
+          shortcut: "Ctrl + P",
           onClick: () => {
             alert("You click Print");
           } 
+        },
+        { 
+          label: "Download", 
+          icon: "icon-print",
+          shortcut: "Ctrl + D",
+          disabled: true,
         },
         { label: "View source", icon: "icon-terminal" },
         { label: "Inspect" }
@@ -220,6 +228,14 @@ const menuData = reactive<MenuOptions>({
       },
     },
     { 
+      label: 'Test item checked mark',
+      clickClose: false,
+      checked: false,
+      onClick: () => {
+        menuData.items[6].checked = !menuData.items[6].checked;
+      },
+    },
+    { 
       label: 'Item with icon',
       icon: "icon-reload-1",
     },
@@ -234,9 +250,14 @@ const menuData = reactive<MenuOptions>({
         fill: '#f60',
       },
     },
+    { 
+      label: "Disabled Item",
+      disabled: true,
+    },
   ],
   iconFontClass: 'iconfont',
   customClass: "class-a",
+  keyboardControl: true,
   zIndex: 3,
   minWidth: 230,
   x: 0,

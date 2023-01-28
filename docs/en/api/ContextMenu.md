@@ -30,6 +30,8 @@ Menu component.
 | itemIconRender | Global menu item icon render slot | MenuItemRenderData |
 | itemLabelRender | Global menu item label render slot  | MenuItemRenderData |
 | itemRightArrowRender | Global menu item right arrow render slot  | MenuItemRenderData |
+| itemCheckRender | Global menu check mark render slot | MenuItemRenderData |
+| itemShortcutRender | Global menu shortcut key badge render slot | MenuItemRenderData |
 | separatorRender | Global menu separator render slot  | - |
 
 ## `MenuItemRenderData`

@@ -75,8 +75,7 @@ export default defineComponent({
     //watch(() => options.value.y, () => checkAndRecreate());
 
     ctx.expose({
-      open: openMenu,
-      close: closeMenu,
+      closeMenu: closeMenu,
     });
 
     return () => {      

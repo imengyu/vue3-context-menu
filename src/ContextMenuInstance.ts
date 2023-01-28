@@ -24,11 +24,14 @@ function initInstance(options: MenuOptions, container: HTMLElement, isNew: boole
 function $contextmenu(options : MenuOptions, customSlots?: Record<string, Slot>) {
   const container = genContainer(options);
   const component = initInstance(options, container.container, container.isNew, customSlots);
-  return component as unknown as ContextMenuInstance;
+  return (component as unknown as Record<string, unknown>).exposed as ContextMenuInstance;
 }
 
 export default {
-  //Vue install
+  /**
+   * For Vue install
+   * @param app 
+   */
   install(app: App<Element>) : void {
     app.config.globalProperties.$contextmenu = $contextmenu;
     app.component('ContextMenu', ContextMenuConstructor);
@@ -38,8 +41,12 @@ export default {
     app.component('ContextMenuSeparator', ContextMenuSeparatorConstructor);
     app.component('ContextSubMenu', ContextSubMenuConstructor);
   },
-  //global function for show context menu
-  //Same as this.$contextmenu
+  /**
+   * Show a ContextMenu in page, same as `this.$contextmenu`
+   * @param options The options of ContextMenu
+   * @param customSlots You can provide some custom slots to customize the rendering style of the menu. These slots are the same as the slots of component ContextMenu.
+   * @returns Menu instance 
+   */
   showContextMenu(options : MenuOptions, customSlots?: Record<string, Slot>) : ContextMenuInstance {
     return $contextmenu(options, customSlots);
   },

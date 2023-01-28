@@ -10,7 +10,10 @@ export function addOpenedContextMenu(inst: ContextMenuInstance) : void {
 export function removeOpenedContextMenu(inst: ContextMenuInstance) : void {
   if (inst === currentOpenedContextMenu)
     currentOpenedContextMenu = null;
-}
+}  
+/**
+ * Close the currently open menu
+ */
 export function closeContextMenu() : void {
   if (currentOpenedContextMenu) {
     currentOpenedContextMenu.closeMenu();

@@ -5,9 +5,19 @@ nav:
   order: 5
 ---
 
+## v1.2.0 - 2023/1/28
+
+* [Added] 添加了 `MenuItem.shortcut` 用于显示当前菜单项的快捷键提示。
+* [Added] 添加了 `MenuItem.preserveIconWidth` 用于设置是否应为没有图标的菜单项保留固定宽度的图标区域。
+* [Added] 添加了 `MenuItem.checked` 用于指定当前菜单项是否被打勾。
+* [Added] 添加了新的三种[主题](../guide/customize.md#主题)，抽离了CSS，提供了一些[CSS变量](../guide/customize.md#css变量)，允许你方便的修改颜色。支持自定义主题。
+* [Fix] 修改全局菜单返回实例调用 closeMenu 无法关闭菜单的问题 (#26)
+* [Changed] 菜单的样式重写，拆分至单独的 SCSS 中。
+* [Changed] ⚠ 菜单的右箭头现在使用单独的 SVG 图片（之前是嵌入在css中的base64 data），如果你使用 `.mx-right-arrow` 样式自定义右箭头图片，需要特殊处理一下，隐藏svg。
+
 ## v1.1.9 - 2023/1/6
 
-* 修改全局菜单插槽未正确传递丢失的问题 (#25)
+* 修改全局菜单插槽未正确传递丢失参数的问题 (#25)
 
 ## v1.1.8 - 2023/1/5
 

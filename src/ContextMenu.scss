@@ -1,0 +1,440 @@
+//CSS Vars
+:root {
+  //Backgroud
+  --mx-menu-backgroud: #fff;
+  --mx-menu-hover-backgroud: #f1f1f1;
+  --mx-menu-active-backgroud: #dfdfdf;
+  --mx-menu-open-backgroud: #f1f1f1;
+  --mx-menu-divider: #f0f0f0;
+
+  //Text
+  --mx-menu-text: #2e2e2e;
+  --mx-menu-hover-text: #2e2e2e;
+  --mx-menu-active-text: #2e2e2e;
+  --mx-menu-open-text: #2e2e2e;
+  --mx-menu-disabled-text: #c9c8c8;
+
+  //Shadow
+  --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
+  --mx-menu-backgroud-radius: 10px;
+
+  //Shortcut badge
+  --mx-menu-shortcut-backgroud: #ebebeb;
+  --mx-menu-shortcut-backgroud-hover:#ebebeb;
+  --mx-menu-shortcut-backgroud-active:#ebebeb;
+  --mx-menu-shortcut-backgroud-open:#ebebeb;
+  --mx-menu-shortcut-backgroud-disabled:#fdfdfd;
+  --mx-menu-shortcut-text: #424242;
+  --mx-menu-shortcut-text-hover: #424242;
+  --mx-menu-shortcut-text-active: #424242;
+  --mx-menu-shortcut-text-open: #424242;
+  --mx-menu-shortcut-text-disabled: #a5a5a5;
+
+  //Focus border color
+  --mx-menu-focus-color: #0085f1;
+
+  //Icon placeholder width
+  --mx-menu-placeholder-width: 24px;
+}
+
+//Base hosts
+.mx-context-menu {
+  pointer-events: all;
+  display: inline-block;
+  overflow: visible;
+  position: absolute;
+  background-color: var(--mx-menu-backgroud);
+  border-radius: var(--mx-menu-backgroud-radius);
+  padding: 12px 0;
+  box-shadow: 0px 10px 40px 10px var(--mx-menu-shadow-color);
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+.mx-context-menu-items {
+  position: relative;
+  overflow: visible;
+}
+.mx-context-menu-scroll {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 1px;
+  pointer-events: none;
+}
+
+//Up down button
+.mx-context-menu-updown {
+  pointer-events: all;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 15px;
+  border-radius: 10px;
+  background-color: var(--mx-menu-backgroud);
+  user-select: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--mx-menu-hover-backgroud);
+  }
+  &:active {
+    background-color: var(--mx-menu-active-backgroud);
+  }
+
+  &.up {
+    top: 0px;
+
+    .mx-right-arrow {
+      transform: translateX(-50%) rotate(270deg);
+    }
+  }
+  &.down {
+    bottom: -1px;
+    
+    .mx-right-arrow {
+      transform: translateX(-50%) rotate(90deg);
+    }
+  }
+
+  .mx-right-arrow {
+    display: inline-block;
+    position: absolute;
+    height: 12px;
+    left: 50%;
+    top: 0px;
+    padding: 0;
+  }
+}
+
+//Item
+.mx-context-menu-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: 6px 15px;
+  user-select: none;
+  overflow: visible;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--mx-menu-text);
+
+  .mx-right-arrow, .mx-checked-mark {
+    fill: var(--mx-menu-text);
+  }
+  //Mouse hover
+  &:hover {
+    background-color: var(--mx-menu-hover-backgroud);
+    color: var(--mx-menu-hover-text);
+
+    .mx-right-arrow, .mx-checked-mark {
+      fill: var(--mx-menu-hover-text);
+    }
+    .mx-shortcut {
+      background-color: var(--mx-menu-shortcut-backgroud-hover);
+      color: var(--mx-menu-shortcut-text-hover);
+    }
+  }
+  //Mouse press
+  &:active {
+    background-color: var(--mx-menu-active-backgroud);
+    color: var(--mx-menu-active-text);
+
+    .mx-right-arrow, .mx-checked-mark {
+      fill: var(--mx-menu-active-text);
+    }
+    .mx-shortcut {
+      background-color: var(--mx-menu-shortcut-backgroud-active);
+      color: var(--mx-menu-shortcut-text-active);
+    }
+  }
+  //With submenu openj state
+  &.open {
+    background-color: var(--mx-menu-open-backgroud);
+    color: var(--mx-menu-open-text);
+    
+    .mx-right-arrow, .mx-checked-mark {
+      fill: var(--mx-menu-open-text);
+    }
+    
+    .mx-shortcut {
+      background-color: var(--mx-menu-shortcut-backgroud-open);
+      color: var(--mx-menu-shortcut-text-open);
+    }
+  }
+  //Focus by keyboard
+  &.keyboard-focus {
+    background-color: var(--mx-menu-active-backgroud);
+    outline: 2px solid var(--mx-menu-focus-color);
+  }
+  //disabled
+  &.disabled {
+    color: var(--mx-menu-disabled-text);
+
+    cursor: not-allowed;
+
+    &:hover, &:active {
+      background-color: transparent;
+    }
+
+    .mx-right-arrow, .mx-checked-mark {
+      fill: var(--mx-menu-disabled-text);
+    }
+    .mx-shortcut {
+      background-color: var(--mx-menu-shortcut-backgroud-disabled);
+      color: var(--mx-menu-shortcut-text-second);
+    }
+  }
+
+  .mx-item-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .mx-icon-placeholder {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: auto;
+    overflow: hidden;
+
+    &.preserve-width {
+      width: var(--mx-menu-placeholder-width);
+    }
+  }
+
+  .icon  {
+    display: inline-block;
+    font-size: 16px;
+
+    &.svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+  .label {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 16px;
+  }
+}
+.mx-context-menu-item-wrapper {
+  position: relative;
+}
+
+//Sperator
+.mx-context-menu-item-sperator  {
+  display: block;
+  padding: 5px 0;
+  background-color: var(--mx-menu-backgroud);
+
+  &:after {
+    display: block;
+    content: '';
+    background-color: var(--mx-menu-divider);
+    height: 1px;
+  }
+}
+
+//Right arrow
+.mx-right-arrow  {
+  width: 14px;
+  height: 14px;
+}
+//Check mark
+.mx-checked-mark {
+  width: 16px;
+  height: 16px;
+}
+
+//Shortcut
+.mx-shortcut {
+  position: relative;
+  justify-self: flex-end;
+  font-size: 11.5px;
+  padding: 2px 4px;
+  
+  background-color: var(--mx-menu-shortcut-backgroud);
+  color: var(--mx-menu-shortcut-text);
+}
+
+//Dark theme
+//===================================================
+.mx-context-menu.dark {
+  //CSS Vars
+  //Backgroud
+  --mx-menu-backgroud: #303031;
+  --mx-menu-hover-backgroud: #636363;
+  --mx-menu-active-backgroud: #555555;
+  --mx-menu-open-backgroud: #636363;
+  --mx-menu-divider: #464646;
+
+  //Text
+  --mx-menu-text: #ffffff;
+  --mx-menu-hover-text: #ffffff;
+  --mx-menu-active-text: #ffffff;
+  --mx-menu-open-text: #ffffff;
+  --mx-menu-disabled-text: #9c9c9c;
+
+  //Shadow
+  --mx-menu-shadow-color: rgba(51, 51, 51, 0.2);
+
+  //Shortcut badge
+  --mx-menu-shortcut-backgroud: #505050;
+  --mx-menu-shortcut-backgroud-hover:#505050;
+  --mx-menu-shortcut-backgroud-active:#505050;
+  --mx-menu-shortcut-backgroud-open:#505050;
+  --mx-menu-shortcut-backgroud-disabled:#444444;
+  --mx-menu-shortcut-text: #f1f1f1;
+  --mx-menu-shortcut-text-hover: #ffffff;
+  --mx-menu-shortcut-text-active: #ffffff;
+  --mx-menu-shortcut-text-open: #ffffff;
+  --mx-menu-shortcut-text-disabled: #9d9d9d;
+}
+
+//Flat theme
+//===================================================
+.mx-context-menu.flat {
+  border-radius: 0;
+  padding: 7px 0;
+  box-shadow: 0px 1px 2px 1px var(--mx-menu-shadow-color);
+
+  .mx-context-menu-item {
+    padding: 3px 12px;
+  }
+}
+
+//win10 theme
+//===================================================
+.mx-context-menu.win10 {
+  & {
+    --mx-menu-divider: #252525;
+    --mx-menu-border-color: #252525;
+  }
+  &.dark {
+    --mx-menu-divider: #979797;
+    --mx-menu-border-color: #979797;
+  }
+
+  border-radius: 0;
+  padding: 8px 0;
+  border: 1px solid var(--mx-menu-border-color);
+  box-shadow: 0px 1px 2px 1px var(--mx-menu-shadow-color);
+
+  .mx-context-menu-item {
+    padding: 6px 12px;
+  }
+  .mx-context-menu-item-sperator {
+    margin: 0 7px;
+  }
+}
+
+//Mac theme
+//===================================================
+.mx-context-menu.mac {
+
+  & {
+
+    //Backgroud
+    --mx-menu-backgroud: #ececec;
+    --mx-menu-hover-backgroud: #0165e1;
+    --mx-menu-active-backgroud: #0165e1;
+    --mx-menu-open-backgroud: #0165e1;
+    --mx-menu-divider: #d2d2d2;
+
+    //Text
+    --mx-menu-text: #232323;
+    --mx-menu-hover-text: #fff;
+    --mx-menu-active-text: #fff;
+    --mx-menu-open-text: #fff;
+    --mx-menu-disabled-text: #bbbbbb;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
+    --mx-menu-backgroud-radius: 10px;
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover:transparent;
+    --mx-menu-shortcut-backgroud-active:transparent;
+    --mx-menu-shortcut-backgroud-open:transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #424242;
+    --mx-menu-shortcut-text-hover: #fff;
+    --mx-menu-shortcut-text-active: #fff;
+    --mx-menu-shortcut-text-open: #fff;
+    --mx-menu-shortcut-text-disabled: #a5a5a5;
+
+    //Focus border color
+    --mx-menu-focus-color: transparent;
+    --mx-menu-border-color: #bbbbbb;
+  }
+  &.dark {
+    //Backgroud
+    --mx-menu-backgroud: #333333;
+    --mx-menu-hover-backgroud: #0153d2;
+    --mx-menu-active-backgroud: #0153d2;
+    --mx-menu-open-backgroud: #0153d2;
+    --mx-menu-divider: #575757;
+
+    //Text
+    --mx-menu-text: #dcdcdc;
+    --mx-menu-hover-text: #fff;
+    --mx-menu-active-text: #fff;
+    --mx-menu-open-text: #fff;
+    --mx-menu-disabled-text: #6a6a6a;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
+    --mx-menu-backgroud-radius: 10px;
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover:transparent;
+    --mx-menu-shortcut-backgroud-active:transparent;
+    --mx-menu-shortcut-backgroud-open:transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #dadada;
+    --mx-menu-shortcut-text-hover: #fff;
+    --mx-menu-shortcut-text-active: #fff;
+    --mx-menu-shortcut-text-open: #fff;
+    --mx-menu-shortcut-text-disabled: #6a6a6a;
+
+    //Focus border color
+    --mx-menu-focus-color: transparent;
+    --mx-menu-border-color: #222;
+  }
+  
+  padding: 8px 0;
+  box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
+  border: 1px solid var(--mx-menu-border-color);
+
+  .mx-context-menu-item {
+    border-radius: 5px;
+    margin: 0 6px;
+    padding: 3px 6px;
+    
+    //Focus by keyboard
+    &.keyboard-focus {
+      background-color: var(--mx-menu-active-backgroud);
+      color: var(--mx-menu-active-text);
+      outline: none;
+
+      .mx-right-arrow, .mx-checked-mark {
+        fill: var(--mx-menu-active-text);
+      }
+      .mx-shortcut {
+        background-color: var(--mx-menu-shortcut-backgroud-active);
+        color: var(--mx-menu-shortcut-text-active);
+      }
+    }
+  }
+  .mx-context-menu-item-sperator {
+    margin: 0 12px;
+  }
+}

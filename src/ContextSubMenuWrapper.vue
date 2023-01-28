@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, renderSlot, toRefs, VNode, watch } from 'vue'
+import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, ref, renderSlot, toRefs, VNode, watch } from 'vue'
 import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
-import ContextSubMenuConstructor from './ContextSubMenu.vue';
+import ContextSubMenuConstructor, { MenuItemContext, SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
 
 export type GlobalHasSlot = (name: string) => boolean;
 export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;
@@ -71,17 +71,71 @@ export default defineComponent({
       
       removeOpenedContextMenu(instance);
     }
+
+    //Expose instance function
+    ctx.expose({
+      closeMenu: closeMenu,
+    });
+
     function installBodyEvents() {
       setTimeout(() => {
         document.addEventListener("click", onBodyClick, true);
         document.addEventListener("contextmenu", onBodyClick, true);
         document.addEventListener("wheel", onBodyWhell, true);
-      }, 100);
+        if (options.value.keyboardControl !== false)
+          document.addEventListener('keydown', onMenuKeyDown);
+      }, 50);
     }
     function removeBodyEvents() {
       document.removeEventListener("contextmenu", onBodyClick, true);
       document.removeEventListener("click", onBodyClick, true);
       document.removeEventListener("wheel", onBodyWhell, true);
+      if (options.value.keyboardControl)
+        document.removeEventListener('keydown', onMenuKeyDown);
+    }
+
+    //For keyboard event, remember which submenu is active
+    const currentOpenedMenu = ref<SubMenuContext|null>();
+    provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
+
+    function onMenuKeyDown(e: KeyboardEvent) {
+      if (currentOpenedMenu.value) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      //Handle keyboard event
+      switch(e.key) {
+        case "Escape": {
+          if (currentOpenedMenu.value?.isTopLevel() === false) {
+            currentOpenedMenu.value?.closeCurrentSubMenu();
+          } else {
+            closeMenu();
+          }
+          break;
+        }
+        case "ArrowDown":
+          currentOpenedMenu.value?.moveCurrentItemDown();
+          break;
+        case "ArrowUp":
+          currentOpenedMenu.value?.moveCurrentItemUp();
+          break;
+        case "Home":
+          currentOpenedMenu.value?.moveCurrentItemFirst();
+          break;
+        case "End":
+          currentOpenedMenu.value?.moveCurrentItemLast();
+          break;
+        case "ArrowLeft": {
+          currentOpenedMenu.value?.closeSelfAndActiveParent();
+          break;
+        }
+        case "ArrowRight":
+          currentOpenedMenu.value?.openCurrentItemSubMenu();
+          break;
+        case "Enter":
+          currentOpenedMenu.value?.triggerCurrentItemClick();
+          break;
+      }
     }
     function onBodyWhell() {
       //close when mouse scroll
@@ -105,6 +159,7 @@ export default defineComponent({
       closeMenu();
     }
     
+    //provide globalOptions for child use
     provide('globalOptions', options.value);
     provide('globalCloseMenu', closeMenu);
     provide('globalTheme', options.value?.theme || 'light');
@@ -120,7 +175,7 @@ export default defineComponent({
     //provide menuContext for child use
     provide('menuContext', {
       zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
-      container: container.value,
+      container: container.value as unknown as HTMLElement,
       adjustPadding: options.value.adjustPadding || MenuConstOptions.defaultAdjustPadding,
       getParentAbsY: () => options.value.y,
       getMyPosition: () => {
@@ -129,9 +184,21 @@ export default defineComponent({
           y: options.value.y,
         };
       },
+      getParentWidth: () => 0, 
+      closeOtherSubMenuWithTimeOut: () => {/* Do nothing */}, 
+      checkCloseOtherSubMenuTimeOut: () => false, 
       addOpenedSubMenu: () => {/* Do nothing */},
       closeOtherSubMenu: () => {/* Do nothing */},
-    });
+      getParentContext: () => null,
+      getSubMenuInstanceContext: () => null,
+      getElement: () => null,
+      addChildMenuItem: () => {/* Do nothing */},
+      removeChildMenuItem: () => {/* Do nothing */},
+      markActiveMenuItem: () => {/* Do nothing */},
+      markThisOpenedByKeyBoard: () => {/* Do nothing */},
+      isOpenedByKeyBoardFlag: () => false,
+      isMenuItemDataCollectedFlag: () => false,
+    } as SubMenuParentContext);
 
     return () => {
       //Hidden

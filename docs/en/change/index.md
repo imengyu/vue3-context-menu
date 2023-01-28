@@ -5,6 +5,15 @@ nav:
   order: 5
 ---
 
+## v1.2.0 - 2023/1/28
+
+* [Added] Added `MenuItem.shortcut` to display the shortcut key badge of the current menu item.
+* [Added] Added `MenuItem.preserveIconWidth` to set whether a fixed-width icon area should be reserved for menu items without icons.
+* [Added] Added `MenuItem.checked` to specify whether the current menu item is checked.
+* [Added] Added three new [theme](../guide/customize.md#theme) extracted CSS and provided some [CSS variables](../guide/customize.md#css-variables), allowing you to modify the color conveniently. Custom themes are supported.
+* [Fix] Fix the problem that global function return instance call `closeMenu` cant close the menu (#26).
+* [Changed] ⚠ The right arrow of the menu now uses a SVG image (before is base64 data embedded in css). If you use the `.mx-right-arrow` style to customize the right arrow image, you need to do special processing to hide the SVG.
+
 ## v1.1.9 - 2023/1/6
 
 * Fix global slot missing problem (#25)

@@ -21,6 +21,12 @@ import ContextMenu from '@imengyu/vue3-context-menu'
   | options | 菜单的数据 |
   | customSlots | 这些插槽允许您自定义当前菜单的样式，这些插槽的名称与 [组件模式 ContextMenu](./ContextMenu.md) 中的插槽名称相同 |
 
+  返回值
+
+  | 类型 | 说明 |
+  | :----: | :----: |
+  | ContextMenuInstance | 当前菜单的实例，可调用 `closeMenu` 关闭菜单 |
+
 ### `ContextMenu.closeContextMenu()`
 
   手动关闭当前打开的菜单.
@@ -61,7 +67,9 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | customClass | 自定义菜单类名 | `string` | — | — |
 | minWidth | 主菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
-| theme | 菜单的主题 | `string` | `'light' 'dark'` | `light` |
+| keyboardControl | 设置用户是否可以使用键盘键控制当前菜单 | `boolean` | — | `true` |
+| theme | 菜单的[主题](../guide/customize.md#主题) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
+| preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
 | adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
@@ -73,10 +81,13 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | label | 菜单项名称，可传入VNode | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | 菜单项图标，可传入VNode | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
+| preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | svgIcon | 菜单项图标 svg，仅在 icon 为空时有效 | `string` | — | — |
 | svgProps | 当使用 svg 图标时，自定义 svg 标签属性 | `SVGAttributes` | — | — |
 | disabled | 是否禁用菜单项 | `boolean` | — | `false` |
-| hidden | 是否隐藏单项 | `boolean` | — | `false` |
+| hidden | 是否隐藏菜单项 | `boolean` | — | `false` |
+| checked | 是否选中菜单项 | `boolean` | — | `false` |
+| shortcut | 当前菜单项的快捷键指示，此快捷键只用于显示给用户看，快捷键的注册还是需要你自己处理 | `string` | — | `''` |
 | adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |

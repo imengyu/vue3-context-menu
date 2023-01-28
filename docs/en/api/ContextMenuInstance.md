@@ -22,6 +22,12 @@ Global Function
   | options | The options of menu. |
   | customSlots | These slots to allow you to customize the style of the current menu, the names of these slots are the same as those in the [component mode](#ContextMenu). |
 
+  Return
+
+  | Type | Description |
+  | :----: | :----: |
+  | ContextMenuInstance | The instance of the current menu, can calling 'closeMenu' to close this menu. |
+
 ### `ContextMenu.closeContextMenu()`
 
   Manually close the currently open context menu.
@@ -52,23 +58,19 @@ Global Function
 
 | Property | Description | Type | Optional value | Default |
 | :----: | :----: | :----: | :----: | :----: |
-| label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
-| icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
+| items | The items for this menu. | `MenuItem[]` | — | — |
+| x | Menu display x position. | `number` | — | `0` |
+| y | Menu display y position. | `number` | — | `0` |
+| xOffset | X-coordinate offset of submenu and parent menu. | `number` | — | `0` |
+| yOffset | Y-coordinate offset of submenu and parent menu. | `number` | — | `0` |
+| iconFontClass | Custom icon library font class name. (global). Only for css font icon, If you use the svg icon, you do not need to use this. | `string` | — | `iconfont` |
+| zIndex | The `z-index` of this menu | `number` | — | `2` |
 | iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
-| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
-| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
-| disabled | Disable menu item? | `boolean` | — | `false` |
-| hidden | Hide menu item? | `boolean` | — | `false` |
-| adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
-| clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
-| clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |
-| divided | Is this menu item separated from the menu item below? | `boolean` | — | `false` |
-| customClass | Custom submenu class. | `string` | — | — |
+| preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
+| keyboardControl | Set whether the user can use keyboard keys to control the current menu. | `boolean` | — | `true` |
+| theme | The [theme](../guide/customize.md#theme) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
-| onClick | Menu item click event handler. | `Function()` | — | — |
-| customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
-| children | Submenu items. | `MenuItem[]` | — | — |
 | adjustPadding | Padding for submenu position adjust. | `number` | — | `10` |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 
@@ -79,10 +81,13 @@ Global Function
 | label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
+| preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
 | svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
 | svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
 | disabled | Disable menu item? | `boolean` | — | `false` |
 | hidden | Hide menu item? | `boolean` | — | `false` |
+| checked | Is this menu item checked? | `boolean` | — | `false` |
+| shortcut | Shortcut key text display on the right. The shortcut keys here are only for display. You need to handle the key events by yourself. | `string` | — | `''` |
 | adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |

@@ -30,6 +30,8 @@ nav:
 | itemIconRender | 当前菜单全局图标渲染插槽 | MenuItemRenderData |
 | itemLabelRender | 当前菜单全局文字渲染插槽 | MenuItemRenderData |
 | itemRightArrowRender | 当前菜单全局右侧箭头渲染插槽 | MenuItemRenderData |
+| itemCheckRender | 当前菜单全局复选框渲染插槽 | MenuItemRenderData |
+| itemShortcutRender | 当前菜单全局快捷键标记渲染插槽 | MenuItemRenderData |
 | separatorRender | 当前菜单分隔符渲染插槽 | - |
 
 ## MenuItemRenderData 结构

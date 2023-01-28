@@ -9,6 +9,8 @@
       left: `${position.x}px`,
       top: `${position.y}px`,
     }"
+    data-type="ContextSubMenu"
+    @click="onSubMenuBodyClick"
   >
     <!--Child menu items-->
     <div 
@@ -19,7 +21,7 @@
       }"
     >
       <slot>
-        <div v-for="(item, i) in items" :key="i" >
+        <template v-for="(item, i) in items" :key="i" >
           <!--Menu Item-->
           <ContextMenuItem
             :clickHandler="item.onClick"
@@ -32,8 +34,11 @@
             :label="item.label"
             :customRender="(item.customRender as Function)"
             :customClass="item.customClass"
+            :checked="item.checked"
+            :shortcut="item.shortcut"
             :clickClose="item.clickClose"
             :clickableWhenHasChildren="item.clickableWhenHasChildren"
+            :preserveIconWidth="item.preserveIconWidth !== undefined ? item.preserveIconWidth : options.preserveIconWidth"
             :showRightArrow="item.children && item.children.length > 0"
             :hasChildren="item.children && item.children.length > 0"
           >
@@ -51,7 +56,7 @@
           <!--Custom render-->
           <VNodeRender v-if="item.hidden !== true && item.divided && globalHasSlot('separatorRender')" :vnode="() => globalRenderSlot('separatorRender', {})" />
           <ContextMenuSeparator v-else-if="item.hidden !== true && item.divided" />
-        </div>
+        </template>
       </slot>
     </div>
         
@@ -62,10 +67,10 @@
     >
       <!--Updown scroll button-->
       <div v-show="overflow && scrollValue < 0" class="mx-context-menu-updown mx-context-no-clickable up" @click="onScroll(false)">
-        <span class="mx-right-arrow" />
+        <ContextMenuIconRight />
       </div>
       <div v-show="overflow && scrollValue > -scrollHeight" class="mx-context-menu-updown mx-context-no-clickable down" @click="onScroll(true)">
-        <span class="mx-right-arrow" />
+        <ContextMenuIconRight />
       </div>
     </div>
   </div>
@@ -79,19 +84,62 @@ import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
 import { VNodeRender } from './ContextMenuUtils'
 import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
+import ContextMenuIconRight from './ContextMenuIconRight.vue'
+
+//The internal info context for menu item
+export interface MenuItemContext {
+  focus: () => void,
+  blur: () => void,
+  showSubMenu: () => void,
+  getElement: () => HTMLElement|undefined,
+  isDisabledOrHidden: () => boolean,
+  click: () => void,
+}
+
+//The internal info context for submenu instance
+export interface SubMenuContext {
+  isTopLevel: () => boolean;
+  closeSelfAndActiveParent: () => void,
+  closeCurrentSubMenu: () => void,
+  moveCurrentItemFirst: () => void,
+  moveCurrentItemLast: () => void,
+  moveCurrentItemDown: () => void,
+  moveCurrentItemUp: () => void,
+  focusCurrentItem: () => void,
+  openCurrentItemSubMenu: () => void,
+  triggerCurrentItemClick: () => void,
+}
 
 //The internal info context for submenu
 export interface SubMenuParentContext {
+  //Props
   container: HTMLElement;
   zIndex: number;
   adjustPadding: number,
+
+  //Position control
   getMyPosition: () => ContextMenuPositionData;
   getParentWidth: () => number;
   getParentAbsY: () => number;
+
+  //SubMenu mutex
   addOpenedSubMenu: (closeFn: () => void) => void;
   closeOtherSubMenu: () => void;
   closeOtherSubMenuWithTimeOut: () => void;
   checkCloseOtherSubMenuTimeOut: () => boolean;
+
+  //Item control
+  addChildMenuItem: (item: MenuItemContext, index?: number) => void;
+  removeChildMenuItem: (item: MenuItemContext) => void;
+  markActiveMenuItem: (item: MenuItemContext, updateState?: boolean) => void;
+  markThisOpenedByKeyBoard: () => void;
+  isOpenedByKeyBoardFlag: () => boolean;
+  isMenuItemDataCollectedFlag: () => boolean;
+
+  //Other
+  getSubMenuInstanceContext: () => SubMenuContext|null;
+  getParentContext: () => SubMenuParentContext|null;
+  getElement: () => HTMLElement|null;
 }
 
 /**
@@ -103,6 +151,7 @@ export default defineComponent({
     ContextMenuItem,
     ContextMenuSeparator,
     VNodeRender,
+    ContextMenuIconRight
   },
   props: {
     /**
@@ -136,8 +185,16 @@ export default defineComponent({
     },
   },
   setup(props) {
+
+    //#region Injects
+
     const parentContext = inject('menuContext') as SubMenuParentContext;
     const options = inject('globalOptions') as MenuOptions;
+    const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
+    const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
+    const globalTheme = inject('globalTheme') as string;
+
+    //#endregion
     
     const { zIndex, getMyPosition, getParentWidth } = parentContext;
     const { adjustPosition } = toRefs(props);
@@ -146,10 +203,88 @@ export default defineComponent({
     const scroll = ref<HTMLElement>();
     const openedSubMenuClose = [] as (() => void)[];
 
+    //#region Keyboard control context
+
+    const globalSetCurrentSubMenu = inject('globalSetCurrentSubMenu') as (menu: SubMenuContext|null) => void;
+
+    const menuItems = [] as MenuItemContext[];
+    let currentItem = null as MenuItemContext|null;
     let leaveTimeout = 0;
 
+    function blurCurrentMenu() {
+      if (currentItem)
+        currentItem.blur();
+    }
+
+    function setAndFocusNotDisableItem(isDown: boolean, startIndex?: number) {
+      if (isDown) {
+        for(let i = startIndex !== undefined ? startIndex : 0; i < menuItems.length; i++) {
+          if (!menuItems[i].isDisabledOrHidden()) {
+            setAndFocusCurrentMenu(i);
+            break;
+          }
+        }
+      } else {
+        for(let i = startIndex !== undefined ? startIndex : (menuItems.length - 1); i >= 0; i--) {
+          if (!menuItems[i].isDisabledOrHidden()) {
+            setAndFocusCurrentMenu(i);
+            break;
+          }
+        }
+      }
+    }
+    function setAndFocusCurrentMenu(index?: number) {
+      if (currentItem)
+        blurCurrentMenu();
+      if (index !== undefined)
+        currentItem = menuItems[Math.max(0, Math.min(index, menuItems.length - 1))];
+      if (!currentItem)
+        return;
+
+      //Focus item
+      currentItem.focus();
+
+      //Scroll to current item
+      if (overflow.value) {
+        const element = currentItem.getElement();
+        if (element) {
+          scrollValue.value = Math.min(Math.max(-scrollHeight.value, -element.offsetTop - element.offsetHeight + maxHeight.value), 0);
+        }
+      }
+    }
+    function onSubMenuBodyClick() {
+      //Mouse click can set current focused submenu 
+      globalSetCurrentSubMenu(thisMenuInsContext);
+    }
+
+    const thisMenuInsContext : SubMenuContext = {
+      isTopLevel: () => parentContext.getParentContext() === null,
+      closeSelfAndActiveParent: () => {
+        const parent = thisMenuContext.getParentContext();
+        if (parent) {
+          parent.closeOtherSubMenu();
+          parent.getSubMenuInstanceContext()?.focusCurrentItem();
+        }
+      },
+      closeCurrentSubMenu: () => thisMenuContext.getParentContext()?.closeOtherSubMenu(),
+      moveCurrentItemFirst: () => setAndFocusNotDisableItem(true),
+      moveCurrentItemLast: () => setAndFocusNotDisableItem(false),
+      moveCurrentItemDown: () => setAndFocusNotDisableItem(true, (currentItem ? (menuItems.indexOf(currentItem) + 1) : 0)),
+      moveCurrentItemUp: () => setAndFocusNotDisableItem(false, (currentItem ? (menuItems.indexOf(currentItem) - 1) : 0)),
+      focusCurrentItem: () => setAndFocusCurrentMenu(),
+      openCurrentItemSubMenu: () => currentItem?.showSubMenu(),
+      triggerCurrentItemClick: () => currentItem?.click(),
+    };
+
+    let isOpenedByKeyBoardFlag = false;
+    let isMenuItemDataCollectedFlag = false;
+
+    //#endregion
+
+    //#region Menu control context
+
     //provide menuContext for child use
-    const thisMenuContext = {
+    const thisMenuContext : SubMenuParentContext = {
       zIndex: zIndex + 1,
       container: parentContext.container,
       adjustPadding: parentContext.adjustPadding,
@@ -162,7 +297,7 @@ export default defineComponent({
           pos.y = options.yOffset;
         return pos;
       },
-      getParentWidth: () => menu.value?.offsetWidth,
+      getParentWidth: () => menu.value?.offsetWidth || 0,
       getParentAbsY: () => menu.value ? getTop(menu.value, parentContext.container) : 0,
       addOpenedSubMenu(closeFn: () => void) {
         openedSubMenuClose.push(closeFn);
@@ -170,6 +305,7 @@ export default defineComponent({
       closeOtherSubMenu() {
         openedSubMenuClose.forEach(k => k());
         openedSubMenuClose.splice(0, openedSubMenuClose.length);
+        globalSetCurrentSubMenu(thisMenuInsContext);
       },
       checkCloseOtherSubMenuTimeOut() {
         if (leaveTimeout) {
@@ -185,8 +321,39 @@ export default defineComponent({
           this.closeOtherSubMenu();
         }, 200) as unknown as number; //Add a delay, the user will not hide the menu when moving too fast
       },
-    } as SubMenuParentContext;
+      addChildMenuItem: (item: MenuItemContext, index?: number) => {
+        if (index === undefined)
+          menuItems.push(item);
+        else
+          menuItems.splice(index, 0, item);
+      },
+      removeChildMenuItem: (item: MenuItemContext) => {
+        menuItems.splice(menuItems.indexOf(item), 1);
+      },
+      markActiveMenuItem: (item: MenuItemContext, updateState = false) => {
+        blurCurrentMenu();
+        currentItem = item;
+        if (updateState)
+          setAndFocusCurrentMenu();
+      },
+      markThisOpenedByKeyBoard: () => {
+        isOpenedByKeyBoardFlag = true;
+      },
+      isOpenedByKeyBoardFlag: () => {
+        if (isOpenedByKeyBoardFlag) {
+          isOpenedByKeyBoardFlag = false;
+          return true;
+        }
+        return false;
+      },
+      isMenuItemDataCollectedFlag: () => isMenuItemDataCollectedFlag,
+      getElement: () => menu.value || null,
+      getParentContext: () => parentContext,
+      getSubMenuInstanceContext: () => thisMenuInsContext,
+    };
     provide('menuContext', thisMenuContext);
+
+    //#endregion
 
     const scrollValue = ref(0);
     const scrollHeight = ref(0);
@@ -205,11 +372,15 @@ export default defineComponent({
 
     onMounted(() => {
       position.value = getMyPosition();
-        
+
+      //Mark current item submenu is open
+      globalSetCurrentSubMenu(thisMenuInsContext);
+
       nextTick(() => {
+        const menuEl = menu.value;
+
         //adjust submenu position
-        if (adjustPosition.value && menu.value && scroll.value) {
-          const menuEl = menu.value;
+        if (adjustPosition.value && menuEl && scroll.value) {
           const { container, adjustPadding: fillPadding } = parentContext;
           const windowHeight = window.innerHeight, windowWidth = window.innerWidth;
 
@@ -235,12 +406,20 @@ export default defineComponent({
             maxHeight.value = 0;
           }
         }
+
+        //Focus this submenu
+        menuEl?.focus({
+          preventScroll: true
+        });
+
+        //Is this submenu opened by keyboard? If yes then select first item
+        if (parentContext.isOpenedByKeyBoardFlag())
+          setAndFocusNotDisableItem(true);
+
+        isMenuItemDataCollectedFlag = true;
       });
     });
 
-    const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
-    const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
-    const globalTheme = inject('globalTheme') as string;
     return {
       menu,
       scroll,
@@ -256,227 +435,12 @@ export default defineComponent({
       globalRenderSlot,
       globalTheme,
       onScroll,
+      onSubMenuBodyClick,
     }
   }
 })
 </script>
 
 <style lang="scss">
-
-//Base hosts
-.mx-context-menu {
-  pointer-events: all;
-  display: inline-block;
-  overflow: visible;
-  position: absolute;
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 12px 0;
-  box-shadow: 0px 10px 40px 10px rgba(0, 0, 0, 0.1);
-  opacity: 1;
-  transition: opacity 0.2s ease-in-out;
-}
-.mx-context-menu-items {
-  position: relative;
-  overflow: visible;
-}
-.mx-context-menu-scroll {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 1px;
-  pointer-events: none;
-}
-
-//Up down button
-.mx-context-menu-updown {
-  pointer-events: all;
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 15px;
-  border-radius: 10px;
-  background-color: #fff;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #e2e0e0;
-  }
-  &:active {
-    background-color: #c9c8c8;
-  }
-
-  &.up {
-    top: 0px;
-
-    .mx-right-arrow {
-      transform: translateX(-50%) rotate(270deg);
-    }
-  }
-  &.down {
-    bottom: -1px;
-    
-    .mx-right-arrow {
-      transform: translateX(-50%) rotate(90deg);
-    }
-  }
-
-  .mx-right-arrow {
-    display: inline-block;
-    position: absolute;
-    height: 12px;
-    left: 50%;
-    top: 0px;
-    padding: 0;
-  }
-}
-
-//Item
-.mx-context-menu-item {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  position: relative;
-  padding: 6px 20px;
-  user-select: none;
-  overflow: visible;
-  color: #2e2e2e;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-  &:hover {
-    background-color: #f1f1f1;
-  }
-  &:active {
-    background-color: #dfdfdf;
-  }
-  &.open {
-    background-color: #f1f1f1;
-  }
-
-  .icon  {
-    display: inline-block;
-    width: 16px;
-    font-size: 16px;
-    color: #636363;
-    margin-right: 8px;
-
-    &.svg {
-      height: 16px;
-    }
-  }
-  span {
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding-right: 16px;
-  }
-
-  //Right arrow
-  .mx-right-arrow  {
-    position: absolute;
-    display: inline-block;
-    right: 2px;
-    top: 50%;
-    margin-top: -5px;
-  }
-
-  //disabled
-  &.disabled {
-    color: #9f9f9f;
-
-    cursor: not-allowed;
-
-    &:hover, &:active {
-      background-color: transparent;
-    }
-  }
-
-}
-.mx-context-menu-item-wrapper {
-  position: relative;
-}
-
-//Sperator
-.mx-context-menu-item-sperator  {
-  display: block;
-  padding: 5px 0;
-  background-color: #fff;
-
-  &:after {
-    display: block;
-    content: '';
-    background-color: #f0f0f0;
-    height: 1px;
-  }
-}
-
-//Right arrow
-.mx-right-arrow  {
-  width: 14px;
-  height: 14px;
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNjI1MjA3MjM5MzE1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjIxMjYzIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjUwIiBoZWlnaHQ9IjUwIj48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwvc3R5bGU+PC9kZWZzPjxwYXRoIGQ9Ik0zMDcuMDE4IDQ5LjQ0NWMxMS41MTcgMCAyMy4wMzIgNC4zOTQgMzEuODE5IDEzLjE4TDc1Ni40MDQgNDgwLjE4YzguNDM5IDguNDM4IDEzLjE4MSAxOS44ODUgMTMuMTgxIDMxLjgycy00Ljc0MSAyMy4zOC0xMy4xODEgMzEuODJMMzM4LjgzOCA5NjEuMzc2Yy0xNy41NzQgMTcuNTczLTQ2LjA2NSAxNy41NzMtNjMuNjQtMC4wMDEtMTcuNTczLTE3LjU3My0xNy41NzMtNDYuMDY1IDAuMDAxLTYzLjY0TDY2MC45NDQgNTEyIDI3NS4xOTggMTI2LjI2NWMtMTcuNTc0LTE3LjU3My0xNy41NzQtNDYuMDY2LTAuMDAxLTYzLjY0QzI4My45ODUgNTMuODM5IDI5NS41MDEgNDkuNDQ1IDMwNy4wMTggNDkuNDQ1eiIgcC1pZD0iMjEyNjQiPjwvcGF0aD48L3N2Zz4=');
-  background-size: 12px;
-  background-repeat: no-repeat;
-}
-
-//Dark theme
-.mx-context-menu.dark {
-  background-color: #303031;
-  box-shadow: 0px 10px 40px 10px rgba(51, 51, 51, 0.2);
-
-  //Up down button
-  .mx-context-menu-updown {
-    background-color: #303031;
-
-    &:hover {
-      background-color: #636363;
-    }
-    &:active {
-      background-color: #7a7a7a;
-    }
-  }
-
-  //Item
-  .mx-context-menu-item {
-    color: #ffffff;
-    
-    &:hover {
-      background-color: #636363;
-    }
-    &:active {
-      background-color: #7a7a7a;
-    }
-    &.open {
-      background-color: #636363;
-    }
-
-    .icon  {
-      color: #f0f0f0;
-    }
-
-    //disabled
-    &.disabled {
-      color: #9c9c9c;
-    }
-  }
-
-  //Sperator
-  .mx-context-menu-item-sperator  {
-    background-color: #303031;
-
-    &:after {
-      background-color: #606060;
-    }
-  }
-
-  .mx-right-arrow  {
-    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pg0KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjEvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvR3JhcGhpY3MvU1ZHLzEuMS9EVEQvc3ZnMTEuZHRkIj48c3ZnIHQ9IjE2MjUyMDcyMzkzMTUiDQogIGNsYXNzPSJpY29uIiB2aWV3Qm94PSIwIDAgMTAyNCAxMDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgcC1pZD0iMjEyNjMiDQogIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNTAiIGhlaWdodD0iNTAiPg0KICA8cGF0aA0KICAgIGZpbGw9IiNmZmZmZmYiDQogICAgZD0iTTMwNy4wMTggNDkuNDQ1YzExLjUxNyAwIDIzLjAzMiA0LjM5NCAzMS44MTkgMTMuMThMNzU2LjQwNCA0ODAuMThjOC40MzkgOC40MzggMTMuMTgxIDE5Ljg4NSAxMy4xODEgMzEuODJzLTQuNzQxIDIzLjM4LTEzLjE4MSAzMS44MkwzMzguODM4IDk2MS4zNzZjLTE3LjU3NCAxNy41NzMtNDYuMDY1IDE3LjU3My02My42NC0wLjAwMS0xNy41NzMtMTcuNTczLTE3LjU3My00Ni4wNjUgMC4wMDEtNjMuNjRMNjYwLjk0NCA1MTIgMjc1LjE5OCAxMjYuMjY1Yy0xNy41NzQtMTcuNTczLTE3LjU3NC00Ni4wNjYtMC4wMDEtNjMuNjRDMjgzLjk4NSA1My44MzkgMjk1LjUwMSA0OS40NDUgMzA3LjAxOCA0OS40NDV6Ig0KICAgIHAtaWQ9IjIxMjY0Ij48L3BhdGg+DQo8L3N2Zz4=');
-  }
-
-}
+@import "./ContextMenu.scss";
 </style>

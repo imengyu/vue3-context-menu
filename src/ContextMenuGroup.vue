@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, PropType } from 'vue'
+import { defineComponent, h, PropType, SVGAttributes } from 'vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 import ContextMenuItemConstructor from './ContextMenuItem.vue';
 
@@ -41,9 +41,57 @@ export default defineComponent({
       type: String,
       default: ''
     },
+    /**
+     * Custom icon library font class name.
+     * 
+     * Only for css font icon, If you use the svg icon, you do not need to use this.
+     */
     iconFontClass: {
       type: String,
       default: 'iconfont'
+    },
+    /**
+     * Is this menu item checked?
+     * 
+     * The check mark are displayed on the left side of the icon, so it is not recommended to display the icon at the same time.
+     */
+     checked: {
+      type: Boolean,
+      default: false
+    },
+    /**
+     * Shortcut key text display on the right.
+     * 
+     * The shortcut keys here are only for display. You need to handle the key events by yourself.
+     */
+    shortcut: {
+      type: String,
+      default: ''
+    },
+    /**
+     * Display icons use svg symbol (`<use xlink:href="#icon-symbol-name">`) ， only valid when icon attribute is empty.
+     */
+    svgIcon: {
+      type: String,
+      default: ''
+    },
+    /**
+     * The user-defined attribute of the svg tag, which is valid when using `svgIcon`.
+     */
+    svgProps: {
+      type: Object as PropType<SVGAttributes>,
+      default: null
+    },
+    /**
+     * Should a fixed-width icon area be reserved for menu items without icon. (this item)
+     * 
+     * Default is true .
+     * 
+     * The width of icon area can be override with css var `--mx-menu-placeholder-width`.
+     */
+    preserveIconWidth: {
+      type: Boolean,
+      default: true,
     },
     /**
      * Show right arrow on this menu?

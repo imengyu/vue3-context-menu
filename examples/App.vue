@@ -6,7 +6,7 @@
       <router-link :to="{ name: 'BasicCustomize' }">Base customize</router-link>
       <router-link :to="{ name: 'BasicComponent' }">Component useage</router-link>
       <router-link :to="{ name: 'ComponentCustomize' }">Component customize</router-link>
-      <router-link :to="{ name: 'Theme' }">Dark Theme</router-link>
+      <router-link :to="{ name: 'Theme' }">Themes</router-link>
       <router-link :to="{ name: 'InScaledBody' }">Use In scaled</router-link>
       <router-link :to="{ name: 'ChangeContainer' }">Change container</router-link>
     </div>
@@ -104,6 +104,24 @@ html, body, #app {
   font-size: 14px;
   border: 1px dashed #ececec;
   background-color: #dadada;
+}
+.box6 {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 18px;
+  user-select: none;
+  color: #000;
+  background-color: rgb(245, 245, 245);
+  border: 1px dashed #7e7e7e;
+}
+.box5 {
+  padding: 60px 0;
+  text-align: center;
+  font-size: 18px;
+  user-select: none;
+  color: #fff;
+  background-color: #7e7e7e;
+  border: 1px dashed #ececec;
 }
 .box2 {
   width: 80%;

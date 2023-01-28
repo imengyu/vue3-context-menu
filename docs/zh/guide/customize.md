@@ -5,13 +5,123 @@ order: 5
 
 # 自定义样式和渲染
 
-## 自定义样式
+## 主题
 
-如果觉得菜单样式不好看，可以重写css样式，所有的css样式定义都在 [`/src/ContextSubMenu.vue`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextSubMenu.vue) 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+菜单内置了以下几种主题，你可以选择你喜欢的使用。
+
+只需要在菜单选项中设置 `theme` 字段即可：
+
+```js
+this.$contextmenu({
+  theme: 'mac dark',
+  items: [
+  ],
+  //省略...
+});
+```
+
+|主题|说明|示意图|
+|--|--|--|
+|`default`|默认主题|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-default.jpg)|
+|`default dark`|默认主题深色|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-default-dark.jpg)|
+|`flat`|精简扁平菜单|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-flat.jpg)|
+|`flat dark`|精简扁平菜单深色|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-flat-dark.jpg)|
+|`win10`|仿Win10菜单白色|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10.jpg)|
+|`win10 dark`|仿Win10菜单黑色|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10-dark.jpg)|
+|`mac`|仿 macos catalina 菜单|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac.jpg)|
+|`mac dark`|仿 macos catalina 菜单深色模式|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac-dark.jpg)|
+
+## css变量
+
+菜单的样式抽离了一些css变量供您使用，你可以很方便的修改颜色，无须每个状态都特殊指定。
+
+```scss
+//Backgroud
+--mx-menu-backgroud: #fff; //菜单背景颜色
+--mx-menu-hover-backgroud: #f1f1f1; //菜单条目鼠标悬浮时的背景颜色
+--mx-menu-active-backgroud: #dfdfdf; //菜单条目鼠标按下时的背景颜色
+--mx-menu-open-backgroud: #f1f1f1; //菜单条目子菜单打开时的背景颜色
+--mx-menu-divider: #f0f0f0; //菜单分割线条目颜色
+
+//Text
+--mx-menu-text: #2e2e2e; //菜单文字颜色
+--mx-menu-hover-text: #2e2e2e; //菜单条目鼠标悬浮时的文字颜色
+--mx-menu-active-text: #2e2e2e; //菜单条目鼠标按下时的文字颜色
+--mx-menu-open-text: #2e2e2e; //菜单条目子菜单打开时的文字颜色
+--mx-menu-disabled-text: #c9c8c8; //菜单条目禁用的文字颜色
+
+//Shadow
+--mx-menu-shadow-color: rgba(0, 0, 0, 0.1); //菜单背景阴影颜色
+--mx-menu-backgroud-radius: 10px; //菜单背景圆角大小
+
+//Shortcut badge
+--mx-menu-shortcut-backgroud: #ebebeb; //菜单快捷键标记的背景颜色，下方是它的四个状态
+--mx-menu-shortcut-backgroud-hover:#ebebeb;
+--mx-menu-shortcut-backgroud-active:#ebebeb;
+--mx-menu-shortcut-backgroud-open:#ebebeb;
+--mx-menu-shortcut-backgroud-disabled:#fdfdfd;
+--mx-menu-shortcut-text: #424242; //菜单快捷键标记的文字颜色，下方是它的四个状态
+--mx-menu-shortcut-text-hover: #424242;
+--mx-menu-shortcut-text-active: #424242;
+--mx-menu-shortcut-text-open: #424242;
+--mx-menu-shortcut-text-disabled: #a5a5a5;
+
+//Focus border color
+--mx-menu-focus-color: #0085f1; //菜单项键盘激活时的外框颜色
+
+//Icon placeholder width
+--mx-menu-placeholder-width: 24px; //图标占位区域的宽度
+```
+
+## 自定义主题
+
+你可以新写你自己的主题，只需要保证主题名字与内置名字不同即可。
+
+菜单所有的css样式定义都在 [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss) 中。
+你可以将所有样式复制出来，按需修改，存放在你的主题文件中。
+
+### 自定义主题示例
+
+例如下面是一个示例主题 `my-theme-name` 的实现，你自己的主题也可以按这个方式实现:
+
+```scss
+.mx-context-menu.my-theme-name {
+  & {
+    //在这里覆盖默认css变量的值
+    --mx-menu-backgroud: #ececec;
+    --mx-menu-hover-backgroud: #0165e1;
+  }
+  
+  //自定义菜单外层样式
+  padding: 8px 0;
+  box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
+  border: 1px solid var(--mx-menu-border-color);
+
+  //自定义其他菜单部件的样式
+  .mx-context-menu-item {
+    border-radius: 5px;
+    margin: 0 6px;
+    padding: 3px 6px;
+  }
+
+  //这里篇幅有限，完整的每个部件的样式请在 ContextMenu.scss 中查看
+}
+```
+
+然后导入主题文件，即可在 theme 中使用：
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
-import '你的样式css文件路径.css'
+import '你的样式文件路径.scss'
+```
+
+## 自定义样式
+
+如果你觉得默认菜单样式不好看，还可以重写css样式（但是还是推荐你使用自定义主题），所有的css样式定义都在 [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss) 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+
+```js
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+import '你的样式scss文件路径.scss'
 ```
 
 ## 自定义字体
@@ -269,3 +379,7 @@ export default defineComponent({
 });
 </script>
 ```
+
+### 特殊样式
+
+`mx-context-no-clickable` : 如果你在子元素中添加这个样式，则点击子元素不会触发菜单的点击事件。
