@@ -13,6 +13,7 @@ English | [简体中文](https://github.com/imengyu/vue3-context-menu/blob/main/
 
 * Simple and easy to use, small size
 * Provide component mode and function mode
+* Provide multiple theme styles for your use
 * Customizable
 
 ## Documentation
