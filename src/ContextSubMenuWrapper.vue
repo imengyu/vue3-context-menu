@@ -2,7 +2,7 @@
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, ref, renderSlot, toRefs, VNode, watch } from 'vue'
 import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
-import ContextSubMenuConstructor, { MenuItemContext, SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
+import ContextSubMenuConstructor, { SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
 
 export type GlobalHasSlot = (name: string) => boolean;
 export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;
@@ -90,7 +90,7 @@ export default defineComponent({
       document.removeEventListener("contextmenu", onBodyClick, true);
       document.removeEventListener("click", onBodyClick, true);
       document.removeEventListener("wheel", onBodyWhell, true);
-      if (options.value.keyboardControl)
+      if (options.value.keyboardControl !== false)
         document.removeEventListener('keydown', onMenuKeyDown);
     }
 
@@ -99,10 +99,7 @@ export default defineComponent({
     provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
 
     function onMenuKeyDown(e: KeyboardEvent) {
-      if (currentOpenedMenu.value) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
+      let handled = true;
       //Handle keyboard event
       switch(e.key) {
         case "Escape": {
@@ -135,6 +132,13 @@ export default defineComponent({
         case "Enter":
           currentOpenedMenu.value?.triggerCurrentItemClick();
           break;
+        default:
+          handled = false;
+          break;
+      }
+      if (handled && currentOpenedMenu.value) {
+        e.stopPropagation();
+        e.preventDefault();
       }
     }
     function onBodyWhell() {

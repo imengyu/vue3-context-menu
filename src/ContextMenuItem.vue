@@ -207,7 +207,7 @@ export default defineComponent({
     const { 
       clickHandler, clickClose, clickableWhenHasChildren, disabled, hidden,
       label, icon, iconFontClass,
-      showRightArrow, shortcut, preserveIconWidth,
+      showRightArrow, shortcut,
       hasChildren,
     } = toRefs(props);
     const showSubMenu = ref(false);
@@ -280,20 +280,23 @@ export default defineComponent({
         return;
       //Has submenu?
       if (hasChildren.value) {
-        if (clickableWhenHasChildren.value && typeof clickHandler.value === 'function') 
-          clickHandler.value();
+        if (clickableWhenHasChildren.value) {
+          if (typeof clickHandler.value === 'function')
+            clickHandler.value();
+          context.emit('click');
+        }
         else if (!showSubMenu.value)
           onMouseEnter();
       } else {
         //Call hander from options
         if (typeof clickHandler.value === 'function') 
           clickHandler.value();
+        context.emit('click');
         if (clickClose.value) {
           //emit close
           globalCloseMenu();
         }
       }
-      context.emit('click');
     }
     //MouseEnter handler: show item submenu
     function onMouseEnter(e?: MouseEvent) {
