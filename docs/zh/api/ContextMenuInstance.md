@@ -68,7 +68,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | minWidth | 主菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 主菜单最大宽度 | `number` | — | `600` |
 | keyboardControl | 设置用户是否可以使用键盘键控制当前菜单 | `boolean` | — | `true` |
-| theme | 菜单的[主题](../guide/customize.md#主题) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
+| theme | 菜单的[主题](../guide/theme.md) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
 | adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |

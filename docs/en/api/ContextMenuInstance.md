@@ -68,7 +68,7 @@ Global Function
 | iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
 | preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
 | keyboardControl | Set whether the user can use keyboard keys to control the current menu. | `boolean` | — | `true` |
-| theme | The [theme](../guide/customize.md#theme) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
+| theme | The [theme](../guide/theme.md) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
 | adjustPadding | Padding for submenu position adjust. | `number` | — | `10` |

@@ -37,8 +37,9 @@ const config = {
           ]
         },
         {
-          text: 'Customize',
+          text: 'Theme and Customize',
           items: [
+            { text: 'Theme', link: '/guide/theme' },
             { text: 'Customize Styles and Rendering', link: '/guide/customize' },
             { text: 'Customize the menu mount container', link: '/guide/custom-container' },
           ]

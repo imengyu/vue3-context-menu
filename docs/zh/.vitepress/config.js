@@ -44,8 +44,9 @@ const config = {
           ]
         },
         {
-          text: '自定义',
+          text: '美化与自定义',
           items: [
+            { text: '主题', link: '/guide/theme' },
             { text: '自定义样式和渲染', link: '/guide/customize' },
             { text: '自定义菜单挂载容器', link: '/guide/custom-container' },
           ]
