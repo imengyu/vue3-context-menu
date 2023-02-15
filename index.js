@@ -1,7 +1,16 @@
 import Inst from './src/ContextMenuInstance'
 export * from './src/ContextMenuInstance'
-export * from './src/ContextMenuItem.vue'
-export * from './src/ContextMenuGroup.vue'
-export * from './src/ContextMenuSeparator.vue'
-export * from './src/ContextSubMenu.vue'
+
+import ContextMenu from './src/ContextMenu.vue';
+import ContextMenuItem from './src/ContextMenuItem.vue';
+import ContextMenuSeparator from './src/ContextMenuSeparator.vue';
+import ContextMenuGroup from './src/ContextMenuGroup.vue';
+
+export {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuGroup,
+}
+
 export default Inst
