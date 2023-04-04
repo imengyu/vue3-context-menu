@@ -382,7 +382,8 @@ export default defineComponent({
         //adjust submenu position
         if (adjustPosition.value && menuEl && scroll.value) {
           const { container, adjustPadding: fillPadding } = parentContext;
-          const windowHeight = window.innerHeight, windowWidth = window.innerWidth;
+          const windowHeight = document.documentElement.scrollHeight
+          const windowWidth = document.documentElement.scrollWidth
 
           const avliableWidth = Math.min(windowWidth, container.offsetWidth);
           const avliableHeight = Math.min(windowHeight, container.offsetHeight);

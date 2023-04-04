@@ -82,6 +82,8 @@ export function genContainer(options: MenuOptions) : {
   container.setAttribute('id', DEFAULT_CONTAINER_ID);
   container.setAttribute('class', 'mx-menu-ghost-host');
   container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
+  container.style.height = document.body.scrollHeight.toString() + "px"
+  container.style.width = document.body.scrollWidth.toString() + "px"
   document.body.appendChild(container);
   return {
     container,
