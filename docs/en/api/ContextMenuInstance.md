@@ -72,6 +72,7 @@ Global Function
 | minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
 | adjustPadding | Padding for submenu position adjust. | `number` | — | `10` |
+| adjustPosition | By default, the menu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | `true` |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 
 ## MenuItem
@@ -88,7 +89,7 @@ Global Function
 | hidden | Hide menu item? | `boolean` | — | `false` |
 | checked | Is this menu item checked? | `boolean` | — | `false` |
 | shortcut | Shortcut key text display on the right. The shortcut keys here are only for display. You need to handle the key events by yourself. | `string` | — | `''` |
-| adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen. | `boolean` | — | `true` |
+| adjustSubMenuPosition | By default, the submenu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | inherit from `MenuOptions.adjustPosition` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |
 | divided | Is this menu item separated from the menu item below? | `boolean` | — | `false` |

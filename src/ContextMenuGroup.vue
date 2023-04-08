@@ -1,7 +1,8 @@
 <script lang="ts">
-import { defineComponent, h, PropType, SVGAttributes } from 'vue'
+import { defineComponent, h, inject, toRefs, PropType, SVGAttributes } from 'vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 import ContextMenuItemConstructor from './ContextMenuItem.vue';
+import { MenuOptions } from './ContextMenuDefine';
 
 export default defineComponent({
   name: 'ContextMenuGroup',
@@ -108,12 +109,15 @@ export default defineComponent({
       default: true
     },
     /**
-     * Specifies whether to adjust the position of the current submenu 
-     * after the menu exceeds the screen. The default is true
+     * By default, the submenu will automatically adjust its position to prevent it overflow the container.
+     * 
+     * If you allow menu overflow containers, you can set this to false.
+     * 
+     * Default is inherit from `MenuOptions.adjustPosition`  .
      */
     adjustSubMenuPosition: {
       type: Boolean,
-      default: true
+      default: undefined
     },
     /**
      * Max width of submenu
@@ -130,23 +134,28 @@ export default defineComponent({
       default: 0,
     },
   },
-  render() {
+  setup(props, ctx) {
+    
+    const options = inject('globalOptions') as MenuOptions;
+    const { adjustSubMenuPosition, maxWidth, minWidth } = toRefs(props);
+    const adjustSubMenuPositionValue = typeof adjustSubMenuPosition.value !== 'undefined' ? adjustSubMenuPosition.value : options.adjustPosition;
+
     //Create Item
-    return h(ContextMenuItemConstructor, {
-      ...this.$props,
+    return () => h(ContextMenuItemConstructor, {
+      ...props,
       showRightArrow: true,
       maxWidth: undefined,
       minWidth: undefined,
       adjustSubMenuPosition: undefined,
-      hasChildren: typeof this.$slots.default !== undefined,
-    }, this.$slots.default ? {
+      hasChildren: typeof ctx.slots.default !== undefined,
+    }, ctx.slots.default ? {
       //Create SubMenu
       submenu: () => h(ContextSubMenuConstructor, {
-        maxWidth: this.maxWidth,
-        minWidth: this.minWidth,
-        adjustPosition: this.adjustSubMenuPosition,
+        maxWidth: maxWidth.value,
+        minWidth: minWidth.value,
+        adjustPosition: adjustSubMenuPositionValue,
       }, {
-        default: this.$slots.default,
+        default: ctx.slots.default,
       })
     } : undefined);
   },

@@ -218,6 +218,7 @@ const componentMenuOptions = reactive<MenuOptions>({
   customClass: "class-a",
   zIndex: 3,
   minWidth: 230,
+  adjustPosition: false,
   x: 0,
   y: 0
 });

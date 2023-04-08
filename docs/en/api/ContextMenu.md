@@ -14,7 +14,7 @@ Menu component.
 | Attribute | Description | Type | Default |
 | :----: | :----: | :----: | :----: |
 | show(v-model) | Controls whether the menu is displayed | `boolean` | — |
-| options | Menu options, See [MenuOptions](#MenuOptions) | `MenuOptions` | — |
+| options | Menu options, See [MenuOptions](./ContextMenuInstance.md#menuoptions) | `MenuOptions` | — |
 
 ## Events
 

@@ -137,6 +137,14 @@ export interface MenuOptions {
    */
   adjustPadding?: number,
   /**
+   * By default, the menu will automatically adjust its position to prevent it overflow the container.
+   * 
+   * If you allow menu overflow containers, you can set this to false.
+   * 
+   * Default is true.
+   */
+  adjustPosition?: boolean,
+  /**
    * Return the mounted node for MenuRoot.
    * 
    * Note: After you change the mount node, the menu display position may be incorrect. 
@@ -226,8 +234,11 @@ export interface MenuItem {
    */
   shortcut ?: string|string,
   /**
-   * Specifies should submenu adjust it position 
-   * when the menu exceeds the screen. The default is true
+   * By default, the submenu will automatically adjust its position to prevent it overflow the container.
+   * 
+   * If you allow menu overflow containers, you can set this to false.
+   * 
+   * Default is inherit from `MenuOptions.adjustPosition`.
    */
   adjustSubMenuPosition ?: boolean,
   /**

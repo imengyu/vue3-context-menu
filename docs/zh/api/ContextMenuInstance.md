@@ -72,6 +72,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
 | adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |
+| adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 
 ## MenuItem
@@ -88,7 +89,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | hidden | 是否隐藏菜单项 | `boolean` | — | `false` |
 | checked | 是否选中菜单项 | `boolean` | — | `false` |
 | shortcut | 当前菜单项的快捷键指示，此快捷键只用于显示给用户看，快捷键的注册还是需要你自己处理 | `string` | — | `''` |
-| adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | — | `true` |
+| adjustSubMenuPosition | 默认情况下，子菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，可以将其设置为false | `boolean` | — | 继承自 `MenuOptions.adjustPosition` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |
 | divided | 是否显示分割线 | `boolean` | — | `false` |

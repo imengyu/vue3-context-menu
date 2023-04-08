@@ -48,7 +48,7 @@
                 :items="item.children"
                 :maxWidth="item.maxWidth"
                 :minWidth="item.minWidth"
-                :adjustPosition="item.adjustSubMenuPosition"
+                :adjustPosition="item.adjustSubMenuPosition !== undefined ? item.adjustSubMenuPosition : options.adjustPosition"
               />
             </template>
           </ContextMenuItem>

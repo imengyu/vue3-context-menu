@@ -21,7 +21,7 @@ title: ContextMenuGroup
 | checked | 是否选中菜单项 | `boolean` | — | `false` |
 | shortcut | 当前菜单项的快捷键指示，此快捷键只用于显示给用户看，快捷键的注册还是需要你自己处理 | `string` | — | `''` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | `false` |
-| adjustSubMenuPosition | 是否在子菜单超出屏幕后进行自动调整 | `boolean` | `true` |
+| adjustSubMenuPosition | 默认情况下，子菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，可以将其设置为false | `boolean` | 继承自 `MenuOptions.adjustPosition` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | `true` |
 | customClass | 自定义子菜单class | `string` | — |
 | minWidth | 子菜单最小宽度 | `number` | `100` |

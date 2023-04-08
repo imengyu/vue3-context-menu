@@ -217,6 +217,7 @@ export default defineComponent({
           h(ContextSubMenuConstructor, {
             class: 'mx-menu-host',
             items: options.value?.items,
+            adjustPosition: options.value?.adjustPosition,
             maxWidth: options.value.maxWidth || MenuConstOptions.defaultMaxWidth,
             minWidth: options.value.minWidth || MenuConstOptions.defaultMinWidth,
           }, {

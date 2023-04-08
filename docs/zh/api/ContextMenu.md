@@ -14,7 +14,7 @@ nav:
 | 属性 | 描述 | 类型 | 默认值 |
 | :----: | :----: | :----: | :----: |
 | show(v-model) | 是否显示菜单 | `boolean` | — |
-| options | 菜单相关定义 | `MenuOptions` | — |
+| options | 菜单相关定义 | [`MenuOptions`](./ContextMenuInstance.md#menuoptions) | — |
 
 ## Events
 

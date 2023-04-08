@@ -20,7 +20,7 @@ Submenu component.
 | checked | Is this menu item checked? | `boolean` | — | `false` |
 | shortcut | Shortcut key text display on the right. The shortcut keys here are only for display. You need to handle the key events by yourself. | `string` | — | `''` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
-| adjustSubMenuPosition | Specifies should submenu adjust it position when the menu exceeds the screen.| `boolean` | `true` |
+| adjustSubMenuPosition | By default, the submenu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | inherit from `MenuOptions.adjustPosition` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | `true` |
 | customClass | Custom submenu class. | `string` | — |
 | minWidth | Submenu minimum width (in pixels). | `number` | `100` |
