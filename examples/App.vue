@@ -1,5 +1,5 @@
 <template>
-  <div class="full test">
+  <div class="test">
     <div class="test-top">
       <h1>Vue3 Context menu</h1>
       <router-link :to="{ name: 'BasicUseage' }">Base useage</router-link>
@@ -23,38 +23,22 @@ export default defineComponent({})
 
 <style>
 
-.full {
-  position: relative;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
 html, body, #app {
   position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
   margin: 0;
 }
 .test {
   position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  overflow-y: scroll;
 }
 
 .test .test-host {
-  margin-top: 60px;
+  margin-top: 30px;
   margin-left: 20px;
   margin-right: 20px;
 }
 .test .test-top {
-  position: absolute;
-  top: 0;
-  left: 20px;
-  right: 20px;
+  padding-top: 25px;
   height: 40px;
 }
 

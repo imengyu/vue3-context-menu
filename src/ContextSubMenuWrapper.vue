@@ -35,6 +35,13 @@ export default defineComponent({
       type: Object,
       default: null
     },
+    /**
+     * Make sure is user set the custom container.
+     */
+    isFullScreenContainer: {
+      type: Boolean,
+      default: true
+    },
   },
   setup(props, ctx) {
     const {
@@ -167,6 +174,8 @@ export default defineComponent({
     provide('globalOptions', options.value);
     provide('globalCloseMenu', closeMenu);
     provide('globalTheme', options.value?.theme || 'light');
+    provide('globalIsFullScreenContainer', props.isFullScreenContainer);
+    
     provide('globalIconFontClass', options.value?.iconFontClass || 'iconfont');
     //check slot exists
     provide('globalHasSlot', (name: string) => {
@@ -239,5 +248,8 @@ export default defineComponent({
   top: 0;
   overflow: hidden;
   pointer-events: none;
+}
+.mx-menu-ghost-host.fullscreen {
+  position: fixed;
 }
 </style>

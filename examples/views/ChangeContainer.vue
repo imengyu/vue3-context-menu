@@ -5,6 +5,9 @@
         long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
         long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
         long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
+        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
+        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
+        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
       </div>
       <div ref="menuContainer" class="box3" style="flex:4">
         The menu will be mounted in this container.
@@ -14,11 +17,6 @@
         <div class="box1" style="flex:1;margin:10px 30px" @contextmenu="onContextComponentMenu($event)">
           And right click to show contextmenu (component mode) !
         </div>
-      </div>
-      <div class="box1" style="flex: 1;">
-        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
-        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
-        long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
       </div>
     </div>
     <div class="box4">

@@ -45,6 +45,7 @@ export default defineComponent({
         options: options,
         show: true,
         container: container,
+        isFullScreenContainer: !isNew,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
         onClose: () => {
           render(null, container);

@@ -14,6 +14,7 @@ function initInstance(options: MenuOptions, container: HTMLElement, isNew: boole
     options: options,
     show: true,
     container: container,
+    isFullScreenContainer: !isNew,
     onClose: () => render(null, container),
   }, customSlots);
   render(vnode, container);

@@ -193,6 +193,7 @@ export default defineComponent({
     const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
     const globalTheme = inject('globalTheme') as string;
+    const globalIsFullScreenContainer = inject('globalIsFullScreenContainer') as boolean;
 
     //#endregion
     
@@ -382,8 +383,9 @@ export default defineComponent({
         //adjust submenu position
         if (adjustPosition.value && menuEl && scroll.value) {
           const { container, adjustPadding: fillPadding } = parentContext;
-          const windowHeight = document.documentElement.scrollHeight
-          const windowWidth = document.documentElement.scrollWidth
+
+          const windowHeight = globalIsFullScreenContainer ? window.innerHeight : document.documentElement.scrollHeight
+          const windowWidth = globalIsFullScreenContainer ? window.innerWidth : document.documentElement.scrollWidth
 
           const avliableWidth = Math.min(windowWidth, container.offsetWidth);
           const avliableHeight = Math.min(windowHeight, container.offsetHeight);
