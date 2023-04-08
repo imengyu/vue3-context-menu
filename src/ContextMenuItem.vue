@@ -111,14 +111,14 @@ export default defineComponent({
      * Menu label
      */
     label: {
-      type: [String, Object],
+      type: [String, Object, Function],
       default: ''
     },
     /**
      * Menu icon (for icon class)
      */
     icon: {
-      type: [String, Object],
+      type: [String, Object, Function],
       default: ''
     },
     /**
