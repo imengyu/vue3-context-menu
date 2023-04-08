@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.2.4 - 2023/4/8
+
+* [Fix] 添加了 `MenuOptions.adjustPosition` 属性，以允许控制最外层菜单是否在溢出容器时自动调整位置 ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
+* [Fix] 修改菜单项的 icon、label属性类型验证 (Thasks @kjellmf [#36](https://github.com/imengyu/vue3-context-menu/issues/36))
+
 ## v1.2.3 - 2023/2/15
 
 * [Fix] 修改菜单组件导出与定义不一致的问题（1.2.0-1.2.2） ([#30](https://github.com/imengyu/vue3-context-menu/issues/30))
