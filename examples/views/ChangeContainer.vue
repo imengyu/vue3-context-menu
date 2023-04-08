@@ -9,7 +9,7 @@
         long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
         long content  long content  long content  long content  long content  long content  long content  long content  long content  long content 
       </div>
-      <div ref="menuContainer" class="box3" style="flex:4">
+      <div ref="menuContainer" class="box3" style="flex:4;padding-top: 400px;">
         The menu will be mounted in this container.
         <div class="box1" style="flex:1;margin:10px 30px" @contextmenu="onContextMenu($event)">
           Right click to show contextmenu !

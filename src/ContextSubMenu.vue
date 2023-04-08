@@ -384,8 +384,8 @@ export default defineComponent({
         if (adjustPosition.value && menuEl && scroll.value) {
           const { container, adjustPadding: fillPadding } = parentContext;
 
-          const windowHeight = globalIsFullScreenContainer ? window.innerHeight : document.documentElement.scrollHeight
-          const windowWidth = globalIsFullScreenContainer ? window.innerWidth : document.documentElement.scrollWidth
+          const windowHeight = document.documentElement.scrollHeight;
+          const windowWidth = document.documentElement.scrollWidth;
 
           const avliableWidth = Math.min(windowWidth, container.offsetWidth);
           const avliableHeight = Math.min(windowHeight, container.offsetHeight);
