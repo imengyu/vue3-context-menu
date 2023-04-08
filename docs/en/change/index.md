@@ -8,6 +8,7 @@ nav:
 ## v1.2.4 - 2023/4/8
 
 * [Fix] Added the `MenuOptions.adjustPosition` attribute to allow control over whether the toplevel menu automatically adjusts its position when overflowing the container ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
+* [Fix] Fixed incorrect menu positioning in scrollable long pages ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
 * [Fix] Add Function as valid prop type to label and icon (Thasks @kjellmf [#36](https://github.com/imengyu/vue3-context-menu/issues/36))
 
 ## v1.2.3 - 2023/2/15
