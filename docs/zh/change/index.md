@@ -8,6 +8,8 @@ nav:
 ## v1.2.6 - 2023/4/29
 
 * [Added] 为函数模式添加了 `onClose`（菜单关闭）、`onSubMenuOpen`（子菜单打开）、`onSubMenuClose`（子菜单关闭） 事件回调。([#41](https://github.com/imengyu/vue3-context-menu/issues/41))
+* [Added] 新增了两个css变量： `--mx-menu-open-hover-backgroud`（菜单项打开并且鼠标悬浮时背景颜色）、`--mx-menu-open-hover-text`（菜单项打开并且鼠标悬浮时文字颜色）
+* [Changed] 修改了 mac 和 win10.light 两个主题的显示效果。
 
 ## v1.2.5 - 2023/4/9
 

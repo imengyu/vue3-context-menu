@@ -5,6 +5,7 @@
   --mx-menu-hover-backgroud: #f1f1f1;
   --mx-menu-active-backgroud: #dfdfdf;
   --mx-menu-open-backgroud: #f1f1f1;
+  --mx-menu-open-hover-backgroud: #f1f1f1;
   --mx-menu-divider: #f0f0f0;
 
   //Text
@@ -12,6 +13,7 @@
   --mx-menu-hover-text: #2e2e2e;
   --mx-menu-active-text: #2e2e2e;
   --mx-menu-open-text: #2e2e2e;
+  --mx-menu-open-hover-text: #2e2e2e;
   --mx-menu-disabled-text: #c9c8c8;
 
   //Shadow
@@ -150,10 +152,15 @@
       color: var(--mx-menu-shortcut-text-active);
     }
   }
-  //With submenu openj state
+  //With submenu open state
   &.open {
     background-color: var(--mx-menu-open-backgroud);
     color: var(--mx-menu-open-text);
+
+    &:hover {
+      background-color: var(--mx-menu-open-hover-backgroud);
+      color: var(--mx-menu-open-hover-text);
+    }
     
     .mx-right-arrow, .mx-checked-mark {
       fill: var(--mx-menu-open-text);
@@ -272,6 +279,7 @@
   --mx-menu-hover-backgroud: #636363;
   --mx-menu-active-backgroud: #555555;
   --mx-menu-open-backgroud: #636363;
+  --mx-menu-open-hover-backgroud: #636363;
   --mx-menu-divider: #464646;
 
   //Text
@@ -279,6 +287,7 @@
   --mx-menu-hover-text: #ffffff;
   --mx-menu-active-text: #ffffff;
   --mx-menu-open-text: #ffffff;
+  --mx-menu-open-hover-text: #ffffff;
   --mx-menu-disabled-text: #9c9c9c;
 
   //Shadow
@@ -313,25 +322,69 @@
 //===================================================
 .mx-context-menu.win10 {
   & {
-    --mx-menu-divider: #252525;
-    --mx-menu-border-color: #252525;
+    --mx-menu-backgroud: #eeeeee;
+    --mx-menu-hover-backgroud: #d8d8d8;
+    --mx-menu-active-backgroud: #dfdfdf;
+    --mx-menu-open-backgroud: #f1f1f1;
+    --mx-menu-open-hover-backgroud: #d8d8d8;
+    --mx-menu-divider: #aaaaaa;
+    --mx-menu-border-color: #b1b1b1;
+
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover: transparent;
+    --mx-menu-shortcut-backgroud-active: transparent;
+    --mx-menu-shortcut-backgroud-open: transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #272727;
+    --mx-menu-shortcut-text-hover: #272727;
+    --mx-menu-shortcut-text-active: #272727;
+    --mx-menu-shortcut-text-open: #272727;
+    --mx-menu-shortcut-text-disabled: #6b6b6b;
+
+    .mx-context-menu-item {
+      padding: 2px 4px;
+      margin: 0 4px;
+    }
+    .mx-context-menu-item-sperator {
+      margin: 0 4px;
+    }
   }
   &.dark {
-    --mx-menu-divider: #979797;
-    --mx-menu-border-color: #979797;
+    --mx-menu-backgroud: #303031;
+    --mx-menu-hover-backgroud: #636363;
+    --mx-menu-active-backgroud: #555555;
+    --mx-menu-open-backgroud: #636363;
+    --mx-menu-open-hover-backgroud: #636363;
+    --mx-menu-divider: #808080;
+    --mx-menu-border-color: #656565;
+
+    --mx-menu-shortcut-backgroud: #505050;
+    --mx-menu-shortcut-backgroud-hover:#505050;
+    --mx-menu-shortcut-backgroud-active:#505050;
+    --mx-menu-shortcut-backgroud-open:#505050;
+    --mx-menu-shortcut-backgroud-disabled:#444444;
+    --mx-menu-shortcut-text: #f1f1f1;
+    --mx-menu-shortcut-text-hover: #ffffff;
+    --mx-menu-shortcut-text-active: #ffffff;
+    --mx-menu-shortcut-text-open: #ffffff;
+    --mx-menu-shortcut-text-disabled: #9d9d9d;
+
+    padding: 8px 0;
+
+    .mx-context-menu-item {
+      padding: 6px 12px;
+      margin: 0;
+    }
+    .mx-context-menu-item-sperator {
+      margin: 0 7px;
+    }
   }
 
   border-radius: 0;
   padding: 8px 0;
   border: 1px solid var(--mx-menu-border-color);
-  box-shadow: 0px 1px 2px 1px var(--mx-menu-shadow-color);
+  box-shadow: 2px 2px 1px 0 var(--mx-menu-shadow-color);
 
-  .mx-context-menu-item {
-    padding: 6px 12px;
-  }
-  .mx-context-menu-item-sperator {
-    margin: 0 7px;
-  }
 }
 
 //Mac theme
@@ -344,7 +397,8 @@
     --mx-menu-backgroud: #ececec;
     --mx-menu-hover-backgroud: #0165e1;
     --mx-menu-active-backgroud: #0165e1;
-    --mx-menu-open-backgroud: #0165e1;
+    --mx-menu-open-backgroud: #858585;
+    --mx-menu-open-hover-backgroud: #0165e1;
     --mx-menu-divider: #d2d2d2;
 
     //Text
@@ -352,6 +406,7 @@
     --mx-menu-hover-text: #fff;
     --mx-menu-active-text: #fff;
     --mx-menu-open-text: #fff;
+    --mx-menu-open-hover-text: #fff;
     --mx-menu-disabled-text: #bbbbbb;
 
     //Shadow
@@ -379,7 +434,8 @@
     --mx-menu-backgroud: #333333;
     --mx-menu-hover-backgroud: #0153d2;
     --mx-menu-active-backgroud: #0153d2;
-    --mx-menu-open-backgroud: #0153d2;
+    --mx-menu-open-hover-backgroud: #0153d2;
+    --mx-menu-open-backgroud: #414346;
     --mx-menu-divider: #575757;
 
     //Text
@@ -387,6 +443,7 @@
     --mx-menu-hover-text: #fff;
     --mx-menu-active-text: #fff;
     --mx-menu-open-text: #fff;
+    --mx-menu-open-hover-text: #fff;
     --mx-menu-disabled-text: #6a6a6a;
 
     //Shadow

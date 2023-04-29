@@ -8,6 +8,8 @@ nav:
 ## v1.2.6 - 2023/4/29
 
 * [Added] Added `onClose` (menu close), `onSubMenuOpen` (submenu open), and `onSubMenuClose` (submenu close) event callbacks for function mode. ([#41](https://github.com/imengyu/vue3-context-menu/issues/41))
+* [Added] Added two CSS variables: `--mx-menu-open-hover-backgroud` (The background color when the menu item is open and the mouse hovers), `--mx-menu-open-hover-text` (Text color when menu item is open and mouse hovers).
+* [Changed] Modified the display effects of `mac` and `win10.light` themes.
 
 ## v1.2.5 - 2023/4/9
 
