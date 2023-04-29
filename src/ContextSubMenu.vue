@@ -41,6 +41,8 @@
             :preserveIconWidth="item.preserveIconWidth !== undefined ? item.preserveIconWidth : options.preserveIconWidth"
             :showRightArrow="item.children && item.children.length > 0"
             :hasChildren="item.children && item.children.length > 0"
+            @sub-menu-open="item.onSubMenuOpen"
+            @sub-menu-close="item.onSubMenuClose"
           >
             <template v-if="item.children && item.children.length > 0" #submenu>
               <!--Sub menu-->

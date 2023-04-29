@@ -9,13 +9,21 @@ import ContextMenuItemConstructor from './ContextMenuItem.vue'
 import ContextMenuGroupConstructor from './ContextMenuGroup.vue'
 import ContextMenuSeparatorConstructor from './ContextMenuSeparator.vue'
 
-function initInstance(options: MenuOptions, container: HTMLElement, isNew: boolean, customSlots?: Record<string, Slot>) {
+function initInstance(
+  options: MenuOptions, 
+  container: HTMLElement, 
+  isNew: boolean, 
+  customSlots?: Record<string, Slot>,
+) {
   const vnode = h(ContextSubMenuWrapperConstructor, { 
     options: options,
     show: true,
     container: container,
     isFullScreenContainer: !isNew,
-    onClose: () => render(null, container),
+    onClose: () => {
+      render(null, container);
+      options.onClose?.();
+    },
   }, customSlots);
   render(vnode, container);
   return vnode.component;

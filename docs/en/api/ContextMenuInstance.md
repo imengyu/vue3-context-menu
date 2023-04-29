@@ -74,6 +74,7 @@ Global Function
 | adjustPadding | Padding for submenu position adjust. | `number` | — | `10` |
 | adjustPosition | By default, the menu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | `true` |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
+| onClose | This event emit when this menu is closing. (Usually used in function mode) | `(() => void)` | — | — |
 
 ## MenuItem
 
@@ -97,5 +98,7 @@ Global Function
 | minWidth | Submenu minimum width (in pixels). | `number` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` | — | `600` |
 | onClick | Menu item click event handler. | `Function()` | — | — |
+| onSubMenuClose | This event emit when submenu of this item is closing. | `(() => void)` | — | — |
+| onSubMenuOpen | This event emit when submenu of this item is showing. | `(() => void)` | — | — |
 | customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | Submenu items. | `MenuItem[]` | — | — |

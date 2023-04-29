@@ -5,11 +5,19 @@ nav:
   order: 5
 ---
 
+## v1.2.6 - 2023/4/29
+
+* [Added] Added `onClose` (menu close), `onSubMenuOpen` (submenu open), and `onSubMenuClose` (submenu close) event callbacks for function mode. ([#41](https://github.com/imengyu/vue3-context-menu/issues/41))
+
+## v1.2.5 - 2023/4/9
+
+* [Fix] Fixed 1.2.4 missing .d.ts files ([#38](https://github.com/imengyu/vue3-context-menu/issues/38))
+
 ## v1.2.4 - 2023/4/8
 
 * [Fix] Added the `MenuOptions.adjustPosition` attribute to allow control over whether the toplevel menu automatically adjusts its position when overflowing the container ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
-* [Fix] Fixed incorrect menu positioning in scrollable long pages ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
-* [Fix] Add Function as valid prop type to label and icon (Thasks @kjellmf [#36](https://github.com/imengyu/vue3-context-menu/issues/36))
+* [Fix] Fixed incorrect menu positioning in scrollable long pages (Thasks @jamespltan pull [#35](https://github.com/imengyu/vue3-context-menu/pull/35)) ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
+* [Fix] Add Function as valid prop type to label and icon (Thasks @kjellmf pull [#36](https://github.com/imengyu/vue3-context-menu/pull/36))
 
 ## v1.2.3 - 2023/2/15
 

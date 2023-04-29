@@ -49,7 +49,8 @@ export default defineComponent({
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
         onClose: () => {
           render(null, container);
-          ctx.emit('close')
+          options.value.onClose?.();
+          ctx.emit('close');
         },
       }, ctx.slots);
 

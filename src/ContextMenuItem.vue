@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, PropType, ref, SVGAttributes, toRefs } from 'vue'
+import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, PropType, ref, SVGAttributes, toRefs, withCtx } from 'vue'
 import { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
 import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { VNodeRender } from './ContextMenuUtils'
@@ -200,7 +200,9 @@ export default defineComponent({
     },
   },
   emits: [
-    'click'
+    'click',
+    'subMenuOpen',
+    'subMenuClose',
   ],
   setup(props, context) {
 
@@ -319,8 +321,10 @@ export default defineComponent({
           menuContext.addOpenedSubMenu(() => {
             keyBoardFocusMenu.value = false;
             showSubMenu.value = false;
+            context.emit('subMenuClose');
           });
           showSubMenu.value = true;
+          context.emit('subMenuOpen');
         }
       }
     }

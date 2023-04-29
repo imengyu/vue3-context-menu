@@ -5,11 +5,19 @@ nav:
   order: 5
 ---
 
+## v1.2.6 - 2023/4/29
+
+* [Added] 为函数模式添加了 `onClose`（菜单关闭）、`onSubMenuOpen`（子菜单打开）、`onSubMenuClose`（子菜单关闭） 事件回调。([#41](https://github.com/imengyu/vue3-context-menu/issues/41))
+
+## v1.2.5 - 2023/4/9
+
+* [Fix] 修复了 1.2.4 丢失 .d.ts 文件的问题 ([#38](https://github.com/imengyu/vue3-context-menu/issues/38))
+
 ## v1.2.4 - 2023/4/8
 
 * [Fix] 添加了 `MenuOptions.adjustPosition` 属性，以允许控制最外层菜单是否在溢出容器时自动调整位置 ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
-* [Fix] 修复了在可滚动的长页面下菜单定位不正确问题 ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
-* [Fix] 修改菜单项的 icon、label属性类型验证 (Thasks @kjellmf [#36](https://github.com/imengyu/vue3-context-menu/issues/36))
+* [Fix] 修复了在可滚动的长页面下菜单定位不正确问题 (Thasks @jamespltan [#35](https://github.com/imengyu/vue3-context-menu/pull/35)) ([#34](https://github.com/imengyu/vue3-context-menu/issues/34))
+* [Fix] 修改菜单项的 icon、label属性类型验证 (Thasks @kjellmf [#36](https://github.com/imengyu/vue3-context-menu/pull/36))
 
 ## v1.2.3 - 2023/2/15
 

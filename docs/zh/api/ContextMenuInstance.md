@@ -10,7 +10,7 @@ title: 函数模式
 import ContextMenu from '@imengyu/vue3-context-menu'
 ```
 
-菜单全局函数，
+菜单全局函数。
 
 ### `ContextMenu.showContextMenu(options: MenuOptions, customSlots?: Record<string, Slot>)`
 
@@ -74,6 +74,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |
 | adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
+| onClose | 菜单关闭事件回调（通常在函数模式使用） | `(() => void)` | — | — |
 
 ## MenuItem
 
@@ -97,5 +98,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | minWidth | 子菜单最小宽度 | `number` | — | `100` |
 | maxWidth | 子菜单最大宽度 | `number` | — | `600` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
+| onSubMenuClose | 子菜单关闭事件回调 | `(() => void)` | — | — |
+| onSubMenuOpen | 子菜单打开事件回调 | `(() => void)` | — | — |
 | customRender | 菜单项整体自定义渲染回调 | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | 子菜单结构信息 | `MenuItem[]` | — | — |

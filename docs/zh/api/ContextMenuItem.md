@@ -40,3 +40,5 @@ title: ContextMenuItem
 | 事件名 | 描述 | 参数 |
 | :----: | :----: | :----: |
 | click | 点击菜单时触发此事件 | - |
+| subMenuOpen | 子菜单打开时触发此事件 | - |
+| subMenuClose | 子菜单关闭时触发此事件 | - |

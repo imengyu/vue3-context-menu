@@ -168,6 +168,10 @@ export interface MenuOptions {
    * ```
    */
   getContainer ?: HTMLElement | (() => HTMLElement);
+  /**
+   * This event emit when this menu is closing. (Usually used in function mode)
+   */
+  onClose ?: (() => void) | undefined;
 }
 export interface MenuItem {
   /**
@@ -270,10 +274,21 @@ export interface MenuItem {
    */
   onClick ?: () => void,
   /**
+   * This event emit when submenu of this item is closing.
+   */
+  onSubMenuClose ?: (() => void) | undefined;
+  /**
+   * This event emit when submenu of this item is showing.
+   */
+  onSubMenuOpen ?: (() => void) | undefined;
+  /**
    * A custom render callback that allows you to customize the rendering
    *  of the current item.
    */
   customRender ?: VNode|((item: MenuItem) => VNode),
+  /**
+   * Child menu items (Valid in function mode).
+   */
   children ?: MenuItem[],
 }
 

@@ -144,6 +144,12 @@ const menuData = reactive<MenuOptions>({
         { label: "View source", icon: "icon-terminal" },
         { label: "Inspect" }
       ],
+      onSubMenuOpen() {
+        console.log('onSubMenuOpen');
+      },
+      onSubMenuClose() {
+        console.log('onSubMenuClose');
+      },
     },
     {
       label: "Submenu with Submenu",
@@ -262,6 +268,9 @@ const menuData = reactive<MenuOptions>({
   minWidth: 230,
   x: 0,
   y: 0,
+  onClose() {
+    console.log('onClose');
+  },
 });
 
 function onContextMenu(e : MouseEvent) {

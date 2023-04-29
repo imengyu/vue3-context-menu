@@ -40,3 +40,5 @@ Menu item component.
 | Event name | Description | Arguments |
 | :----: | :----: | :----: |
 | click | This event is triggered when the click this menu item | - |
+| subMenuOpen | Trigger this event when a submenu is opened | - |
+| subMenuClose | Trigger this event when the submenu is closed | - |
