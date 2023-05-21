@@ -5,6 +5,7 @@ export default ContextMenuGlobal;
 
 export * from './lib/ContextMenuDefine';
 import MenuBar from './lib/MenuBar.vue';
+import { MenuBarOptions } from './lib/MenuBar';
 import ContextMenu from './lib/ContextMenu.vue';
 import ContextMenuItem from './lib/ContextMenuItem.vue';
 import ContextMenuSeparator from './lib/ContextMenuSeparator.vue';
@@ -16,6 +17,7 @@ export {
   ContextMenuSeparator,
   ContextMenuGroup,
   MenuBar,
+  MenuBarOptions,
 }
 
 declare module 'vue3-context-menu' {
