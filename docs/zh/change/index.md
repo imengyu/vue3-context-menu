@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.2.7 - 2023/05/27
+
+* [Added] 新增了 MenuBar 菜单栏组件。
+* [Fix] 使用Teleport渲染菜单，修复插槽相关数据不正常问题 ([#45](https://github.com/imengyu/vue3-context-menu/issues/45))
+
 ## v1.2.6 - 2023/4/29
 
 * [Added] 为函数模式添加了 `onClose`（菜单关闭）、`onSubMenuOpen`（子菜单打开）、`onSubMenuClose`（子菜单关闭） 事件回调。([#41](https://github.com/imengyu/vue3-context-menu/issues/41))

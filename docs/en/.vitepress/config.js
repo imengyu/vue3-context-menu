@@ -57,6 +57,7 @@ const config = {
                 { text: 'ContextMenuGroup', link: '/api/ContextMenuGroup' },
                 { text: 'ContextMenuItem', link: '/api/ContextMenuItem' },
                 { text: 'ContextMenuSeparator', link: '/api/ContextMenuSeparator' },
+                { text: 'MenuBar', link: '/api/MenuBar' },
               ]
             },
           ]

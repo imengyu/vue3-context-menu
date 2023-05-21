@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, PropType, ref, SVGAttributes, toRefs, withCtx } from 'vue'
+import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, PropType, ref, SVGAttributes, toRefs } from 'vue'
 import { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
 import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { VNodeRender } from './ContextMenuUtils'
@@ -231,8 +231,12 @@ export default defineComponent({
         if (showSubMenu.value) {
           //Mark current item
           menuContext.markActiveMenuItem(menuItemInstance, true);
-        } else if (hasChildren.value) 
-         onMouseEnter();
+          return true;
+        } else if (hasChildren.value) {
+          onMouseEnter();
+          return true;
+        }
+        return false;
       },
       isDisabledOrHidden: () => disabled.value || hidden.value,
       getElement: () => menuItemRef.value,

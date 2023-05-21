@@ -1,0 +1,57 @@
+
+//Menu Bar
+//===================================================
+.mx-menu-bar {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--mx-menu-backgroud);
+  padding: 5px 0;
+
+  &.mini {
+    flex-grow: 0;
+  }
+
+  .mx-menu-bar-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .mx-menu-bar-item {
+    padding: 2px 8px;
+    border-radius: 5px;
+    user-select: none;
+    background-color: var(--mx-menu-backgroud);
+    color: var(--mx-menu-text);
+
+    &:hover {
+      background-color: var(--mx-menu-hover-backgroud);
+      color: var(--mx-menu-hover-text);
+
+      .mx-menu-bar-icon-menu {
+        fill: var(--mx-menu-hover-text);
+      }
+    }
+    &:active, &.active {
+      background-color: var(--mx-menu-active-backgroud);
+      color: var(--mx-menu-active-text);
+
+      .mx-menu-bar-icon-menu {
+        fill: var(--mx-menu-active-text);
+      }
+    }
+  }
+
+  .mx-menu-bar-icon-menu {
+    fill: var(--mx-menu-text);
+    width: var(--mx-menu-icon-size);
+    height: var(--mx-menu-icon-size);
+  }
+}
+
+.mx-menu-bar.flat {
+  .mx-menu-bar-item {
+    border-radius: 0;
+  }
+}

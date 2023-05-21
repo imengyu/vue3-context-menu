@@ -56,8 +56,11 @@ export function removeContainer(container: HTMLElement) :void {
 }
 
 const DEFAULT_CONTAINER_ID = 'mx-menu-default-container';
+const GEN_CONTAINER_ID = 'mx-menu-container-';
+let containerId = 0;
 
 export function genContainer(options: MenuOptions) : {
+  eleId: string,
   container: HTMLElement,
   isNew: boolean,
 } {
@@ -66,8 +69,14 @@ export function genContainer(options: MenuOptions) : {
   if (getContainer) {
     const container = typeof getContainer === 'function' ? getContainer() : getContainer;
     if (container) {
+      let eleId = container.getAttribute('id');
+      if (!eleId) {
+        eleId = GEN_CONTAINER_ID + (containerId++);
+        container.setAttribute('id', eleId);
+      }
       container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
       return {
+        eleId,
         container,
         isNew: false,
       };
@@ -75,17 +84,15 @@ export function genContainer(options: MenuOptions) : {
   }
 
   let container = document.getElementById(DEFAULT_CONTAINER_ID);
-  if (container) 
-    document.body.removeChild(container);
-    
-  container = document.createElement('div');
-  container.setAttribute('id', DEFAULT_CONTAINER_ID);
-  container.setAttribute('class', 'mx-menu-ghost-host fullscreen');
+  if (!container) {
+    container = document.createElement('div');
+    container.setAttribute('id', DEFAULT_CONTAINER_ID);
+    container.setAttribute('class', 'mx-menu-ghost-host fullscreen');
+    document.body.appendChild(container);
+  }
   container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
-  //container.style.height = document.body.scrollHeight.toString() + "px"
-  //container.style.width = document.body.scrollWidth.toString() + "px"
-  document.body.appendChild(container);
   return {
+    eleId: DEFAULT_CONTAINER_ID,
     container,
     isNew: true,
   };

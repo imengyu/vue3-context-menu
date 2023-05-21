@@ -130,11 +130,13 @@ export default defineComponent({
           currentOpenedMenu.value?.moveCurrentItemLast();
           break;
         case "ArrowLeft": {
-          currentOpenedMenu.value?.closeSelfAndActiveParent();
+          if (!currentOpenedMenu.value?.closeSelfAndActiveParent())
+            options.value.onKeyFocusMoveLeft?.();
           break;
         }
         case "ArrowRight":
-          currentOpenedMenu.value?.openCurrentItemSubMenu();
+          if (!currentOpenedMenu.value?.openCurrentItemSubMenu())
+            options.value.onKeyFocusMoveRight?.();
           break;
         case "Enter":
           currentOpenedMenu.value?.triggerCurrentItemClick();
@@ -183,7 +185,7 @@ export default defineComponent({
     });
     //render slot
     provide('globalRenderSlot', (name: string, params: Record<string, unknown>) => {
-      return renderSlot(ctx.slots, name, { ...params })
+      return renderSlot(ctx.slots, name, { ...params }, () => [ h('span', 'Render slot failed') ], false);
     });
     //provide menuContext for child use
     provide('menuContext', {

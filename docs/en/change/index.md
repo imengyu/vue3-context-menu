@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.2.7 - 2023/05/27
+
+* [Added] Added the MenuBar component.
+* [Fix] Use the Teleport rendering menu to fix abnormal slot related data issues ([#45](https://github.com/imengyu/vue3-context-menu/issues/45))
+
 ## v1.2.6 - 2023/4/29
 
 * [Added] Added `onClose` (menu close), `onSubMenuOpen` (submenu open), and `onSubMenuClose` (submenu close) event callbacks for function mode. ([#41](https://github.com/imengyu/vue3-context-menu/issues/41))

@@ -172,6 +172,15 @@ export interface MenuOptions {
    * This event emit when this menu is closing. (Usually used in function mode)
    */
   onClose ?: (() => void) | undefined;
+
+  /**
+   * Event for MenuBar component
+   */
+  onKeyFocusMoveLeft ?:  (() => void) | undefined;
+  /**
+   * Event for MenuBar component
+   */
+  onKeyFocusMoveRight ?:  (() => void) | undefined;
 }
 export interface MenuItem {
   /**

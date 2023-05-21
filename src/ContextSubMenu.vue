@@ -92,7 +92,7 @@ import ContextMenuIconRight from './ContextMenuIconRight.vue'
 export interface MenuItemContext {
   focus: () => void,
   blur: () => void,
-  showSubMenu: () => void,
+  showSubMenu: () => boolean,
   getElement: () => HTMLElement|undefined,
   isDisabledOrHidden: () => boolean,
   click: () => void,
@@ -101,14 +101,14 @@ export interface MenuItemContext {
 //The internal info context for submenu instance
 export interface SubMenuContext {
   isTopLevel: () => boolean;
-  closeSelfAndActiveParent: () => void,
+  closeSelfAndActiveParent: () => boolean,
+  openCurrentItemSubMenu: () => boolean,
   closeCurrentSubMenu: () => void,
   moveCurrentItemFirst: () => void,
   moveCurrentItemLast: () => void,
   moveCurrentItemDown: () => void,
   moveCurrentItemUp: () => void,
   focusCurrentItem: () => void,
-  openCurrentItemSubMenu: () => void,
   triggerCurrentItemClick: () => void,
 }
 
@@ -195,7 +195,6 @@ export default defineComponent({
     const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
     const globalTheme = inject('globalTheme') as string;
-    const globalIsFullScreenContainer = inject('globalIsFullScreenContainer') as boolean;
 
     //#endregion
     
@@ -266,8 +265,13 @@ export default defineComponent({
         const parent = thisMenuContext.getParentContext();
         if (parent) {
           parent.closeOtherSubMenu();
-          parent.getSubMenuInstanceContext()?.focusCurrentItem();
+          const conext = parent.getSubMenuInstanceContext()
+          if (conext) {
+            conext.focusCurrentItem();
+            return true;
+          }
         }
+        return false;
       },
       closeCurrentSubMenu: () => thisMenuContext.getParentContext()?.closeOtherSubMenu(),
       moveCurrentItemFirst: () => setAndFocusNotDisableItem(true),
@@ -275,7 +279,11 @@ export default defineComponent({
       moveCurrentItemDown: () => setAndFocusNotDisableItem(true, (currentItem ? (menuItems.indexOf(currentItem) + 1) : 0)),
       moveCurrentItemUp: () => setAndFocusNotDisableItem(false, (currentItem ? (menuItems.indexOf(currentItem) - 1) : 0)),
       focusCurrentItem: () => setAndFocusCurrentMenu(),
-      openCurrentItemSubMenu: () => currentItem?.showSubMenu(),
+      openCurrentItemSubMenu: () => {
+        if (currentItem)
+          return currentItem?.showSubMenu()
+        return false;
+      },
       triggerCurrentItemClick: () => currentItem?.click(),
     };
 

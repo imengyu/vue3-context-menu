@@ -169,4 +169,77 @@ export default defineComponent({
     },
   }
 });
+</script>
+```
+
+## Menu bar
+
+This library comes with a menu bar component, which is very similar to the function of the right-click menu and the menu bar. Therefore, it is integrated into the library, and you can also use this component to implement the main menu bar function of desktop programs.
+
+For online examples, please refer to [here](https://imengyu.top/pages/vue3-context-menu-demo/#/MenuBar).
+
+```vue
+<template>
+  <MenuBar :options="menuData" />
+</template>
+
+<script setup lang="ts">
+import { MenuBar } from '@imengyu/vue3-context-menu';
+
+const menuData : MenuBarOptions = {
+  items: [
+    {
+      label: "File",
+      children: [
+        { label: "New" },
+        { label: "Open" },
+        { 
+          label: "Open recent",
+          children: [
+            { label: "File 1...." },
+            { label: "File 2...." },
+            { label: "File 3...." },
+            { label: "File 4...." },
+            { label: "File 5...." },
+          ],
+        },
+        { label: "Save", divided: true },
+        { label: "Save as..." },
+        { label: "Close" },
+        { label: "Exit" },
+      ],
+    },
+    {
+      label: "Edit",
+      children: [
+        { label: "Undo" },
+        { label: "Redo" },
+        { label: "Cut", divided: true },
+        { label: "Copy" },
+        { label: "Find", divided: true },
+        { label: "Replace" },
+      ],
+    },
+    {
+      label: "View",
+      children: [
+        { label: "Zoom in" },
+        { label: "Zoom out" },
+        { label: "Reset zoom" },
+        { label: "Full screent", divided: true },
+        { label: "Find", divided: true },
+        { label: "Replace" },
+      ],
+    },
+    {
+      label: "Help",
+      children: [
+        { label: "About" },
+      ],
+    },
+  ],
+  zIndex: 3,
+  minWidth: 230,
+};
+</script>
 ```

@@ -161,4 +161,77 @@ export default defineComponent({
     },
   }
 });
+</script>
+```
+
+## 菜单栏
+
+本库附带了一个菜单栏组件，因为右键菜单的功能和菜单栏非常相似，所以一并做到库里了，你也可以使用这个组件实现桌面程序的主菜单栏功能。
+
+在线示例可以参考[这里](https://imengyu.top/pages/vue3-context-menu-demo/#/MenuBar)。
+
+```vue
+<template>
+  <MenuBar :options="menuData" />
+</template>
+
+<script setup lang="ts">
+import { MenuBar } from '@imengyu/vue3-context-menu';
+
+const menuData : MenuBarOptions = {
+  items: [
+    {
+      label: "File",
+      children: [
+        { label: "New" },
+        { label: "Open" },
+        { 
+          label: "Open recent",
+          children: [
+            { label: "File 1...." },
+            { label: "File 2...." },
+            { label: "File 3...." },
+            { label: "File 4...." },
+            { label: "File 5...." },
+          ],
+        },
+        { label: "Save", divided: true },
+        { label: "Save as..." },
+        { label: "Close" },
+        { label: "Exit" },
+      ],
+    },
+    {
+      label: "Edit",
+      children: [
+        { label: "Undo" },
+        { label: "Redo" },
+        { label: "Cut", divided: true },
+        { label: "Copy" },
+        { label: "Find", divided: true },
+        { label: "Replace" },
+      ],
+    },
+    {
+      label: "View",
+      children: [
+        { label: "Zoom in" },
+        { label: "Zoom out" },
+        { label: "Reset zoom" },
+        { label: "Full screent", divided: true },
+        { label: "Find", divided: true },
+        { label: "Replace" },
+      ],
+    },
+    {
+      label: "Help",
+      children: [
+        { label: "About" },
+      ],
+    },
+  ],
+  zIndex: 3,
+  minWidth: 230,
+};
+</script>
 ```

@@ -7,8 +7,8 @@
       <router-link :to="{ name: 'BasicComponent' }">Component useage</router-link>
       <router-link :to="{ name: 'ComponentCustomize' }">Component customize</router-link>
       <router-link :to="{ name: 'Theme' }">Themes</router-link>
-      <router-link :to="{ name: 'InScaledBody' }">Use In scaled</router-link>
       <router-link :to="{ name: 'ChangeContainer' }">Change container</router-link>
+      <router-link :to="{ name: 'MenuBar' }">MenuBar</router-link>
     </div>
     <div class="test-host">
       <router-view />

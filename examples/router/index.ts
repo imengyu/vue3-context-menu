@@ -4,7 +4,7 @@ import BasicCustomize from '../views/BasicCustomize.vue'
 import BasicUseage from '../views/BasicUseage.vue'
 import Theme from '../views/Theme.vue'
 import ComponentCustomize from '../views/ComponentCustomize.vue'
-import InScaledBody from '../views/InScaledBody.vue'
+import MenuBar from '../views/MenuBar.vue'
 import ChangeContainer from '../views/ChangeContainer.vue'
 
 const routes: Array<RouteRecordRaw> = [
@@ -34,9 +34,9 @@ const routes: Array<RouteRecordRaw> = [
     component: Theme,
   },
   {
-    path: '/InScaledBody',
-    name: 'InScaledBody',
-    component: InScaledBody,
+    path: '/MenuBar',
+    name: 'MenuBar',
+    component: MenuBar,
   },
   {
     path: '/ChangeContainer',
