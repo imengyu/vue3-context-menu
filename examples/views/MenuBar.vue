@@ -1,5 +1,6 @@
 <template>
   <div style="margin-left:150px;">
+    <h3>MenuBar:</h3>
     <MenuBar :options="menuData">
     </MenuBar>
     <MenuBar :options="menuData2">
@@ -12,6 +13,7 @@
     </MenuBar>
     <MenuBar :options="menuData6">
     </MenuBar>
+    <h3>Collapsed MenuBar:</h3>
     <MenuBar :options="menuData7">
     </MenuBar>
     <MenuBar :options="menuData8">
