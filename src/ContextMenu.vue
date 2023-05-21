@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, h, PropType, render, toRefs, VNode, watch } from 'vue'
+import { defineComponent, h, PropType, Teleport, toRefs, VNode } from 'vue'
 import { MenuOptions } from './ContextMenuDefine'
-import { genContainer, removeContainer } from "./ContextMenuUtils";
+import { genContainer } from "./ContextMenuUtils";
 import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
 
 export type GlobalHasSlot = (name: string) => boolean;
@@ -36,52 +36,32 @@ export default defineComponent({
       show,
     } = toRefs(props);
 
-    let currentContainer = null as HTMLElement|null; 
-    let currentContainerIsNew = false; 
+    ctx.expose({
+      closeMenu: () => ctx.emit('update:show', false),
+    });
 
-    function openMenu() {
-      const { container, isNew } = genContainer(options.value);
-      const vnode = h(ContextSubMenuWrapperConstructor as unknown as string, { 
+    return () => {  
+      const { isNew, container, eleId } = genContainer(options.value);
+      const vnode = show.value ? [ h(ContextSubMenuWrapperConstructor as unknown as string, { 
         options: options,
         show: true,
         container: container,
         isFullScreenContainer: !isNew,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
         onClose: () => {
-          render(null, container);
-          options.value.onClose?.();
+          ctx.emit('update:show', false);
           ctx.emit('close');
+          options.value.onClose?.();
         },
-      }, ctx.slots);
-
-      currentContainerIsNew = isNew;
-      currentContainer = container;
-      render(vnode, container);
-    }
-    function closeMenu() {
-      if (currentContainer) {
-        if (currentContainerIsNew)
-          removeContainer(currentContainer);
-        currentContainer = null;
-      }
-    }
-
-    watch(show, (v) => {
-      if (v)
-        openMenu();
-      else
-        closeMenu();
-    });
-
-    //watch(() => options.value.x, () => checkAndRecreate());
-    //watch(() => options.value.y, () => checkAndRecreate());
-
-    ctx.expose({
-      closeMenu: closeMenu,
-    });
-
-    return () => {      
-      return [];
+      }, ctx.slots) ] : [];
+      
+      return [
+        h(
+          Teleport,
+          { to: `#${eleId}` },
+          vnode
+        )
+      ];
     }
   },
 })

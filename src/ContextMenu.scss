@@ -16,6 +16,8 @@
   --mx-menu-open-hover-text: #2e2e2e;
   --mx-menu-disabled-text: #c9c8c8;
 
+  --mx-menu-icon-size: 16px;
+
   //Shadow
   --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
   --mx-menu-backgroud-radius: 10px;
@@ -215,11 +217,11 @@
 
   .icon  {
     display: inline-block;
-    font-size: 16px;
+    font-size: var(--mx-menu-icon-size);
 
     &.svg {
-      width: 16px;
-      height: 16px;
+      width: var(--mx-menu-icon-size);
+      height: var(--mx-menu-icon-size);
     }
   }
   .label {
@@ -255,8 +257,8 @@
 }
 //Check mark
 .mx-checked-mark {
-  width: 16px;
-  height: 16px;
+  width: var(--mx-menu-icon-size);
+  height: var(--mx-menu-icon-size);
 }
 
 //Shortcut
@@ -272,6 +274,7 @@
 
 //Dark theme
 //===================================================
+.mx-menu-bar.dark,
 .mx-context-menu.dark {
   //CSS Vars
   //Backgroud
@@ -308,6 +311,7 @@
 
 //Flat theme
 //===================================================
+.mx-menu-bar.flat,
 .mx-context-menu.flat {
   border-radius: 0;
   padding: 7px 0;
@@ -320,6 +324,7 @@
 
 //win10 theme
 //===================================================
+.mx-menu-bar.win10
 .mx-context-menu.win10 {
   & {
     --mx-menu-backgroud: #eeeeee;
@@ -389,6 +394,7 @@
 
 //Mac theme
 //===================================================
+.mx-menu-bar.mac,
 .mx-context-menu.mac {
 
   & {
