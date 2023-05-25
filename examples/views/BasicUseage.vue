@@ -237,8 +237,10 @@ const menuData = reactive<MenuOptions>({
       label: 'Test item checked mark',
       clickClose: false,
       checked: false,
-      onClick: () => {
-        menuData.items[6].checked = !menuData.items[6].checked;
+      onClick() {
+        console.log(this);
+        
+        this.checked = !this.checked;
       },
     },
     { 

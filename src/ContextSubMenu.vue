@@ -24,7 +24,7 @@
         <template v-for="(item, i) in items" :key="i" >
           <!--Menu Item-->
           <ContextMenuItem
-            :clickHandler="item.onClick"
+            :clickHandler="item.onClick ? () => item.onClick!() : undefined"
             :disabled="item.disabled"
             :hidden="item.hidden"
             :icon="item.icon"
