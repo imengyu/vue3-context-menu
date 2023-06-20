@@ -467,13 +467,12 @@ export default defineComponent({
               }
 
               if (overflow.value) { //Y overflow
-                const oy = yOverflow - fillPaddingY;
-                const py = parentContext.getParentAbsY();
-
-                if (py - oy < 0)
-                  position.value.y -= py - fillPaddingY;
+                const oy = yOverflow;
+                const maxSubHeight = absY;
+                if (oy > maxSubHeight)
+                  position.value.y -= maxSubHeight - fillPaddingY;
                 else
-                  position.value.y -= oy;
+                  position.value.y -= oy - fillPaddingY * 2;
                 maxHeight.value = (avliableHeight - fillPaddingY * 2);
               } else {
                 maxHeight.value = 0;
