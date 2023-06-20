@@ -65,14 +65,17 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
 | zIndex | 菜单的`z-index` | `number` | — | `2` |
 | customClass | 自定义菜单类名 | `string` | — | — |
-| minWidth | 主菜单最小宽度 | `number` | — | `100` |
-| maxWidth | 主菜单最大宽度 | `number` | — | `600` |
+| minWidth | 主菜单最小宽度 | `number ` or `string` | — | `100` |
+| maxWidth | 主菜单最大宽度 | `number ` or `string` | — | `600` |
 | keyboardControl | 设置用户是否可以使用键盘键控制当前菜单 | `boolean` | — | `true` |
 | theme | 菜单的[主题](../guide/theme.md) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
-| adjustPadding | 自动调整菜单时的上下边距 | `number` | — | `10` |
+| adjustPadding | 自动调整菜单时的上下边距 | `{ x: number, y: number }` or `number` | — | `10` |
 | adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |
+| direction | 设置主菜单相对于坐标的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | `'br'` |
+| ignoreClickClassName | 若菜单项中的元素有这个className，单击它将忽略事件。| `string` | — |
+| clickCloseClassName | 若菜单项中的元素有这个className，单击它将忽略事件，并且点击后会关闭菜单。| `string` | — |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 | onClose | 菜单关闭事件回调（通常在函数模式使用） | `(() => void)` | — | — |
 
@@ -95,8 +98,9 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |
 | divided | 是否显示分割线 | `boolean` | — | `false` |
 | customClass | 自定义子菜单class | `string` | — | — |
-| minWidth | 子菜单最小宽度 | `number` | — | `100` |
-| maxWidth | 子菜单最大宽度 | `number` | — | `600` |
+| minWidth | 子菜单最小宽度 | `number` or `string` | — | `100` |
+| maxWidth | 子菜单最大宽度 | `number` or `string` | — | `600` |
+| direction | 设置子菜单的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | 继承自 `MenuOptions.direction` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
 | onSubMenuClose | 子菜单关闭事件回调 | `(() => void)` | — | — |
 | onSubMenuOpen | 子菜单打开事件回调 | `(() => void)` | — | — |

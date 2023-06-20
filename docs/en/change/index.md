@@ -5,6 +5,22 @@ nav:
   order: 5
 ---
 
+## v1.3.0 - 2023/06/20
+
+* [Added] Add `MenuOptions.direction` and `MenuItem.direction` that allow controll menu pop direction.
+* [Added] Add `clickCloseClassName` and `clickCloseClassName` for ignore clicking of some element. ([#48](https://github.com/imengyu/vue3-context-menu/issues/48))
+* [Added] Add `close` callback in render solt param for close hole menu.
+* [Change] `MenuOptions.adjustPadding` now default value is `{ x：0, y: 10 }`.
+* [Change] The menu overflow adjustment has been changed, and the menu will not overflow the screen now.
+* [Fix] Fix menu adjust position not right ([#49](https://github.com/imengyu/vue3-context-menu/issues/49))
+* [Fix] Fix closeWhenScroll not working on mobile devices ([#47](https://github.com/imengyu/vue3-context-menu/issues/47))
+* [Fix] Fix problem that minWidth and maxWidth with number type not effect ([#46](https://github.com/imengyu/vue3-context-menu/issues/46))
+
+## v1.2.10 - 2023/05/27
+
+* [Fix] Fix this not right in onClick callback
+* [Fix] Fix win10 theme missing
+
 ## v1.2.7 - 2023/05/27
 
 * [Added] Added the MenuBar component.

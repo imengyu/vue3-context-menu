@@ -5,6 +5,22 @@ nav:
   order: 5
 ---
 
+## v1.3.0 - 2023/06/20
+
+* [Added] 添加了 `MenuOptions.direction` 和 `MenuItem.direction` 允许控制菜单弹出方向。
+* [Added] 添加了 `clickCloseClassName` 和 `clickCloseClassName` 用于忽略某些自定义子元素的点击事件 ([#48](https://github.com/imengyu/vue3-context-menu/issues/48))
+* [Added] 在渲染插槽参数中添加了 `close` 回调用于关闭整个菜单。
+* [Change] `MenuOptions.adjustPadding` 默认值修改为 `{ x：0, y: 10 }`.
+* [Change] 菜单溢出调整已经更改，现在菜单不会溢出屏幕
+* [Fix] 修复菜单在过窄的页面中溢出问题 ([#49](https://github.com/imengyu/vue3-context-menu/issues/49))
+* [Fix] 修复 closeWhenScroll 在移动端上不工作的问题 ([#47](https://github.com/imengyu/vue3-context-menu/issues/47))
+* [Fix] 修复数字类型的minWidth和maxWidth无效的问题 ([#46](https://github.com/imengyu/vue3-context-menu/issues/46))
+
+## v1.2.10 - 2023/05/27
+
+* [Fix] 修复onClick回调中的 this 指向错误
+* [Fix] 修复 win10 主题丢失问题
+
 ## v1.2.7 - 2023/05/27
 
 * [Added] 新增了 MenuBar 菜单栏组件。

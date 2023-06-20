@@ -435,10 +435,10 @@ export default defineComponent({
           }
 
           //set y positon
-          if (props.direction.startsWith('t')) {
+          if (props.direction.includes('t')) {
             position.value.y -= menuEl.offsetHeight + fillPaddingYAlways * 2; //top
           }
-          else if (props.direction.startsWith('b')) {
+          else if (props.direction.includes('b')) {
             position.value.y -= fillPaddingYAlways;  //bottom
           }
           else {
