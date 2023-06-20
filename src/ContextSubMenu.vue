@@ -431,6 +431,7 @@ export default defineComponent({
             position.value.x += parentWidth + fillPaddingX; //right
           }
           else {
+            position.value.x += parentWidth / 2;
             position.value.x -= (menuEl.offsetWidth + fillPaddingX) / 2; //center
           }
 
