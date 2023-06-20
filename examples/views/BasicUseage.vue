@@ -4,9 +4,25 @@
       <div class="box1" style="flex:1" @contextmenu="onContextMenu($event)">
         Right click here to show contextmenu !
       </div>
+      <div class="box1" style="flex:1">
+        Here are context menu with direction
+        <br>
+        <br>
+        <div class="grid">
+          <div @contextmenu="onContextMenu3($event, 'tl')">Top Left</div>
+          <div @contextmenu="onContextMenu3($event, 't')">Top Center</div>
+          <div @contextmenu="onContextMenu3($event, 'tr')">Top Right</div>
+          <div @contextmenu="onContextMenu3($event, 'l')">Left</div>
+          <div></div>
+          <div @contextmenu="onContextMenu3($event, 'r')">Right</div>
+          <div @contextmenu="onContextMenu3($event, 'bl')">Bottom Left</div>
+          <div @contextmenu="onContextMenu3($event, 'b')">Bottom Center</div>
+          <div @contextmenu="onContextMenu3($event, 'br')">Bottom Right</div>
+        </div>
+      </div>
       <div class="box1" style="flex:1;padding: 50px" @contextmenu="onContextMenu1($event)">
         Test nested menus: Contextmenu In parent
-        <div class="box2" style="width: 200px; height: 100px" @contextmenu="onContextMenu2($event)">
+        <div class="box2" style="width: 170px; height: 100px" @contextmenu="onContextMenu2($event)">
           Contextmenu In child
         </div>
       </div>
@@ -252,6 +268,82 @@ const menuData = reactive<MenuOptions>({
       },
     },
     { 
+      label: 'Test submenu direction',
+      children: [
+        { 
+          label: "Left Top", 
+          direction: 'lt',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Left Center", 
+          direction: 'l',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Left Bottom", 
+          direction: 'lb',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Right Top", 
+          direction: 'rt',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Right Center", 
+          direction: 'r',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Right Bottom (Default)", 
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Center Top", 
+          direction: 't',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Center Bottom", 
+          direction: 'b',
+          children: [
+            { label: "Item1" },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+      ]
+    },
+    { 
       label: 'Item with icon',
       icon: "icon-reload-1",
     },
@@ -335,6 +427,33 @@ function onContextMenu2(e : MouseEvent) {
     y: e.y
   } as MenuOptions);
 }
+function onContextMenu3(e : MouseEvent, direction: string) {
+  //prevent the browser's default menu
+  e.preventDefault();
+  e.stopPropagation();
+  //show our menu
+  ContextMenu.showContextMenu({
+    items: [
+      { 
+        label: 'This is menu with intital direction',
+      },
+      { 
+        label: 'Simple item',
+        children: [
+          { label: "Item1" },
+          { label: "Item2" },
+          { label: "Item3" },
+        ]
+      },
+    ],
+    direction,
+    zIndex: 3,
+    minWidth: 230,
+    x: e.x,
+    y: e.y
+  } as MenuOptions);
+}
+
 </script>
 
 <style>

@@ -2,7 +2,7 @@
   <div class="test">
     <div class="test-top">
       <h1>Vue3 Context menu</h1>
-      <router-link :to="{ name: 'BasicUseage' }">Base useage</router-link>
+      <router-link :to="{ name: 'BasicUseage' }" class="first">Base useage</router-link>
       <router-link :to="{ name: 'BasicCustomize' }">Base customize</router-link>
       <router-link :to="{ name: 'BasicComponent' }">Component useage</router-link>
       <router-link :to="{ name: 'ComponentCustomize' }">Component customize</router-link>
@@ -21,7 +21,7 @@ import { defineComponent } from 'vue'
 export default defineComponent({})
 </script>
 
-<style>
+<style lang="scss">
 
 html, body, #app {
   position: relative;
@@ -30,32 +30,35 @@ html, body, #app {
 }
 .test {
   position: relative;
-}
 
-.test .test-host {
-  margin-top: 30px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-.test .test-top {
-  padding-top: 25px;
-  height: 40px;
-}
+  .test-host {
+    margin-top: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .test-top {
+    padding-top: 25px;
+    height: 40px;
+    margin-left: 140px;
 
-.test .test-top h1 {
-  display: inline-block;
-  margin: 0;
-  color: #000;
-  margin-left: 140px;
-}
-.test .test-top a {
-  margin: 0 20px;
-  color: #1a7ff1;
-  text-decoration: underline;
-}
+    h1 {
+      margin: 0;
+      color: #000;
+    }
+    a {
+      margin: 0 15px;
+      color: #1a7ff1;
+      text-decoration: underline;
 
-.test img {
-  width: 300px;
+      &.first {
+        margin-left: 0;
+      }
+    }
+  }
+
+  img {
+    width: 300px;
+  }
 }
 
 .horbox {
@@ -119,5 +122,67 @@ html, body, #app {
 code {
   border-radius: 10px;
 }
+.grid {
+  display: grid;
+  grid-template-columns: 33.33% 33.33% 33.33%;
+  grid-template-rows: 33.33% 33.33% 33.33%;
 
+  div {
+    position: relative;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    user-select: none;
+    border: 1px solid #ff9252;
+    background-color: #ffefbc;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .test {
+    .test-top {
+      height: 90px;
+    }
+  }
+}
+@media screen and (max-width: 800px) {
+  .test {
+    .test-top {
+      height: 100px;
+      margin-left: 100px;
+
+      h1 {
+        display: block;
+        font-size: 27px;
+      }
+      a {
+        margin: 0 10px;
+      }
+    }
+  }
+  .fork-img img {
+    width: 100px;
+    height: 100px;
+  }
+  .horbox {
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .test {
+    .test-top {
+      margin-left: 80px;
+      height: 120px;
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  }
+  .fork-img img {
+    width: 80px;
+    height: 80px;
+  }
+}
 </style>

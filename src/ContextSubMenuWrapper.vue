@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, ref, renderSlot, toRefs, VNode, watch } from 'vue'
-import { MenuConstOptions, MenuOptions } from './ContextMenuDefine'
+import { MenuConstOptions, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
 
@@ -197,14 +197,13 @@ export default defineComponent({
       zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
       container: container.value as unknown as HTMLElement,
       adjustPadding: options.value.adjustPadding || MenuConstOptions.defaultAdjustPadding,
-      getParentAbsY: () => options.value.y,
-      getMyPosition: () => {
-        return {
-          x: options.value.x,
-          y: options.value.y,
-        };
-      },
+      getParentAbsY: () => options.value.x,
+      getParentAbsX: () => options.value.y,
+      getParentX: () => 0,
+      getParentY: () => 0,
       getParentWidth: () => 0, 
+      getParentHeight: () => 0, 
+      getPositon: () => [options.value.x,options.value.y],
       closeOtherSubMenuWithTimeOut: () => {/* Do nothing */}, 
       checkCloseOtherSubMenuTimeOut: () => false, 
       addOpenedSubMenu: () => {/* Do nothing */},
@@ -236,6 +235,7 @@ export default defineComponent({
             adjustPosition: options.value?.adjustPosition,
             maxWidth: options.value.maxWidth || MenuConstOptions.defaultMaxWidth,
             minWidth: options.value.minWidth || MenuConstOptions.defaultMinWidth,
+            direction: options.value.direction || MenuConstOptions.defaultDirection as MenuPopDirection,
           }, {
             default: ctx.slots.default,
           })

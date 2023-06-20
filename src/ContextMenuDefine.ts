@@ -4,10 +4,14 @@ import { SVGAttributes, VNode } from "vue";
  * Default config
  */
 export const MenuConstOptions = {
+  defaultDirection: 'br',
   defaultMinWidth: 100,
   defaultMaxWidth: 600,
   defaultZindex: 100,
-  defaultAdjustPadding: 10,
+  defaultAdjustPadding: {
+    x: 0,
+    y: 10.
+  },
 }
 
 /**
@@ -21,6 +25,7 @@ export interface ContextMenuInstance {
   closeMenu(): void;
 }
 
+export type MenuPopDirection = 'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r';
 
 export interface MenuOptions {
   /**
@@ -43,6 +48,15 @@ export interface MenuOptions {
   * Y-coordinate offset of submenu and parent menu.
   */
   yOffset ?: number;
+  /**
+   * Set the mian menu pop-up direction relative to coordinates.
+   * 
+   * Default is `'br'`, if `adjustPosition` is true then the menu will determine
+   * the pop-up direction based on its distance from the screen edge.
+   * 
+   * @default 'br'
+   */
+  direction ?: MenuPopDirection,
   /**
    * The z-index of this menu.
    */
@@ -141,9 +155,9 @@ export interface MenuOptions {
    */
   closeWhenScroll ?: boolean;
   /**
-   * Padding for submenu position adjust. Default is 10.
+   * Padding for submenu position adjust. Default is `{ x：0, y: 10 }`.
    */
-  adjustPadding?: number,
+  adjustPadding?: { x: number, y: number }|number,
   /**
    * By default, the menu will automatically adjust its position to prevent it overflow the container.
    * 
@@ -254,6 +268,14 @@ export interface MenuItem {
    * The shortcut keys here are only for display. You need to handle the key events by yourself.
    */
   shortcut ?: string|string,
+  /**
+   * Set the submenu pop-up direction relative to coordinates.
+   * 
+   * Default is inherted from `MenuOptions.direction`, if `adjustSubMenuPosition` is true then the submenu will determine
+   * the pop-up direction based on its distance from the screen edge.
+   * 
+   */
+  direction ?: MenuPopDirection,
   /**
    * By default, the submenu will automatically adjust its position to prevent it overflow the container.
    * 

@@ -51,6 +51,7 @@
                 :maxWidth="item.maxWidth"
                 :minWidth="item.minWidth"
                 :adjustPosition="item.adjustSubMenuPosition !== undefined ? item.adjustSubMenuPosition : options.adjustPosition"
+                :direction="item.direction !== undefined ? item.direction : options.direction"
               />
             </template>
           </ContextMenuItem>
@@ -80,7 +81,7 @@
 
 <script lang="ts">
 import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, toRefs } from 'vue'
-import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions } from './ContextMenuDefine'
+import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions, MenuPopDirection } from './ContextMenuDefine'
 import { getLeft, getTop, solveNumberOrStringSize } from './ContextMenuUtils'
 import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
@@ -117,12 +118,16 @@ export interface SubMenuParentContext {
   //Props
   container: HTMLElement;
   zIndex: number;
-  adjustPadding: number,
+  adjustPadding: { x: number, y: number },
 
   //Position control
-  getMyPosition: () => ContextMenuPositionData;
   getParentWidth: () => number;
+  getParentHeight: () => number;
+  getParentX: () => number;
+  getParentY: () => number;
+  getParentAbsX: () => number;
   getParentAbsY: () => number;
+  getPositon: () => [number,number];
 
   //SubMenu mutex
   addOpenedSubMenu: (closeFn: () => void) => void;
@@ -185,6 +190,13 @@ export default defineComponent({
       type: Boolean,
       default: true,
     },
+    /**
+     * Menu direction
+     */
+    direction: {
+      type: String as PropType<MenuPopDirection>,
+      default: 'br',
+    },
   },
   setup(props) {
 
@@ -198,7 +210,7 @@ export default defineComponent({
 
     //#endregion
     
-    const { zIndex, getMyPosition, getParentWidth } = parentContext;
+    const { zIndex, getParentWidth, getParentHeight } = parentContext;
     const { adjustPosition } = toRefs(props);
 
     const menu = ref<HTMLElement>();
@@ -299,17 +311,13 @@ export default defineComponent({
       zIndex: zIndex + 1,
       container: parentContext.container,
       adjustPadding: parentContext.adjustPadding,
-      getMyPosition() {
-        const pos = { x: 0, y: 0 } as ContextMenuPositionData;
-        //计算子菜单的位置
-        if(menu.value) 
-          pos.x = menu.value.offsetWidth + (options.xOffset || 0);
-        if (options.yOffset)
-          pos.y = options.yOffset;
-        return pos;
-      },
       getParentWidth: () => menu.value?.offsetWidth || 0,
+      getParentHeight: () => menu.value?.offsetHeight || 0,
+      getParentX: () => position.value.x,
+      getParentY: () => position.value.y,
+      getParentAbsX: () => menu.value ? getLeft(menu.value, parentContext.container) : 0,
       getParentAbsY: () => menu.value ? getTop(menu.value, parentContext.container) : 0,
+      getPositon: () => [0,0],
       addOpenedSubMenu(closeFn: () => void) {
         openedSubMenuClose.push(closeFn);
       },
@@ -382,7 +390,11 @@ export default defineComponent({
     const maxHeight = ref(0);
 
     onMounted(() => {
-      position.value = getMyPosition();
+      const pos = parentContext.getPositon();
+      position.value = {
+        x: pos[0] ?? options.xOffset ?? 0,
+        y: pos[1] ?? options.yOffset ?? 0,
+      };
 
       //Mark current item submenu is open
       globalSetCurrentSubMenu(thisMenuInsContext);
@@ -391,8 +403,16 @@ export default defineComponent({
         const menuEl = menu.value;
 
         //adjust submenu position
-        if (adjustPosition.value && menuEl && scroll.value) {
-          const { container, adjustPadding: fillPadding } = parentContext;
+        if (menuEl && scroll.value) {
+
+          const { container } = parentContext;
+
+          const parentWidth = getParentWidth?.() ?? 0;
+          const parentHeight = getParentHeight?.() ?? 0;
+
+          const fillPaddingX = typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.x ?? 0);
+          const fillPaddingYAlways = typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.y ?? 0);
+          const fillPaddingY = parentHeight > 0 ? fillPaddingYAlways : 0;
 
           const windowHeight = document.documentElement.scrollHeight;
           const windowWidth = document.documentElement.scrollWidth;
@@ -400,23 +420,65 @@ export default defineComponent({
           const avliableWidth = Math.min(windowWidth, container.offsetWidth);
           const avliableHeight = Math.min(windowHeight, container.offsetHeight);
 
-          const absX = getLeft(menuEl, container), absY = getTop(menuEl, container);
+          let absX = getLeft(menuEl, container), 
+            absY = getTop(menuEl, container);
           
-          const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
-          const yOverflow = (absY + menuEl.offsetHeight) - (avliableHeight);
+          //set x positon
+          if (props.direction.includes('l')) {
+            position.value.x -= menuEl.offsetWidth + fillPaddingX; //left
+          }
+          else if (props.direction.includes('r')) {
+            position.value.x += parentWidth + fillPaddingX; //right
+          }
+          else {
+            position.value.x -= (menuEl.offsetWidth + fillPaddingX) / 2; //center
+          }
 
-          scrollHeight.value = menuEl.offsetHeight - avliableHeight + fillPadding * 2 /* Padding */;
-          overflow.value = yOverflow > 0;
+          //set y positon
+          if (props.direction.startsWith('t')) {
+            position.value.y -= menuEl.offsetHeight + fillPaddingYAlways * 2; //top
+          }
+          else if (props.direction.startsWith('b')) {
+            position.value.y -= fillPaddingYAlways;  //bottom
+          }
+          else {
+            position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways) / 2; //center
+          }
 
-          if (xOverflow > 0) //X overflow
-            position.value.x -= (getParentWidth ? getParentWidth() : 0) + menuEl.offsetWidth - fillPadding; 
+          //Overflow adjust
+          if (adjustPosition.value) {
+            nextTick(() => {
+              absX = getLeft(menuEl, container);
+              absY = getTop(menuEl, container);
+              
+              const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
+              const yOverflow = (absY + menuEl.offsetHeight) - (avliableHeight);
 
-          if (overflow.value) {
-            const oy = Math.min(absY - fillPadding, yOverflow + fillPadding);
-            position.value.y -= oy;
-            maxHeight.value = (avliableHeight - fillPadding * 2);
-          } else {
-            maxHeight.value = 0;
+              scrollHeight.value = menuEl.offsetHeight - avliableHeight - fillPaddingY * 2 /* Padding */;
+              overflow.value = yOverflow > 0;
+
+              if (xOverflow > 0) {//X overflow
+                const ox = parentWidth + menuEl.offsetWidth - fillPaddingX; 
+                const maxSubWidth = absX;
+                if (ox > maxSubWidth)
+                  position.value.x -= maxSubWidth;
+                else
+                  position.value.x -= ox;
+              }
+
+              if (overflow.value) { //Y overflow
+                const oy = yOverflow - fillPaddingY;
+                const py = parentContext.getParentAbsY();
+
+                if (py - oy < 0)
+                  position.value.y -= py - fillPaddingY;
+                else
+                  position.value.y -= oy;
+                maxHeight.value = (avliableHeight - fillPaddingY * 2);
+              } else {
+                maxHeight.value = 0;
+              }
+            });
           }
         }
 
