@@ -104,7 +104,7 @@ export default defineComponent({
       default: ''
     },
     clickHandler: {
-      type: Function as PropType<() => void>,
+      type: Function as PropType<(e: MouseEvent|KeyboardEvent) => void>,
       default: null
     },
     /**
@@ -280,7 +280,7 @@ export default defineComponent({
     });
 
     //Click handler
-    function onClick(e?: MouseEvent) {
+    function onClick(e: MouseEvent|KeyboardEvent) {
       //Ignore clicking when disabled or click on some special elements
       if (disabled.value || (e && (e.target as HTMLElement).classList.contains('mx-context-no-clickable')))
         return;
@@ -288,16 +288,16 @@ export default defineComponent({
       if (hasChildren.value) {
         if (clickableWhenHasChildren.value) {
           if (typeof clickHandler.value === 'function')
-            clickHandler.value();
-          context.emit('click');
+            clickHandler.value(e);
+          context.emit('click', e);
         }
         else if (!showSubMenu.value)
           onMouseEnter();
       } else {
         //Call hander from options
         if (typeof clickHandler.value === 'function') 
-          clickHandler.value();
-        context.emit('click');
+          clickHandler.value(e);
+        context.emit('click', e);
         if (clickClose.value) {
           //emit close
           globalCloseMenu();
@@ -351,6 +351,7 @@ export default defineComponent({
           hasChildren: hasChildren,
           onClick,
           onMouseEnter,
+          closeMenu: globalCloseMenu,
         }
       },
       showSubMenu,

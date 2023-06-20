@@ -24,7 +24,7 @@
         <template v-for="(item, i) in items" :key="i" >
           <!--Menu Item-->
           <ContextMenuItem
-            :clickHandler="item.onClick ? () => item.onClick!() : undefined"
+            :clickHandler="item.onClick ? (e) => item.onClick!(e) : undefined"
             :disabled="item.disabled"
             :hidden="item.hidden"
             :icon="item.icon"
@@ -95,7 +95,7 @@ export interface MenuItemContext {
   showSubMenu: () => boolean,
   getElement: () => HTMLElement|undefined,
   isDisabledOrHidden: () => boolean,
-  click: () => void,
+  click: (e: MouseEvent|KeyboardEvent) => void,
 }
 
 //The internal info context for submenu instance
@@ -109,7 +109,7 @@ export interface SubMenuContext {
   moveCurrentItemDown: () => void,
   moveCurrentItemUp: () => void,
   focusCurrentItem: () => void,
-  triggerCurrentItemClick: () => void,
+  triggerCurrentItemClick: (e: KeyboardEvent|MouseEvent) => void,
 }
 
 //The internal info context for submenu
@@ -284,7 +284,7 @@ export default defineComponent({
           return currentItem?.showSubMenu()
         return false;
       },
-      triggerCurrentItemClick: () => currentItem?.click(),
+      triggerCurrentItemClick: (e) => currentItem?.click(e),
     };
 
     let isOpenedByKeyBoardFlag = false;

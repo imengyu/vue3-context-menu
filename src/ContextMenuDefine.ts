@@ -280,8 +280,10 @@ export interface MenuItem {
   minWidth ?: number|string,
   /**
    * Menu item click event handler.
+   * 
+   * @param e The current event of `click` or `keydown` (when user use keyboard press this menu)
    */
-  onClick ?: () => void,
+  onClick ?: (e?: MouseEvent|KeyboardEvent) => void,
   /**
    * This event emit when submenu of this item is closing.
    */

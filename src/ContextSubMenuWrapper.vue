@@ -143,7 +143,7 @@ export default defineComponent({
             options.value.onKeyFocusMoveRight?.();
           break;
         case "Enter":
-          currentOpenedMenu.value?.triggerCurrentItemClick();
+          currentOpenedMenu.value?.triggerCurrentItemClick(e);
           break;
         default:
           handled = false;
