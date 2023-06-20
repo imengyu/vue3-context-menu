@@ -12,6 +12,7 @@ nav:
 * [Added] Add `close` callback in render solt param for close hole menu.
 * [Change] `MenuOptions.adjustPadding` now default value is `{ x：0, y: 10 }`.
 * [Change] The menu overflow adjustment has been changed, and the menu will not overflow the screen now.
+* [Fix] Fixed text overflow display issue after limiting the maximum width of the menu.
 * [Fix] Fix menu adjust position not right ([#49](https://github.com/imengyu/vue3-context-menu/issues/49))
 * [Fix] Fix closeWhenScroll not working on mobile devices ([#47](https://github.com/imengyu/vue3-context-menu/issues/47))
 * [Fix] Fix problem that minWidth and maxWidth with number type not effect ([#46](https://github.com/imengyu/vue3-context-menu/issues/46))
