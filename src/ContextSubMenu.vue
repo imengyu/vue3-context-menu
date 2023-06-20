@@ -2,8 +2,8 @@
   <div
     :class="'mx-context-menu ' + (options.customClass ? options.customClass : '') + ' ' + globalTheme"
     :style="{
-      maxWidth: (maxWidth ? maxWidth : `${constOptions.defaultMaxWidth}px`),
-      minWidth: minWidth ? minWidth : `${constOptions.defaultMinWidth}px`,
+      maxWidth: (maxWidth ? solveNumberOrStringSize(maxWidth) : `${constOptions.defaultMaxWidth}px`),
+      minWidth: minWidth ? solveNumberOrStringSize(minWidth) : `${constOptions.defaultMinWidth}px`,
       maxHeight: overflow && maxHeight > 0 ? `${maxHeight}px` : undefined,
       zIndex: zIndex,
       left: `${position.x}px`,
@@ -81,7 +81,7 @@
 <script lang="ts">
 import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, toRefs } from 'vue'
 import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions } from './ContextMenuDefine'
-import { getLeft, getTop } from './ContextMenuUtils'
+import { getLeft, getTop, solveNumberOrStringSize } from './ContextMenuUtils'
 import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
 import { VNodeRender } from './ContextMenuUtils'
@@ -449,6 +449,7 @@ export default defineComponent({
       globalTheme,
       onScroll,
       onSubMenuBodyClick,
+      solveNumberOrStringSize,
     }
   }
 })

@@ -273,11 +273,11 @@ export interface MenuItem {
   /**
    * Submenu maximum width (in pixels).
    */
-  maxWidth ?: number,
+  maxWidth ?: number|string,
   /**
    * Submenu minimum width (in pixels).
    */
-  minWidth ?: number,
+  minWidth ?: number|string,
   /**
    * Menu item click event handler.
    */

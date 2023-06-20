@@ -187,15 +187,23 @@ const menuData = reactive<MenuOptions>({
           ]
         },
         { 
-          label: "A submenu", 
+          label: "Test submenu maxWidth", 
+          maxWidth: 230,
           children: [
-            { label: "Item1" },
-            { label: "Item2" },
-            { label: "Item3" },
+            { label: "1 this is long text text text text text text text text" },
+            { label: "2 this is long text text text text text text text text" },
+            { 
+              label: "3 this is long text text text text text text text text",
+              children: [
+                { label: "Item1" },
+                { label: "Item2" },
+                { label: "Item3" },
+              ]
+            },
           ]
         },
         { 
-          label: "A submenu2", 
+          label: "A submenu", 
           children: [
             { label: "Item1" },
             { label: "Item2" },

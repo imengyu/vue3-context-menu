@@ -98,6 +98,10 @@ export function genContainer(options: MenuOptions) : {
   };
 }
 
+export function solveNumberOrStringSize(value: string|number) : string {
+  return typeof value === 'number' ? `${value}px` : value;
+}
+
 /**
  * Render a VNode
  */
