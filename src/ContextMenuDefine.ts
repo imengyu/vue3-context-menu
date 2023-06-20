@@ -91,6 +91,14 @@ export interface MenuOptions {
    */
   theme	?: string;
   /**
+   * If your element in menu item has this className, click it will ignore event. 
+   */
+  ignoreClickClassName?: string,
+  /**
+   * If your element in menu item has this className, click it will ignore event and close hole menu. 
+   */
+  clickCloseClassName?: string,
+  /**
    * Custom icon library font class name. (global)
    * 
    * Only for css font icon, If you use the svg icon, you do not need to use this.

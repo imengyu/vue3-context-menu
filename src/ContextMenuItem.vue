@@ -221,6 +221,8 @@ export default defineComponent({
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
     const globalTheme = inject('globalTheme') as string;
     const globalIconFontClass = inject('globalIconFontClass') as string;
+    const globalClickCloseClassName = inject('globalClickCloseClassName') as string;
+    const globalIgnoreClickClassName = inject('globalIgnoreClickClassName') as string;
     const globalCloseMenu = inject('globalCloseMenu') as () => void;
 
     const menuContext = inject('menuContext') as SubMenuParentContext;
@@ -281,9 +283,22 @@ export default defineComponent({
 
     //Click handler
     function onClick(e: MouseEvent|KeyboardEvent) {
-      //Ignore clicking when disabled or click on some special elements
-      if (disabled.value || (e && (e.target as HTMLElement).classList.contains('mx-context-no-clickable')))
+      //Ignore clicking when disabled
+      if (disabled.value)
         return;
+      //Ignore clicking when click on some special elements
+      if (e) {
+        const currentTarget = e.target as HTMLElement;
+        if (currentTarget.classList.contains('mx-context-no-clickable'))
+          return;
+        if (globalIgnoreClickClassName && currentTarget.classList.contains(globalIgnoreClickClassName))
+          return;
+        if (globalClickCloseClassName && currentTarget.classList.contains(globalClickCloseClassName)) {
+          e.stopPropagation();
+          globalCloseMenu();
+          return;
+        }
+      }
       //Has submenu?
       if (hasChildren.value) {
         if (clickableWhenHasChildren.value) {

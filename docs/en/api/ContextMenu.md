@@ -43,4 +43,5 @@ Menu component.
 | hasChildren | This value indicates whether the current menu has submenus | `boolean` |
 | onClick | Define the click event callback of the element, which is used for the internal event processing of the menu. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
 | onMouseEnter | Mouse in event callback of custom element. When rendering item with slot, please call this function back, otherwise the menu cannot respond to the event normally | - |
+| close | Calling this function will close the current menu | - |
 | ... | Other arguments are same with `MenuItem` | - |

@@ -181,7 +181,8 @@ export default defineComponent({
     provide('globalCloseMenu', closeMenu);
     provide('globalTheme', options.value?.theme || 'light');
     provide('globalIsFullScreenContainer', props.isFullScreenContainer);
-    
+    provide('globalClickCloseClassName', options.value?.clickCloseClassName);
+    provide('globalIgnoreClickClassName', options.value?.ignoreClickClassName);
     provide('globalIconFontClass', options.value?.iconFontClass || 'iconfont');
     //check slot exists
     provide('globalHasSlot', (name: string) => {
