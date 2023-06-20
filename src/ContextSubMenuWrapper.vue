@@ -32,7 +32,7 @@ export default defineComponent({
      * Current container, For calculation only
      */
     container: {
-      type: Object,
+      type: Object as PropType<HTMLElement>,
       default: null
     },
     /**
@@ -88,7 +88,9 @@ export default defineComponent({
       setTimeout(() => {
         document.addEventListener("click", onBodyClick, true);
         document.addEventListener("contextmenu", onBodyClick, true);
-        document.addEventListener("wheel", onBodyWhell, true);
+        document.addEventListener("scroll", onBodyScroll, true);
+        if (!props.isFullScreenContainer && container.value)
+          container.value.addEventListener("scroll", onBodyScroll, true);
         if (options.value.keyboardControl !== false)
           document.addEventListener('keydown', onMenuKeyDown);
       }, 50);
@@ -96,7 +98,9 @@ export default defineComponent({
     function removeBodyEvents() {
       document.removeEventListener("contextmenu", onBodyClick, true);
       document.removeEventListener("click", onBodyClick, true);
-      document.removeEventListener("wheel", onBodyWhell, true);
+      document.removeEventListener("scroll", onBodyScroll, true);
+      if (!props.isFullScreenContainer && container.value)
+        container.value.removeEventListener("scroll", onBodyScroll, true);
       if (options.value.keyboardControl !== false)
         document.removeEventListener('keydown', onMenuKeyDown);
     }
@@ -150,8 +154,8 @@ export default defineComponent({
         e.preventDefault();
       }
     }
-    function onBodyWhell() {
-      //close when mouse scroll
+    function onBodyScroll() {
+      //close when docunment scroll
       if (options.value.closeWhenScroll !== false)
         closeMenu();
     }
