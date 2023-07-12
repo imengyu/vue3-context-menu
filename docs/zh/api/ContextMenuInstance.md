@@ -57,7 +57,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
-| items | 菜单结构信息 | `MenuItem[]` | — | — |
+| items | <div style="width:200px">菜单结构信息</div> | `MenuItem[]` | — | — |
 | x | 菜单显示X坐标 | `number` | — | `0` |
 | y | 菜单显示Y坐标 | `number` | — | `0` |
 | xOffset | 子菜单与父菜单X的偏移 | `number` | — | `0` |
@@ -83,7 +83,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 
 | 属性 | 描述 | 类型 | 可选值 | 默认值 |
 | :----: | :----: | :----: | :----: | :----: |
-| label | 菜单项名称，可传入VNode | `string` or `VNode` or `((label: string) => VNode)` | — | — |
+| label | <div style="width:300px">菜单项名称，可传入VNode</div> | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | 菜单项图标，可传入VNode | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
@@ -96,11 +96,11 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | adjustSubMenuPosition | 默认情况下，子菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，可以将其设置为false | `boolean` | — | 继承自 `MenuOptions.adjustPosition` |
 | clickableWhenHasChildren | 指定当本菜单下有子菜单时，点击当前菜单是否触发点击事件 | `boolean` | — | `false` |
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |
-| divided | 是否显示分割线 | `boolean` | — | `false` |
+| divided | 是否显示分割线。分割线显示逻辑<ul><li>`true` or `'down'`: 分割线显示在菜单项下方。</li><li> `'up'`: 分割线显示在菜单项上方。</li><li> `'self'`: 把当前菜单项变成分割线。</li><li> `false`: 没有分割线。 </li></ul> | `boolean` or `'up'` or `'down'` or `'self'` | — | `false` |
 | customClass | 自定义子菜单class | `string` | — | — |
 | minWidth | 子菜单最小宽度 | `number` or `string` | — | `100` |
 | maxWidth | 子菜单最大宽度 | `number` or `string` | — | `600` |
-| direction | 设置子菜单的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | 继承自 `MenuOptions.direction` |
+| direction | 设置子菜单的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | 继承自 `MenuOptions.direction` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
 | onSubMenuClose | 子菜单关闭事件回调 | `(() => void)` | — | — |
 | onSubMenuOpen | 子菜单打开事件回调 | `(() => void)` | — | — |

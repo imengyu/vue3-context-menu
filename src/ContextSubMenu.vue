@@ -22,8 +22,11 @@
     >
       <slot>
         <template v-for="(item, i) in items" :key="i" >
+          <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'up'" />
+          <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'self'" />
           <!--Menu Item-->
           <ContextMenuItem
+            v-else
             :clickHandler="item.onClick ? (e) => item.onClick!(e) : undefined"
             :disabled="item.disabled"
             :hidden="item.hidden"
@@ -57,8 +60,7 @@
           </ContextMenuItem>
           <!--Separator-->
           <!--Custom render-->
-          <VNodeRender v-if="item.hidden !== true && item.divided && globalHasSlot('separatorRender')" :vnode="() => globalRenderSlot('separatorRender', {})" />
-          <ContextMenuSeparator v-else-if="item.hidden !== true && item.divided" />
+          <ContextMenuSeparator v-if="item.hidden !== true && (item.divided === 'down' || item.divided === true)" />
         </template>
       </slot>
     </div>
@@ -83,10 +85,9 @@
 import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, toRefs } from 'vue'
 import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions, MenuPopDirection } from './ContextMenuDefine'
 import { getLeft, getTop, solveNumberOrStringSize } from './ContextMenuUtils'
+import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
-import { VNodeRender } from './ContextMenuUtils'
-import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
 
 //The internal info context for menu item
@@ -157,7 +158,6 @@ export default defineComponent({
   components: {
     ContextMenuItem,
     ContextMenuSeparator,
-    VNodeRender,
     ContextMenuIconRight
   },
   props: {

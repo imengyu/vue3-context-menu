@@ -344,6 +344,35 @@ const menuData = reactive<MenuOptions>({
       ]
     },
     { 
+      label: 'Test submenu divider',
+      children: [
+        { 
+          label: "Simple", 
+          children: [
+            { label: "Item1 divided down", divided: true },
+            { label: "Item2" },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Divided up", 
+          children: [
+            { label: "Item1" },
+            { label: "Item2 Divided up", divided: 'up' },
+            { label: "Item3" },
+          ]
+        },
+        { 
+          label: "Divided item", 
+          children: [
+            { label: "Item1" },
+            { divided: 'self' },
+            { label: "Item3" },
+          ]
+        },
+      ]
+    },
+    { 
       label: 'Item with icon',
       icon: "icon-reload-1",
     },

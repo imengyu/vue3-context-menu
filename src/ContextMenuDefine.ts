@@ -293,9 +293,14 @@ export interface MenuItem {
    */
   clickClose ?: boolean,
   /**
-   * Is this menu item separated from the menu item below?
+   * Is this menu item separated from the menu item?
+   * 
+   * * `true` or `'down'`: Separator is show below menu.
+   * * `'up'`: Separator is show above menu.
+   * * `'self'`: Mark this item is a Separator.
+   * * `false`: No Separator.
    */
-  divided ?: boolean,
+  divided ?: boolean|'up'|'down'|'self',
   /**
    * Custom css class for submenu
    */

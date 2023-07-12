@@ -58,7 +58,7 @@ Global Function
 
 | Property | Description | Type | Optional value | Default |
 | :----: | :----: | :----: | :----: | :----: |
-| items | The items for this menu. | `MenuItem[]` | — | — |
+| items | <div style="width:250px">The items for this menu.</div> | `MenuItem[]` | — | — |
 | x | Menu display x position. | `number` | — | `0` |
 | y | Menu display y position. | `number` | — | `0` |
 | xOffset | X-coordinate offset of submenu and parent menu. | `number` | — | `0` |
@@ -73,7 +73,7 @@ Global Function
 | maxWidth | Submenu maximum width (in pixels). | `number` or `string` | — | `600` |
 | adjustPadding | Padding for submenu position adjust. | `{ x: number, y: number }` or `number` | — | `{ x：0, y: 10 }` |
 | adjustPosition | By default, the menu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | `true` |
-| direction | Set the mian menu pop-up direction relative to coordinates. Default is `'br'`, if `adjustPosition` is true then the menu will determine the pop-up direction based on its distance from the screen edge. | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | `'br'` |
+| direction | Set the mian menu pop-up direction relative to coordinates. Default is `'br'`, if `adjustPosition` is true then the menu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | `'br'` |
 | ignoreClickClassName | If your element in menu item has this className, click it will ignore event. | `string` | — |
 | clickCloseClassName | If your element in menu item has this className, click it will ignore event and close hole menu. | `string` | — |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
@@ -83,7 +83,7 @@ Global Function
 
 | Property | Description | Type | Optional value | Default |
 | :----: | :----: | :----: | :----: | :----: |
-| label | The label of menu. | `string` or `VNode` or `((label: string) => VNode)` | — | — |
+| label | <div style="width:300px">The label of menu.</div> | `string` or `VNode` or `((label: string) => VNode)` | — | — |
 | icon | The icon for menu item. | `string` or `VNode` or `((icon: string) => VNode)` | — | — |
 | iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
 | preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
@@ -96,11 +96,11 @@ Global Function
 | adjustSubMenuPosition | By default, the submenu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | inherit from `MenuOptions.adjustPosition` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | — | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | — | `true` |
-| divided | Is this menu item separated from the menu item below? | `boolean` | — | `false` |
+| divided | Should show Separator?<ul><li>`true` or `'down'`: Separator is show below menu.</li><li> `'up'`: Separator is show above menu.</li><li> `'self'`: Mark this item is a Separator.</li><li> `false`: No Separator. </li></ul> | `boolean` or `'up'` or `'down'` or `'self'` | — | `false` |`boolean` | — | `false` |
 | customClass | Custom submenu class. | `string` | — | — |
 | minWidth | Submenu minimum width (in pixels). | `number` or `string` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` or `string` | — | `600` |
-| direction | Set the submenu pop-up direction relative to coordinates. Default is inherted from `MenuOptions.direction`, if `adjustSubMenuPosition` is true then the submenu will determine the pop-up direction based on its distance from the screen edge. | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | inherit from `MenuOptions.direction` |
+| direction | Set the submenu pop-up direction relative to coordinates. Default is inherted from `MenuOptions.direction`, if `adjustSubMenuPosition` is true then the submenu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | inherit from `MenuOptions.direction` |
 | onClick | Menu item click event handler. | `Function()` | — | — |
 | onSubMenuClose | This event emit when submenu of this item is closing. | `(() => void)` | — | — |
 | onSubMenuOpen | This event emit when submenu of this item is showing. | `(() => void)` | — | — |
