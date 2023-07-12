@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.3.1 - 2023/06/7/12
+
+* [Added] `MenuItem.divider` 添加了 `'up'|'down'|'self'` 选项用于控制分割线方向。
+
 ## v1.3.0 - 2023/06/20
 
 * [Added] 添加了 `MenuOptions.direction` 和 `MenuItem.direction` 允许控制菜单弹出方向。

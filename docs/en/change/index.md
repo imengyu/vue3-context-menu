@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.3.1 - 2023/06/7/12
+
+* [Added] `MenuItem.divider` Added option `'up'|'down'|'self'` for control separator direction. 
+
 ## v1.3.0 - 2023/06/20
 
 * [Added] Add `MenuOptions.direction` and `MenuItem.direction` that allow controll menu pop direction.
