@@ -127,6 +127,7 @@ export default defineComponent({
           },
           {
             label: "Submenu with Submenu",
+            divided: 'up',
             children: [
               {
                 label: "Very long submenu",
@@ -175,6 +176,7 @@ export default defineComponent({
                   { label: "Item2" },
                   { label: "Item3" },
                   { 
+                    divided: 'up',
                     label: "A submenu", 
                     children: [
                       { label: "Item1" },
