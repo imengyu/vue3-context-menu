@@ -21,8 +21,9 @@ export const MenuConstOptions = {
 export interface ContextMenuInstance {
   /**
    * Close this menu.
+   * @param fromItem The last clicked menu item, will pass to `MenuOptions.onClose` callback, if user does not click any item, can be `undefined`.
    */
-  closeMenu(): void;
+  closeMenu(fromItem?: MenuItem|undefined): void;
 }
 
 export type MenuPopDirection = 'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r';
@@ -192,8 +193,9 @@ export interface MenuOptions {
   getContainer ?: HTMLElement | (() => HTMLElement);
   /**
    * This event emit when this menu is closing. (Usually used in function mode)
+   * @param lastClickItem The last clicked menu item, if user does not click any item, it is `undefined`. This param only valid in function mode.
    */
-  onClose ?: (() => void) | undefined;
+  onClose ?: ((lastClickItem: MenuItem|undefined) => void) | undefined;
 
   /**
    * Event for MenuBar component

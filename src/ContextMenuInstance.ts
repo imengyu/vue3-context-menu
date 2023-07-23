@@ -20,9 +20,9 @@ function initInstance(
     show: true,
     container: container,
     isFullScreenContainer: !isNew,
-    onClose: () => {
+    onClose: (item: undefined) => {
       render(null, container);
-      options.onClose?.();
+      options.onClose?.(item);
     },
   }, customSlots);
   render(vnode, container);

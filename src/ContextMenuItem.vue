@@ -66,6 +66,7 @@ import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { VNodeRender } from './ContextMenuUtils'
 import ContextMenuIconCheck from './ContextMenuIconCheck.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
+import { MenuItem } from './ContextMenuDefine'
 
 /**
  * Menu Item
@@ -198,6 +199,10 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
+    rawMenuItem: {
+      type: Object as PropType<MenuItem>,
+      default: undefined
+    },
   },
   emits: [
     'click',
@@ -223,7 +228,7 @@ export default defineComponent({
     const globalIconFontClass = inject('globalIconFontClass') as string;
     const globalClickCloseClassName = inject('globalClickCloseClassName') as string;
     const globalIgnoreClickClassName = inject('globalIgnoreClickClassName') as string;
-    const globalCloseMenu = inject('globalCloseMenu') as () => void;
+    const globalCloseMenu = inject('globalCloseMenu') as (fromItem: MenuItem|undefined) => void;
 
     const menuContext = inject('menuContext') as SubMenuParentContext;
 
@@ -295,7 +300,7 @@ export default defineComponent({
           return;
         if (globalClickCloseClassName && currentTarget.classList.contains(globalClickCloseClassName)) {
           e.stopPropagation();
-          globalCloseMenu();
+          globalCloseMenu(props.rawMenuItem);
           return;
         }
       }
@@ -315,7 +320,7 @@ export default defineComponent({
         context.emit('click', e);
         if (clickClose.value) {
           //emit close
-          globalCloseMenu();
+          globalCloseMenu(props.rawMenuItem);
         }
       }
     }

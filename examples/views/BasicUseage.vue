@@ -399,8 +399,8 @@ const menuData = reactive<MenuOptions>({
   minWidth: 230,
   x: 0,
   y: 0,
-  onClose() {
-    console.log('onClose');
+  onClose(item) {
+    console.log('onClose', item);
   },
 });
 
