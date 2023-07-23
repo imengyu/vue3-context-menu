@@ -48,10 +48,10 @@ export default defineComponent({
         container: container,
         isFullScreenContainer: !isNew,
         'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
-        onClose: () => {
+        onClose: (fromItem: undefined) => {
           ctx.emit('update:show', false);
           ctx.emit('close');
-          options.value.onClose?.();
+          options.value.onClose?.(fromItem);
         },
       }, ctx.slots) ] : [];
       

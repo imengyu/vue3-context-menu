@@ -70,7 +70,7 @@ export default defineComponent({
   components: {
     MenuBarIconMenu,
   },
-  setup(props, ctx) {
+  setup(props) {
     const menuBarContent = ref<HTMLDivElement>();
     const menuBarActive = ref(false);
     const menuItems = ref<MenuItem[]>([]);

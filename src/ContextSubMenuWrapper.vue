@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, ref, renderSlot, toRefs, VNode, watch } from 'vue'
-import { MenuConstOptions, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
+import { MenuConstOptions, MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
 
@@ -72,9 +72,9 @@ export default defineComponent({
       installBodyEvents();
       addOpenedContextMenu(instance);
     }
-    function closeMenu() {
+    function closeMenu(fromItem?: MenuItem|undefined) {
       ctx.emit("update:show", false);
-      ctx.emit("close");
+      ctx.emit("close", fromItem);
       
       removeOpenedContextMenu(instance);
     }
@@ -196,7 +196,7 @@ export default defineComponent({
     provide('menuContext', {
       zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
       container: container.value as unknown as HTMLElement,
-      adjustPadding: options.value.adjustPadding || MenuConstOptions.defaultAdjustPadding,
+      adjustPadding: { x: 0, y: 0 },
       getParentAbsY: () => options.value.x,
       getParentAbsX: () => options.value.y,
       getParentX: () => 0,

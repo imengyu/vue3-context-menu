@@ -44,6 +44,7 @@
             :preserveIconWidth="item.preserveIconWidth !== undefined ? item.preserveIconWidth : options.preserveIconWidth"
             :showRightArrow="item.children && item.children.length > 0"
             :hasChildren="item.children && item.children.length > 0"
+            :rawMenuItem="item"
             @sub-menu-open="item.onSubMenuOpen"
             @sub-menu-close="item.onSubMenuClose"
           >
@@ -310,7 +311,7 @@ export default defineComponent({
     const thisMenuContext : SubMenuParentContext = {
       zIndex: zIndex + 1,
       container: parentContext.container,
-      adjustPadding: parentContext.adjustPadding,
+      adjustPadding: options.adjustPadding as { x: number, y: number } || MenuConstOptions.defaultAdjustPadding,
       getParentWidth: () => menu.value?.offsetWidth || 0,
       getParentHeight: () => menu.value?.offsetHeight || 0,
       getParentX: () => position.value.x,
