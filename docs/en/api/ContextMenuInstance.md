@@ -77,7 +77,7 @@ Global Function
 | ignoreClickClassName | If your element in menu item has this className, click it will ignore event. | `string` | — |
 | clickCloseClassName | If your element in menu item has this className, click it will ignore event and close hole menu. | `string` | — |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
-| onClose | This event emit when this menu is closing. (Usually used in function mode) | `(() => void)` | — | — |
+| onClose | This event emit when this menu is closing. (Usually used in function mode). Param lastClickItem The last clicked menu item, if user does not click any item, it is `undefined`. This param only valid in function mode. | `((lastClickItem: MenuItem|undefined) => void)` | — | — |
 
 ## MenuItem
 

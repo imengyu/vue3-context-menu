@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.3.1 - 2023/07/23
+
+* [Added] 在函数模式下的 onClose 回调中添加了触发关闭的菜单项参数，用于获取用户点击了哪个菜单项关闭了菜单。 ([#55](https://github.com/imengyu/vue3-context-menu/issues/55)).
+* [Fix] 修复 MenuBar 弹出菜单位置不正确问题。 ([#54](https://github.com/imengyu/vue3-context-menu/issues/54)).
+
 ## v1.3.1 - 2023/07/12
 
 * [Added] `MenuItem.divider` 添加了 `'up'|'down'|'self'` 选项用于控制分割线方向。

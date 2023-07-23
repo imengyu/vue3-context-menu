@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.3.1 - 2023/07/23
+
+* [Added] Add last click item in onClose callback ([#55](https://github.com/imengyu/vue3-context-menu/issues/55)).
+* [Fix] Fix menu bar pop position padding incorrect ([#54](https://github.com/imengyu/vue3-context-menu/issues/54)).
+
 ## v1.3.1 - 2023/07/12
 
 * [Added] `MenuItem.divider` Added option `'up'|'down'|'self'` for control separator direction. 

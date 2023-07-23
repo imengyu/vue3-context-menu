@@ -77,7 +77,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | ignoreClickClassName | 若菜单项中的元素有这个className，单击它将忽略事件。| `string` | — |
 | clickCloseClassName | 若菜单项中的元素有这个className，单击它将忽略事件，并且点击后会关闭菜单。| `string` | — |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
-| onClose | 菜单关闭事件回调（通常在函数模式使用） | `(() => void)` | — | — |
+| onClose | 菜单关闭事件回调（通常在函数模式使用）。参数 lastClickItem 指示了触发关闭的菜单项（仅函数模式有效），如果用户没有点击菜单项而是点击其他地方关闭，则参数为 `undefined`。 | `((lastClickItem: MenuItem|undefined) => void)` | — | — |
 
 ## MenuItem
 
