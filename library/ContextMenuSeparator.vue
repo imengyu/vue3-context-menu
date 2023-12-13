@@ -5,8 +5,8 @@
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue'
-import { GlobalHasSlot, GlobalRenderSlot } from './ContextSubMenuWrapper.vue';
 import { VNodeRender } from './ContextMenuUtils';
+import type { GlobalHasSlot, GlobalRenderSlot } from './ContextSubMenuWrapper.vue';
 
 export default defineComponent({
   name: 'ContextMenuSperator',

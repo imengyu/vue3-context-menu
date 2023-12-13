@@ -1,4 +1,4 @@
-import { ContextMenuInstance } from "./ContextMenuDefine";
+import type { ContextMenuInstance } from "./ContextMenuDefine";
 
 let currentOpenedContextMenu : ContextMenuInstance|null = null;
 

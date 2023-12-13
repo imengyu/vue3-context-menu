@@ -75,7 +75,9 @@ onContextMenu(e : MouseEvent) {
 git clone git@github.com:imengyu/vue3-context-menu.git
 cd vue3-context-menu
 npm install
-npm serve
+npm run dev # Development serve project
+npm run build-demo # Build example project
+npm run build-lib # Build library project
 ```
 
 ## 已有主题

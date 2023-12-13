@@ -1,8 +1,9 @@
 <script lang="ts">
-import { defineComponent, h, inject, toRefs, PropType, SVGAttributes } from 'vue'
+import { defineComponent, h, inject, toRefs } from 'vue'
+import type { PropType, SVGAttributes } from 'vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 import ContextMenuItemConstructor from './ContextMenuItem.vue';
-import { MenuOptions } from './ContextMenuDefine';
+import type { MenuOptions } from './ContextMenuDefine';
 
 export default defineComponent({
   name: 'ContextMenuGroup',

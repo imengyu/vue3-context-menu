@@ -60,13 +60,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, PropType, ref, SVGAttributes, toRefs } from 'vue'
-import { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
-import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
+import { defineComponent, inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type SVGAttributes, toRefs } from 'vue'
+import type { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
+import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
+import type { MenuItem } from './ContextMenuDefine'
 import { VNodeRender } from './ContextMenuUtils'
 import ContextMenuIconCheck from './ContextMenuIconCheck.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
-import { MenuItem } from './ContextMenuDefine'
 
 /**
  * Menu Item

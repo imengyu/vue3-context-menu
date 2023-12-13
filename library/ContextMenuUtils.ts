@@ -1,5 +1,7 @@
-import { defineComponent, toRefs, VNode } from "vue";
-import { MenuConstOptions, MenuOptions } from "./ContextMenuDefine";
+import { defineComponent, toRefs } from "vue";
+import type { VNode } from "vue";
+import type { MenuOptions } from "./ContextMenuDefine";
+import { MenuConstOptions } from "./ContextMenuDefine";
 
 export function getTop(e: HTMLElement, stopNode?: HTMLElement): number {
   let offset = e.offsetTop;

@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import './css/iconfont.css'
 
-import ContextMenu from '../src/ContextMenuInstance'
+import ContextMenu from '../library/ContextMenuInstance'
 
 createApp(App)
   .use(router)

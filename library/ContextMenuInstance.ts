@@ -1,5 +1,7 @@
-import { App, h, render, Slot } from "vue";
-import { ContextMenuInstance, MenuOptions } from "./ContextMenuDefine";
+import { h, render } from "vue";
+import type { App, Slot } from "vue";
+import type { ContextMenuInstance } from "./ContextMenuDefine";
+import type { MenuOptions } from "./ContextMenuDefine";
 import { closeContextMenu } from "./ContextMenuMutex";
 import { genContainer, transformMenuPosition } from "./ContextMenuUtils";
 import ContextMenuConstructor from './ContextMenu.vue'

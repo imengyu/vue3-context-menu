@@ -57,9 +57,9 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { MenuOptions } from '../../src/ContextMenuDefine';
-import ContextMenuComponent from '../../src/ContextMenu.vue';
-import ContextMenu from '../../src/ContextMenuInstance';
+import { MenuOptions } from '../../library/ContextMenuDefine';
+import ContextMenuComponent from '../../library/ContextMenu.vue';
+import ContextMenu from '../../library/ContextMenuInstance';
 
 const menuContainer = ref<HTMLElement>();
 const menuData = reactive<MenuOptions>({

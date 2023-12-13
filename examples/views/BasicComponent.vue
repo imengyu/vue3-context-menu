@@ -81,7 +81,7 @@ v-model:show="show"
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { MenuOptions } from '../../src/ContextMenuDefine';
+import { MenuOptions } from '../../library/ContextMenuDefine';
 
 export default defineComponent({
   mounted() {

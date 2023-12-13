@@ -1,8 +1,9 @@
 <script lang="ts">
-import { defineComponent, h, onBeforeUnmount, onMounted, PropType, provide, ref, renderSlot, toRefs, VNode, watch } from 'vue'
-import { MenuConstOptions, MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
+import { defineComponent, h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch } from 'vue'
+import type { MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
+import { MenuConstOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
-import ContextSubMenuConstructor, { SubMenuContext, SubMenuParentContext } from './ContextSubMenu.vue';
+import ContextSubMenuConstructor, { type SubMenuContext, type SubMenuParentContext } from './ContextSubMenu.vue';
 
 export type GlobalHasSlot = (name: string) => boolean;
 export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;

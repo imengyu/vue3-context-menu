@@ -1,4 +1,4 @@
-import { MenuOptions } from "./ContextMenuDefine";
+import type { MenuOptions } from "./ContextMenuDefine";
 
 export interface MenuBarOptions extends Omit<MenuOptions, 'x'|'y'|'getContainer'> {
   /**

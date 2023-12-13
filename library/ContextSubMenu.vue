@@ -97,10 +97,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onMounted, PropType, provide, ref, toRefs } from 'vue'
-import { MenuOptions, MenuItem, ContextMenuPositionData, MenuConstOptions, MenuPopDirection } from './ContextMenuDefine'
+import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs } from 'vue'
+import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection } from './ContextMenuDefine'
+import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
+import { MenuConstOptions } from './ContextMenuDefine'
 import { getLeft, getTop, solveNumberOrStringSize } from './ContextMenuUtils'
-import { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
@@ -477,7 +478,7 @@ export default defineComponent({
 
           //Overflow adjust
           if (adjustPosition.value) {
-            setTimeout(() => {
+            nextTick(() => {
               absX = getLeft(menuEl, container);
               absY = getTop(menuEl, container);
               
@@ -507,7 +508,7 @@ export default defineComponent({
               } else {
                 maxHeight.value = 0;
               }
-            }, 100);
+            });
           }
         }
 

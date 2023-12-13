@@ -1,4 +1,4 @@
-import { SVGAttributes, VNode } from "vue";
+import type { SVGAttributes, VNode } from "vue";
 
 /**
  * Default config

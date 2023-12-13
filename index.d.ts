@@ -4,25 +4,11 @@ import ContextMenuGlobal from './lib/ContextMenuInstance';
 export default ContextMenuGlobal;
 
 export * from './lib/ContextMenuDefine';
-import MenuBar from './lib/MenuBar.vue';
-import { MenuBarOptions } from './lib/MenuBar';
-import ContextMenu from './lib/ContextMenu.vue';
-import ContextMenuItem from './lib/ContextMenuItem.vue';
-import ContextMenuSeparator from './lib/ContextMenuSeparator.vue';
-import ContextMenuGroup from './lib/ContextMenuGroup.vue';
 
-export {
-  ContextMenu,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuGroup,
-  MenuBar,
-  MenuBarOptions,
-}
+export * from './lib';
 
 declare module 'vue3-context-menu' {
 }
-
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     /**
