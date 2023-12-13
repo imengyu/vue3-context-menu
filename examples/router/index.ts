@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw } from 'vue-router'
 import BasicComponent from '../views/BasicComponent.vue'
 import BasicCustomize from '../views/BasicCustomize.vue'
 import BasicUseage from '../views/BasicUseage.vue'

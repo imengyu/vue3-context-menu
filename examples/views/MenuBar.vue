@@ -23,8 +23,8 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { MenuOptions } from '../../library/ContextMenuDefine';
-import { MenuBarOptions } from '../../library/MenuBar';
+import type { MenuOptions } from '../../library/ContextMenuDefine';
+import type { MenuBarOptions } from '../../library/MenuBar';
 import MenuBar from '../../library/MenuBar.vue';
 
 const menuData : MenuBarOptions = {

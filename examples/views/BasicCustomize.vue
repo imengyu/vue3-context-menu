@@ -60,7 +60,7 @@ this.$contextmenu({
 <script lang="ts">
 import { defineComponent, h } from 'vue'
 import ContextMenu from '../../library/ContextMenuInstance';
-import { MenuOptions } from '../../library/ContextMenuDefine';
+import type { MenuOptions } from '../../library/ContextMenuDefine';
 
 export default defineComponent({
   mounted() {

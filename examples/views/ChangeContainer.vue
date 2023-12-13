@@ -57,7 +57,7 @@
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { MenuOptions } from '../../library/ContextMenuDefine';
+import type { MenuOptions } from '../../library/ContextMenuDefine';
 import ContextMenuComponent from '../../library/ContextMenu.vue';
 import ContextMenu from '../../library/ContextMenuInstance';
 
@@ -169,7 +169,7 @@ const menuData = reactive<MenuOptions>({
       label: 'Test item dynamic show and hide',
       clickClose: false,
       onClick: () => {
-        menuData.items[4].hidden = !menuData.items[4].hidden;
+        menuData.items![4].hidden = !menuData.items![4].hidden;
       },
     },
     { 
@@ -179,10 +179,10 @@ const menuData = reactive<MenuOptions>({
       label: 'Test item dynamic change the label',
       clickClose: false,
       onClick: () => {
-        if (menuData.items[5].label === 'Test item dynamic change the label')
-          menuData.items[5].label = 'My label CHANGED!';
+        if (menuData.items![5].label === 'Test item dynamic change the label')
+          menuData.items![5].label = 'My label CHANGED!';
         else
-          menuData.items[5].label = 'Test item dynamic change the label';
+          menuData.items![5].label = 'Test item dynamic change the label';
       },
     },
     { 
@@ -233,7 +233,7 @@ function onContextMenu(e : MouseEvent) {
   console.log(scaledPosition.x, scaledPosition.y);
 
   //show our menu
-  ContextMenu.showContextMenu(menuData);
+  ContextMenu.showContextMenu(menuData as MenuOptions);
 }
 function onContextComponentMenu(e : MouseEvent) {
   //prevent the browser's default menu

@@ -98,7 +98,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { MenuOptions } from '../../library/ContextMenuDefine';
+import type { MenuOptions } from '../../library/ContextMenuDefine';
 
 export default defineComponent({
   data() {

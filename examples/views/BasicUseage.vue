@@ -99,7 +99,7 @@ createApp(App)
 
 <script setup lang="ts">
 import { onMounted, reactive } from 'vue'
-import { MenuOptions } from '../../library/ContextMenuDefine';
+import type { MenuOptions } from '../../library/ContextMenuDefine';
 import ContextMenu from '../../library/ContextMenuInstance';
 
 onMounted(() => {
