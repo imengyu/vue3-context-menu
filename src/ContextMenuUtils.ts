@@ -74,7 +74,6 @@ export function genContainer(options: MenuOptions) : {
         eleId = GEN_CONTAINER_ID + (containerId++);
         container.setAttribute('id', eleId);
       }
-      container.style.zIndex = zIndex?.toString() || MenuConstOptions.defaultZindex.toString();
       return {
         eleId,
         container,
