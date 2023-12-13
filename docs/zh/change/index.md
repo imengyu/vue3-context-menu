@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.3.2 - 2023/12/13
+## v1.3.4 - 2023/12/13
 
 * [Added] 添加了 `MenuOptions.mouseScroll` 来定义是否可以用滚轮来滚动长菜单。
 * [Added] 允许在上下按钮上使用滚轮来滚动长菜单。Thanks @jonathanzuniga ([#56](https://github.com/imengyu/vue3-context-menu/issues/56)).

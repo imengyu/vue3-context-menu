@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.3.2 - 2023/12/13
+## v1.3.4 - 2023/12/13
 
 * [Added] Added `MenuOptions.mouseScroll` to define whether long menus can be scrolled with a scroll wheel.
 * [Added] Allow the use of a scroll wheel on the up and down buttons to scroll through long menus. Thanks @jonathanzuniga ([#56](https://github.com/imengyu/vue3-context-menu/issues/56)).
