@@ -19,7 +19,11 @@ export default defineConfig({
       fileName: (format) => `vue3-context-menu.${format}.js`,
     },
     rollupOptions: {
+      external: ['vue'],
       output: {
+        globals: {
+          vue: 'Vue'
+        },
         assetFileNames: 'vue3-context-menu.[ext]',
       },
     },
