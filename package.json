@@ -6,7 +6,6 @@
   "files": [
     "src",
     "lib",
-    "examples",
     "index.d.ts"
   ],
   "scripts": {
