@@ -4,7 +4,6 @@
   "description": "A context menu component for Vue3",
   "main": "lib/vue3-context-menu.umd.js",
   "files": [
-    "src",
     "lib",
     "index.d.ts"
   ],
