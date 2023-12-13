@@ -79,7 +79,21 @@
   user-select: none;
   cursor: pointer;
 
-  &:hover {
+  &.placeholder {
+    position: relative;
+    cursor: default;
+  }
+
+  &.disabled {
+    color: var(--mx-menu-disabled-text);
+    cursor: default;
+
+    .mx-right-arrow  {
+      fill: var(--mx-menu-disabled-text);
+    }
+  }
+
+  &:hover:not(.disabled) {
     background-color: var(--mx-menu-hover-backgroud);
   }
   &:active {

@@ -67,6 +67,21 @@ export interface MenuOptions {
    */
   customClass	?:	string;
   /**
+   * Set whether users can use the mouse scroll wheel to scroll through long menus in the menu area.
+   * 
+   * @default false
+   */
+  mouseScroll ?: boolean;
+  /**
+   * Determine whether the up/down buttons in the menu item require space holder. 
+   * The purpose of this variable is because some menu themes add blank padding above and below the menu, 
+   * which are just enough to place up/down buttons. 
+   * If there is no blank padding in your custom menu theme, you can set this field to provide blank space for up/down buttons to prevent obscuring menu items.
+   * 
+   * @default false
+   */
+  updownButtonSpaceholder?: boolean;
+  /**
    * Theme for this menu. Default is 'default'
    * 
    * |theme|explain|example image|

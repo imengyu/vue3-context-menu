@@ -11,16 +11,18 @@
     }"
     data-type="ContextSubMenu"
     @click="onSubMenuBodyClick"
+    @wheel="onMouseWhell"
   >
     <!--Child menu items-->
     <div 
-      class="mx-context-menu-items"
+      :class="[ 'mx-context-menu-items' ]"
       ref="menu"
       :style="{
         top: `${scrollValue}px`,
       }"
     >
       <slot>
+        <div v-if="overflow && options.updownButtonSpaceholder" class="mx-context-menu-updown placeholder"></div>
         <template v-for="(item, i) in items" :key="i" >
           <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'up'" />
           <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'self'" />
@@ -63,6 +65,7 @@
           <!--Custom render-->
           <ContextMenuSeparator v-if="item.hidden !== true && (item.divided === 'down' || item.divided === true)" />
         </template>
+        <div v-if="overflow && options.updownButtonSpaceholder" class="mx-context-menu-updown placeholder"></div>
       </slot>
     </div>
         
@@ -72,10 +75,21 @@
       ref="scroll"
     >
       <!--Updown scroll button-->
-      <div v-show="overflow && scrollValue < 0" class="mx-context-menu-updown mx-context-no-clickable up" @click="onScroll(false)">
+      <div
+        v-show="overflow"
+        ref="upScrollButton"
+        :class="'mx-context-menu-updown mx-context-no-clickable up' + (overflow && scrollValue < 0 ? '' : ' disabled')" 
+        @click="onScroll(false)"
+        @wheel="onMouseWhellMx"
+      >
         <ContextMenuIconRight />
       </div>
-      <div v-show="overflow && scrollValue > -scrollHeight" class="mx-context-menu-updown mx-context-no-clickable down" @click="onScroll(true)">
+      <div 
+        v-show="overflow"
+        :class="'mx-context-menu-updown mx-context-no-clickable down' + (overflow && scrollValue > -scrollHeight ? '' : ' disabled')" 
+        @click="onScroll(true)"
+        @wheel="onMouseWhellMx"
+      >
         <ContextMenuIconRight />
       </div>
     </div>
@@ -216,6 +230,7 @@ export default defineComponent({
 
     const menu = ref<HTMLElement>();
     const scroll = ref<HTMLElement>();
+    const upScrollButton = ref<HTMLElement>();
     const openedSubMenuClose = [] as (() => void)[];
 
     //#region Keyboard control context
@@ -381,9 +396,22 @@ export default defineComponent({
     //Scroll the items
     function onScroll(down : boolean) {
       if (down)
-        scrollValue.value = Math.max(scrollValue.value - 50, -scrollHeight.value);
+        scrollValue.value = Math.min(Math.max(scrollValue.value - 50, -scrollHeight.value), 0);
       else 
         scrollValue.value = Math.min(scrollValue.value + 50, 0);
+    }
+
+    function onMouseWhellMx(e: WheelEvent) {
+      e.preventDefault();
+      e.stopPropagation();
+      onScroll (e.deltaY > 0);
+    }
+    function onMouseWhell(e: WheelEvent) {
+      if (options.mouseScroll) {
+        e.preventDefault();
+        e.stopPropagation();
+        onScroll (e.deltaY > 0);
+      }
     }
 
     const overflow = ref(false);
@@ -449,15 +477,15 @@ export default defineComponent({
 
           //Overflow adjust
           if (adjustPosition.value) {
-            nextTick(() => {
+            setTimeout(() => {
               absX = getLeft(menuEl, container);
               absY = getTop(menuEl, container);
               
               const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
-              const yOverflow = (absY + menuEl.offsetHeight) - (avliableHeight);
+              const yOverflow = (absY + menuEl.offsetHeight + fillPaddingY * 2) - (avliableHeight);
 
-              scrollHeight.value = menuEl.offsetHeight - avliableHeight - fillPaddingY * 2 /* Padding */;
-              overflow.value = yOverflow > 0;
+              overflow.value = yOverflow > 0;              
+              scrollHeight.value = menuEl.offsetHeight - avliableHeight + fillPaddingY * 2 /* Padding */;
 
               if (xOverflow > 0) {//X overflow
                 const ox = parentWidth + menuEl.offsetWidth - fillPaddingX; 
@@ -474,12 +502,12 @@ export default defineComponent({
                 if (oy > maxSubHeight)
                   position.value.y -= maxSubHeight - fillPaddingY;
                 else
-                  position.value.y -= oy - fillPaddingY * 2;
+                  position.value.y -= oy - fillPaddingY;
                 maxHeight.value = (avliableHeight - fillPaddingY * 2);
               } else {
                 maxHeight.value = 0;
               }
-            });
+            }, 100);
           }
         }
 
@@ -503,6 +531,7 @@ export default defineComponent({
       zIndex,
       constOptions: MenuConstOptions,
       scrollValue,
+      upScrollButton,
       overflow,
       position,
       scrollHeight,
@@ -512,6 +541,8 @@ export default defineComponent({
       globalTheme,
       onScroll,
       onSubMenuBodyClick,
+      onMouseWhell,
+      onMouseWhellMx,
       solveNumberOrStringSize,
     }
   }
