@@ -71,11 +71,13 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | theme | 菜单的[主题](../guide/theme.md) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
+| mouseScroll | 设置用户是否可以在菜单区域中使用鼠标滚轮来滚动长菜单。 | `boolean` | — | `false` |
 | adjustPadding | 自动调整菜单时的上下边距 | `{ x: number, y: number }` or `number` | — | `10` |
 | adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |
 | direction | 设置主菜单相对于坐标的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | `'br'` |
 | ignoreClickClassName | 若菜单项中的元素有这个className，单击它将忽略事件。| `string` | — |
 | clickCloseClassName | 若菜单项中的元素有这个className，单击它将忽略事件，并且点击后会关闭菜单。| `string` | — |
+| updownButtonSpaceholder | 决定菜单项中的上/下按钮是否需要空白占位。设置这个变量的目的是因为有些菜单主题会在菜单上下添加空白边距，这一部分空白边距刚好可以放置上/下按钮。如果你的自定义主题菜单中没有空白边距，则可以设置此字段为上/下按提供要空白占位，防止遮挡菜单条目。 | `boolean` | — | `false` |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 | onClose | 菜单关闭事件回调（通常在函数模式使用）。参数 lastClickItem 指示了触发关闭的菜单项（仅函数模式有效），如果用户没有点击菜单项而是点击其他地方关闭，则参数为 `undefined`。 | `((lastClickItem: MenuItem|undefined) => void)` | — | — |
 

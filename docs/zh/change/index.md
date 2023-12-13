@@ -5,6 +5,14 @@ nav:
   order: 5
 ---
 
+## v1.3.2 - 2023/12/13
+
+* [Added] 添加了 `MenuOptions.mouseScroll` 来定义是否可以用滚轮来滚动长菜单。
+* [Added] 允许在上下按钮上使用滚轮来滚动长菜单。Thanks @jonathanzuniga ([#56](https://github.com/imengyu/vue3-context-menu/issues/56)).
+* [Fix] 修复长菜单条目显示不完全问题。
+* [Fix] 修复了自定义挂载容器添加zIndex的问题。
+* [Fix] 修复了菜单溢出容器问题。
+
 ## v1.3.1 - 2023/07/23
 
 * [Added] 在函数模式下的 onClose 回调中添加了触发关闭的菜单项参数，用于获取用户点击了哪个菜单项关闭了菜单。 ([#55](https://github.com/imengyu/vue3-context-menu/issues/55)).

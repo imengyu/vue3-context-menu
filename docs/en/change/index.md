@@ -5,6 +5,14 @@ nav:
   order: 5
 ---
 
+## v1.3.2 - 2023/12/13
+
+* [Added] Added `MenuOptions.mouseScroll` to define whether long menus can be scrolled with a scroll wheel.
+* [Added] Allow the use of a scroll wheel on the up and down buttons to scroll through long menus. Thanks @jonathanzuniga ([#56](https://github.com/imengyu/vue3-context-menu/issues/56)).
+* [Fix] Fix the issue of incomplete display of long menu items.
+* [Fix] Fixed the issue of adding zIndex to custom mount containers.
+* [Fix] Fixed the issue that menu overflow the container .
+
 ## v1.3.1 - 2023/07/23
 
 * [Added] Add last click item in onClose callback ([#55](https://github.com/imengyu/vue3-context-menu/issues/55)).

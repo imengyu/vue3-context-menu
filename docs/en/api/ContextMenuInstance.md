@@ -68,6 +68,8 @@ Global Function
 | iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
 | preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
 | keyboardControl | Set whether the user can use keyboard keys to control the current menu. | `boolean` | — | `true` |
+| closeWhenScroll | Set whether to close the menu when the user scrolls the mouse. | `boolean` | - | `true` |
+| mouseScroll | Set whether users can use the mouse scroll wheel to scroll through long menus in the menu area. | `boolean` | — | `false` |
 | theme | The [theme](../guide/theme.md) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | minWidth | Submenu minimum width (in pixels). | `number` or `string` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` or `string` | — | `600` |
@@ -76,6 +78,7 @@ Global Function
 | direction | Set the mian menu pop-up direction relative to coordinates. Default is `'br'`, if `adjustPosition` is true then the menu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | `'br'` |
 | ignoreClickClassName | If your element in menu item has this className, click it will ignore event. | `string` | — |
 | clickCloseClassName | If your element in menu item has this className, click it will ignore event and close hole menu. | `string` | — |
+| updownButtonSpaceholder | Determine whether the up/down buttons in the menu item require space holder. The purpose of this variable is because some menu themes add blank padding above and below the menu, which are just enough to place up/down buttons. If there is no blank padding in your custom menu theme, you can set this field to provide blank space for up/down buttons to prevent obscuring menu items. | `boolean` | — | `false` |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 | onClose | This event emit when this menu is closing. (Usually used in function mode). Param lastClickItem The last clicked menu item, if user does not click any item, it is `undefined`. This param only valid in function mode. | `((lastClickItem: MenuItem|undefined) => void)` | — | — |
 
