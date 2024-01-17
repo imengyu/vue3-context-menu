@@ -5,6 +5,15 @@ nav:
   order: 5
 ---
 
+
+## v1.3.6 - 2024/01/17
+
+* [Added] 添加 `isClosed` 实例方法用于检查当前菜单实例是否已经关闭。 ([#77](https://github.com/imengyu/vue3-context-menu/issues/77))
+* [Added] 添加 `clickCloseOnOutside` 选项允许配置用户点击外部是否关闭菜单。 ([#76](https://github.com/imengyu/vue3-context-menu/issues/76))
+* [Fix] 修复 VNodeRenderer 发出的类型警告。
+* [Docs] 添加 `--mx-menu-open-hover-background` 和 `--mx-menu-open-hover-text` 的说明。(Thanks @croatialu)
+* [Docs] 修改拼写 (Thanks @cheqianxiao)
+
 ## v1.3.4 - 2023/12/13
 
 * [Added] 添加了 `MenuOptions.mouseScroll` 来定义是否可以用滚轮来滚动长菜单。

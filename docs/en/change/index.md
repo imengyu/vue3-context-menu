@@ -5,6 +5,14 @@ nav:
   order: 5
 ---
 
+## v1.3.6 - 2024/01/17
+
+* [Added] Add `isClosed` instance function to check if the menu is currently closed. ([#77](https://github.com/imengyu/vue3-context-menu/issues/77))
+* [Added] Add clickCloseOnOutside allow do not close menu when the user click on other places ([#76](https://github.com/imengyu/vue3-context-menu/issues/76))
+* [Fix] VNodeRenderer prop type check warning.
+* [Docs] add `--mx-menu-open-hover-background` and `--mx-menu-open-hover-text` (Thanks @croatialu)
+* [Docs] Fix typo (Thanks @cheqianxiao)
+
 ## v1.3.4 - 2023/12/13
 
 * [Added] Added `MenuOptions.mouseScroll` to define whether long menus can be scrolled with a scroll wheel.
