@@ -39,6 +39,7 @@ export default defineComponent({
 
     ctx.expose({
       closeMenu: () => ctx.emit('update:show', false),
+      isClosed: () => !show.value,
     });
 
     return () => {  

@@ -67,7 +67,11 @@ export default defineComponent({
       }
     });
 
-    const instance = { closeMenu };
+    const instance = { 
+      closeMenu,
+      isClosed,
+    };
+    let closed = false;
     
     function openMenu() {
       installBodyEvents();
@@ -77,12 +81,17 @@ export default defineComponent({
       ctx.emit("update:show", false);
       ctx.emit("close", fromItem);
       
+      closed = true;
       removeOpenedContextMenu(instance);
+    }
+    function isClosed() {
+      return closed;
     }
 
     //Expose instance function
     ctx.expose({
       closeMenu: closeMenu,
+      isClosed: isClosed,
     });
 
     function installBodyEvents() {

@@ -24,6 +24,10 @@ export interface ContextMenuInstance {
    * @param fromItem The last clicked menu item, will pass to `MenuOptions.onClose` callback, if user does not click any item, can be `undefined`.
    */
   closeMenu(fromItem?: MenuItem|undefined): void;
+  /**
+   * Check if the menu is currently closed.
+   */
+  isClosed(): boolean;
 }
 
 export type MenuPopDirection = 'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r';
