@@ -125,6 +125,12 @@ export interface MenuOptions {
    */
   ignoreClickClassName?: string,
   /**
+   * Set should close menu when the user click on other places.
+   * 
+   * @default true
+   */
+  clickCloseOnOutside ?: boolean;
+  /**
    * If your element in menu item has this className, click it will ignore event and close hole menu. 
    */
   clickCloseClassName?: string,
@@ -206,12 +212,12 @@ export interface MenuOptions {
    * ```
    */
   getContainer ?: HTMLElement | (() => HTMLElement);
+
   /**
    * This event emit when this menu is closing. (Usually used in function mode)
    * @param lastClickItem The last clicked menu item, if user does not click any item, it is `undefined`. This param only valid in function mode.
    */
   onClose ?: ((lastClickItem: MenuItem|undefined) => void) | undefined;
-
   /**
    * Event for MenuBar component
    */

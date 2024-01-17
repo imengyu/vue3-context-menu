@@ -171,10 +171,11 @@ export default defineComponent({
           return;
         target = target.parentNode as HTMLElement;
       }
-      
-      //Close menu
-      removeBodyEvents();
-      closeMenu();
+      if (options.value.clickCloseOnOutside !== false) {
+        //Close menu
+        removeBodyEvents();
+        closeMenu();
+      }
     }
     
     //provide globalOptions for child use
