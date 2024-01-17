@@ -22,7 +22,7 @@ English | [简体中文](https://github.com/imengyu/vue3-context-menu/blob/main/
 
 [Click here View online Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
 
-### Useage
+### Usage
 
 ```
 npm install -save @imengyu/vue3-context-menu
