@@ -44,6 +44,7 @@ The style of the menu has extracted some css variables for you to use. You can e
 --mx-menu-hover-backgroud: #f1f1f1; //The background color of the menu item when hovering
 --mx-menu-active-backgroud: #dfdfdf; //The background color of the menu item when the mouse is pressed
 --mx-menu-open-backgroud: #f1f1f1; //The background color of the menu item when the menu item submenu is opened
+--mx-menu-open-hover-backgroud: #f1f1f1; // The background color of the menu item when the menu item submenu is opened and the mouse is hovering
 --mx-menu-divider: #f0f0f0; //Menu divider color
 
 //Text
@@ -51,6 +52,7 @@ The style of the menu has extracted some css variables for you to use. You can e
 --mx-menu-hover-text: #2e2e2e; //Menu text color when hovering
 --mx-menu-active-text: #2e2e2e; //Menu text color when the mouse is pressed
 --mx-menu-open-text: #2e2e2e; //Menu text color when the menu item submenu is opened
+--mx-menu-open-hover-text: #2e2e2e; //Menu text color when the menu item submenu is opened and the mouse is hovering
 --mx-menu-disabled-text: #c9c8c8; //Menu text color when the menu item is disabled
 
 //Shadow

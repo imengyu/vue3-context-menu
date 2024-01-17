@@ -24,6 +24,7 @@ import '你的样式scss文件路径.scss'
 --mx-menu-hover-backgroud: #f1f1f1; //菜单条目鼠标悬浮时的背景颜色
 --mx-menu-active-backgroud: #dfdfdf; //菜单条目鼠标按下时的背景颜色
 --mx-menu-open-backgroud: #f1f1f1; //菜单条目子菜单打开时的背景颜色
+--mx-menu-open-hover-background: #f1f1f1; //菜单条目子菜单打开时悬浮的背景颜色
 --mx-menu-divider: #f0f0f0; //菜单分割线条目颜色
 
 //Text
@@ -31,6 +32,7 @@ import '你的样式scss文件路径.scss'
 --mx-menu-hover-text: #2e2e2e; //菜单条目鼠标悬浮时的文字颜色
 --mx-menu-active-text: #2e2e2e; //菜单条目鼠标按下时的文字颜色
 --mx-menu-open-text: #2e2e2e; //菜单条目子菜单打开时的文字颜色
+--mx-menu-open-hover-text: #2e2e2e; //菜单条目子菜单打开时悬浮的文字颜色
 --mx-menu-disabled-text: #c9c8c8; //菜单条目禁用的文字颜色
 
 //Shadow
