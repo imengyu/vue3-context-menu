@@ -16,8 +16,8 @@ Menu bar component.
 
 | Slot name | Description | Arguments |
 | :----: | :----: | :----: |
-| prefix | 菜单栏前部渲染插槽 | - |
-| suffix | 菜单栏后部渲染插槽 | - |
+| prefix | Rendering slot in front of menu bar | - |
+| suffix | The rendering slot behind the menu bar | - |
 
 ## MenuBarOptions
 

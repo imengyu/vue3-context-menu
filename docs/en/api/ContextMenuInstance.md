@@ -80,7 +80,7 @@ Global Function
 | clickCloseOnOutside | Set should close menu when the user click on other places. | `boolean` | `true` |
 | clickCloseClassName | If your element in menu item has this className, click it will ignore event and close hole menu. | `string` | — |
 | updownButtonSpaceholder | Determine whether the up/down buttons in the menu item require space holder. The purpose of this variable is because some menu themes add blank padding above and below the menu, which are just enough to place up/down buttons. If there is no blank padding in your custom menu theme, you can set this field to provide blank space for up/down buttons to prevent obscuring menu items. | `boolean` | — | `false` |
-| getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.en.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
+| getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |
 | onClose | This event emit when this menu is closing. (Usually used in function mode). Param lastClickItem The last clicked menu item, if user does not click any item, it is `undefined`. This param only valid in function mode. | `((lastClickItem: MenuItem|undefined) => void)` | — | — |
 
 ## MenuItem
