@@ -3,6 +3,12 @@ import type { VNode } from "vue";
 import type { MenuOptions } from "./ContextMenuDefine";
 import { MenuConstOptions } from "./ContextMenuDefine";
 
+/**
+ * Get absolute y position of HTMLElement
+ * @param e Element
+ * @param stopNode Specify the node for recursive termination, default to body
+ * @returns 
+ */
 export function getTop(e: HTMLElement, stopNode?: HTMLElement): number {
   let offset = e.offsetTop;
   if (e.offsetParent != null && e.offsetParent != stopNode) {
@@ -11,6 +17,12 @@ export function getTop(e: HTMLElement, stopNode?: HTMLElement): number {
   }
   return offset;
 }
+/**
+ * Get absolute x position of HTMLElement
+ * @param e Element
+ * @param stopNode Specify the node for recursive termination, default to body
+ * @returns 
+ */
 export function getLeft(e: HTMLElement, stopNode?: HTMLElement): number {
   let offset = e.offsetLeft;
   if (e.offsetParent != null && e.offsetParent != stopNode) {
@@ -52,15 +64,13 @@ export function transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: 
   };
 }
 
-
-export function removeContainer(container: HTMLElement) :void {
-  container.parentNode?.removeChild(container);
-}
-
 const DEFAULT_CONTAINER_ID = 'mx-menu-default-container';
 const GEN_CONTAINER_ID = 'mx-menu-container-';
 let containerId = 0;
 
+export function removeContainer(container: HTMLElement) : void {
+  container.parentNode?.removeChild(container);
+}
 export function genContainer(options: MenuOptions) : {
   eleId: string,
   container: HTMLElement,
@@ -99,6 +109,11 @@ export function genContainer(options: MenuOptions) : {
   };
 }
 
+/**
+ * Number to px string
+ * @param value 
+ * @returns 
+ */
 export function solveNumberOrStringSize(value: string|number) : string {
   return typeof value === 'number' ? `${value}px` : value;
 }
@@ -108,10 +123,16 @@ export function solveNumberOrStringSize(value: string|number) : string {
  */
 export const VNodeRender = defineComponent({
   props: {
+    /**
+     * Can be VNode or (data: unknown) => VNode
+     */
     vnode: {
-      type: [ Object, Function ],
-      default: null,
+      type: null,
     },
+    /**
+     * If vnode is a callback, this data will be passed to the callback first parameter.
+     * @default null
+     */
     data: {
       type: Object,
       default: null,
