@@ -12,9 +12,9 @@
     "build-demo": "vite build examples",
     "build-lib": "vite build library",
     "build-types": "vue-tsc -p ./library/tsconfig.json --outDir ./lib --declaration --emitDeclarationOnly",
-    "docs:dev": "vitepress dev ../docs/zh",
-    "docs:build-zh": "vitepress build ../docs/zh",
-    "docs:build-en": "vitepress build ../docs/en"
+    "docs:dev": "cd docs/zh && vitepress dev",
+    "docs:build-zh": "vitepress build ./docs/zh",
+    "docs:build-en": "vitepress build ./docs/en"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
