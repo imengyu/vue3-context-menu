@@ -1,4 +1,4 @@
-import type { SVGAttributes, VNode } from "vue";
+import type { SVGAttributes, TransitionProps, VNode } from "vue";
 
 /**
  * Default config
@@ -31,6 +31,8 @@ export interface ContextMenuInstance {
 }
 
 export type MenuPopDirection = 'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r';
+export type MenuChildren = MenuItem[];
+
 
 export interface MenuOptions {
   /**
@@ -144,6 +146,11 @@ export interface MenuOptions {
    * Only for css font icon, If you use the svg icon, you do not need to use this.
    */
   iconFontClass ?:	string;
+  /**
+   * The Vue Transition props used when menu show or hide.
+   * @default ''
+   */
+  menuTransitionProps ?: TransitionProps;
   /**
    * Should a fixed-width icon area be reserved for menu items without icon. (global)
    * 
@@ -362,7 +369,7 @@ export interface MenuItem {
   /**
    * Child menu items (Valid in function mode).
    */
-  children ?: MenuItem[],
+  children ?: MenuChildren,
 }
 
 export interface ContextMenuPositionData {

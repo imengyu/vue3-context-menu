@@ -2,6 +2,10 @@ import type { ContextMenuInstance } from "./ContextMenuDefine";
 
 let currentOpenedContextMenu : ContextMenuInstance|null = null;
 
+
+export function checkOpenedContextMenu() : boolean {
+  return currentOpenedContextMenu !== null;
+}
 export function addOpenedContextMenu(inst: ContextMenuInstance) : void {
   if (currentOpenedContextMenu)
     closeContextMenu();

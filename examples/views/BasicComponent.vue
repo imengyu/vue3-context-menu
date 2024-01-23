@@ -102,7 +102,10 @@ export default defineComponent({
         zIndex: 3,
         minWidth: 230,
         x: 500,
-        y: 200
+        y: 200,
+        //menuTransitionProps: {
+        //  name: 'fade',
+        //}
       } as MenuOptions,
     }
   },

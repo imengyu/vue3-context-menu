@@ -1,260 +1,269 @@
-<script lang="ts">
-import { defineComponent, h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch } from 'vue'
+<template>
+  <div class="mx-menu-ghost-host">
+    <Transition 
+      v-if="options.menuTransitionProps"
+      appear
+      v-bind="options.menuTransitionProps"
+      @after-leave="emit('closeAnimFinished')"
+    >
+      <ContextSubMenuConstructor 
+        v-if="show"
+        class="mx-menu-host"
+        :items="options.items"
+        :adjustPosition="options.adjustPosition"
+        :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
+        :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
+        :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
+      >
+        <slot />
+      </ContextSubMenuConstructor>
+    </Transition>
+    <ContextSubMenuConstructor 
+      v-else-if="show"
+      class="mx-menu-host"
+      :items="options.items"
+      :adjustPosition="options.adjustPosition"
+      :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
+      :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
+      :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
+    >
+      <slot />
+    </ContextSubMenuConstructor>
+  </div>
+</template>
+
+<script setup lang="ts">
+import { h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch, Transition, useSlots, type Ref } from 'vue'
 import type { MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
 import { MenuConstOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { type SubMenuContext, type SubMenuParentContext } from './ContextSubMenu.vue';
 
-export type GlobalHasSlot = (name: string) => boolean;
-export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;
-
 /**
  * Context menu component
  */
-export default defineComponent({
-  name: 'ContextMenu',
-  emits: [ 'update:show', 'close' ],
-  props: {
-    /**
-     * Menu options
-     */
-    options: {
-      type: Object as PropType<MenuOptions>,
-      default: null
-    },
-    /**
-     * Show menu?
-     */
-    show: {
-      type: Boolean,
-      default: false
-    },
-    /**
-     * Current container, For calculation only
-     */
-    container: {
-      type: Object as PropType<HTMLElement>,
-      default: null
-    },
-    /**
-     * Make sure is user set the custom container.
-     */
-    isFullScreenContainer: {
-      type: Boolean,
-      default: true
-    },
+
+export type GlobalHasSlot = (name: string) => boolean;
+export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) => VNode;
+
+const props = defineProps({
+  /**
+   * Menu options
+   */
+  options: {
+    type: Object as PropType<MenuOptions>,
+    default: null
   },
-  setup(props, ctx) {
-    const {
-      options,
-      show,
-      container,
-    } = toRefs(props);
-
-    onMounted(() => {
-      if (show)
-        openMenu();
-    })
-    onBeforeUnmount(() => {
-      removeBodyEvents();
-    });
-
-    watch(show, (v: boolean) => {
-      if(v) {
-        openMenu();
-      } else {
-        removeBodyEvents();
-      }
-    });
-
-    const instance = { 
-      closeMenu,
-      isClosed,
-    };
-    let closed = false;
-    
-    function openMenu() {
-      installBodyEvents();
-      addOpenedContextMenu(instance);
-    }
-    function closeMenu(fromItem?: MenuItem|undefined) {
-      ctx.emit("update:show", false);
-      ctx.emit("close", fromItem);
-      
-      closed = true;
-      removeOpenedContextMenu(instance);
-    }
-    function isClosed() {
-      return closed;
-    }
-
-    //Expose instance function
-    ctx.expose({
-      closeMenu: closeMenu,
-      isClosed: isClosed,
-    });
-
-    function installBodyEvents() {
-      setTimeout(() => {
-        document.addEventListener("click", onBodyClick, true);
-        document.addEventListener("contextmenu", onBodyClick, true);
-        document.addEventListener("scroll", onBodyScroll, true);
-        if (!props.isFullScreenContainer && container.value)
-          container.value.addEventListener("scroll", onBodyScroll, true);
-        if (options.value.keyboardControl !== false)
-          document.addEventListener('keydown', onMenuKeyDown);
-      }, 50);
-    }
-    function removeBodyEvents() {
-      document.removeEventListener("contextmenu", onBodyClick, true);
-      document.removeEventListener("click", onBodyClick, true);
-      document.removeEventListener("scroll", onBodyScroll, true);
-      if (!props.isFullScreenContainer && container.value)
-        container.value.removeEventListener("scroll", onBodyScroll, true);
-      if (options.value.keyboardControl !== false)
-        document.removeEventListener('keydown', onMenuKeyDown);
-    }
-
-    //For keyboard event, remember which submenu is active
-    const currentOpenedMenu = ref<SubMenuContext|null>();
-    provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
-
-    function onMenuKeyDown(e: KeyboardEvent) {
-      let handled = true;
-      //Handle keyboard event
-      switch(e.key) {
-        case "Escape": {
-          if (currentOpenedMenu.value?.isTopLevel() === false) {
-            currentOpenedMenu.value?.closeCurrentSubMenu();
-          } else {
-            closeMenu();
-          }
-          break;
-        }
-        case "ArrowDown":
-          currentOpenedMenu.value?.moveCurrentItemDown();
-          break;
-        case "ArrowUp":
-          currentOpenedMenu.value?.moveCurrentItemUp();
-          break;
-        case "Home":
-          currentOpenedMenu.value?.moveCurrentItemFirst();
-          break;
-        case "End":
-          currentOpenedMenu.value?.moveCurrentItemLast();
-          break;
-        case "ArrowLeft": {
-          if (!currentOpenedMenu.value?.closeSelfAndActiveParent())
-            options.value.onKeyFocusMoveLeft?.();
-          break;
-        }
-        case "ArrowRight":
-          if (!currentOpenedMenu.value?.openCurrentItemSubMenu())
-            options.value.onKeyFocusMoveRight?.();
-          break;
-        case "Enter":
-          currentOpenedMenu.value?.triggerCurrentItemClick(e);
-          break;
-        default:
-          handled = false;
-          break;
-      }
-      if (handled && currentOpenedMenu.value) {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    }
-    function onBodyScroll() {
-      //close when docunment scroll
-      if (options.value.closeWhenScroll !== false)
-        closeMenu();
-    }
-    function onBodyClick(e: MouseEvent) {
-      checkTargetAndClose(e.target as HTMLElement);
-    }
-    function checkTargetAndClose(target: HTMLElement) {
-      //Loop target , Check whether the currently clicked element belongs to the current menu.
-      // If yes, it will not be closed
-      while (target) {
-        if (target.classList && target.classList.contains('mx-menu-host'))
-          return;
-        target = target.parentNode as HTMLElement;
-      }
-      if (options.value.clickCloseOnOutside !== false) {
-        //Close menu
-        removeBodyEvents();
-        closeMenu();
-      }
-    }
-    
-    //provide globalOptions for child use
-    provide('globalOptions', options.value);
-    provide('globalCloseMenu', closeMenu);
-    provide('globalTheme', options.value?.theme || 'light');
-    provide('globalIsFullScreenContainer', props.isFullScreenContainer);
-    provide('globalClickCloseClassName', options.value?.clickCloseClassName);
-    provide('globalIgnoreClickClassName', options.value?.ignoreClickClassName);
-    provide('globalIconFontClass', options.value?.iconFontClass || 'iconfont');
-    //check slot exists
-    provide('globalHasSlot', (name: string) => {
-      return ctx.slots[name] !== undefined;
-    });
-    //render slot
-    provide('globalRenderSlot', (name: string, params: Record<string, unknown>) => {
-      return renderSlot(ctx.slots, name, { ...params }, () => [ h('span', 'Render slot failed') ], false);
-    });
-    //provide menuContext for child use
-    provide('menuContext', {
-      zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
-      container: container.value as unknown as HTMLElement,
-      adjustPadding: { x: 0, y: 0 },
-      getParentAbsY: () => options.value.x,
-      getParentAbsX: () => options.value.y,
-      getParentX: () => 0,
-      getParentY: () => 0,
-      getParentWidth: () => 0, 
-      getParentHeight: () => 0, 
-      getPositon: () => [options.value.x,options.value.y],
-      closeOtherSubMenuWithTimeOut: () => {/* Do nothing */}, 
-      checkCloseOtherSubMenuTimeOut: () => false, 
-      addOpenedSubMenu: () => {/* Do nothing */},
-      closeOtherSubMenu: () => {/* Do nothing */},
-      getParentContext: () => null,
-      getSubMenuInstanceContext: () => null,
-      getElement: () => null,
-      addChildMenuItem: () => {/* Do nothing */},
-      removeChildMenuItem: () => {/* Do nothing */},
-      markActiveMenuItem: () => {/* Do nothing */},
-      markThisOpenedByKeyBoard: () => {/* Do nothing */},
-      isOpenedByKeyBoardFlag: () => false,
-      isMenuItemDataCollectedFlag: () => false,
-    } as SubMenuParentContext);
-
-    return () => {
-      //Hidden
-      if (!show.value)
-        return [];
-
-      //Create SubMenu
-      return [
-        h('div', {
-          class: 'mx-menu-ghost-host', 
-        }, [
-          h(ContextSubMenuConstructor, {
-            class: 'mx-menu-host',
-            items: options.value?.items,
-            adjustPosition: options.value?.adjustPosition,
-            maxWidth: options.value.maxWidth || MenuConstOptions.defaultMaxWidth,
-            minWidth: options.value.minWidth || MenuConstOptions.defaultMinWidth,
-            direction: options.value.direction || MenuConstOptions.defaultDirection as MenuPopDirection,
-          }, {
-            default: ctx.slots.default,
-          })
-        ])
-      ];
-    }
+  /**
+   * Show menu?
+   */
+  show: {
+    type: Object as PropType<Ref<boolean>>,
+    default: null
   },
+  /**
+   * Current container, For calculation only
+   */
+  container: {
+    type: Object as PropType<HTMLElement>,
+    default: null
+  },
+  /**
+   * Make sure is user set the custom container.
+   */
+  isFullScreenContainer: {
+    type: Boolean,
+    default: true
+  },
+});
+
+const emit = defineEmits([ 'close', 'closeAnimFinished' ]);
+
+const slots = useSlots()
+
+const {
+  options,
+  show,
+  container,
+} = toRefs(props);
+
+onMounted(() => {
+  if (show.value)
+    openMenu();
 })
+onBeforeUnmount(() => {
+  removeBodyEvents();
+});
+
+watch(show, (v: boolean) => {
+  if(v) {
+    openMenu();
+  } else {
+    removeBodyEvents();
+  }
+});
+
+const instance = { 
+  closeMenu,
+  isClosed,
+};
+let closed = false;
+
+function openMenu() {
+  installBodyEvents();
+  addOpenedContextMenu(instance);
+}
+function closeMenu(fromItem?: MenuItem|undefined) {
+  closed = true;
+  emit("close", fromItem);
+  if (!options.value.menuTransitionProps)
+    emit('closeAnimFinished');
+  removeOpenedContextMenu(instance);
+}
+function isClosed() {
+  return closed;
+}
+
+
+function installBodyEvents() {
+  setTimeout(() => {
+    document.addEventListener("click", onBodyClick, true);
+    document.addEventListener("contextmenu", onBodyClick, true);
+    document.addEventListener("scroll", onBodyScroll, true);
+    if (!props.isFullScreenContainer && container.value)
+      container.value.addEventListener("scroll", onBodyScroll, true);
+    if (options.value.keyboardControl !== false)
+      document.addEventListener('keydown', onMenuKeyDown);
+  }, 50);
+}
+function removeBodyEvents() {
+  document.removeEventListener("contextmenu", onBodyClick, true);
+  document.removeEventListener("click", onBodyClick, true);
+  document.removeEventListener("scroll", onBodyScroll, true);
+  if (!props.isFullScreenContainer && container.value)
+    container.value.removeEventListener("scroll", onBodyScroll, true);
+  if (options.value.keyboardControl !== false)
+    document.removeEventListener('keydown', onMenuKeyDown);
+}
+
+//For keyboard event, remember which submenu is active
+const currentOpenedMenu = ref<SubMenuContext|null>();
+provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
+
+function onMenuKeyDown(e: KeyboardEvent) {
+  let handled = true;
+  //Handle keyboard event
+  switch(e.key) {
+    case "Escape": {
+      if (currentOpenedMenu.value?.isTopLevel() === false) {
+        currentOpenedMenu.value?.closeCurrentSubMenu();
+      } else {
+        closeMenu();
+      }
+      break;
+    }
+    case "ArrowDown":
+      currentOpenedMenu.value?.moveCurrentItemDown();
+      break;
+    case "ArrowUp":
+      currentOpenedMenu.value?.moveCurrentItemUp();
+      break;
+    case "Home":
+      currentOpenedMenu.value?.moveCurrentItemFirst();
+      break;
+    case "End":
+      currentOpenedMenu.value?.moveCurrentItemLast();
+      break;
+    case "ArrowLeft": {
+      if (!currentOpenedMenu.value?.closeSelfAndActiveParent())
+        options.value.onKeyFocusMoveLeft?.();
+      break;
+    }
+    case "ArrowRight":
+      if (!currentOpenedMenu.value?.openCurrentItemSubMenu())
+        options.value.onKeyFocusMoveRight?.();
+      break;
+    case "Enter":
+      currentOpenedMenu.value?.triggerCurrentItemClick(e);
+      break;
+    default:
+      handled = false;
+      break;
+  }
+  if (handled && currentOpenedMenu.value) {
+    e.stopPropagation();
+    e.preventDefault();
+  }
+}
+function onBodyScroll() {
+  //close when docunment scroll
+  if (options.value.closeWhenScroll !== false)
+    closeMenu();
+}
+function onBodyClick(e: MouseEvent) {
+  checkTargetAndClose(e.target as HTMLElement);
+}
+function checkTargetAndClose(target: HTMLElement) {
+  //Loop target , Check whether the currently clicked element belongs to the current menu.
+  // If yes, it will not be closed
+  while (target) {
+    if (target.classList && target.classList.contains('mx-menu-host'))
+      return;
+    target = target.parentNode as HTMLElement;
+  }
+  if (options.value.clickCloseOnOutside !== false) {
+    //Close menu
+    removeBodyEvents();
+    closeMenu();
+  }
+}
+
+//provide globalOptions for child use
+provide('globalOptions', options.value);
+provide('globalCloseMenu', closeMenu);
+provide('globalTheme', options.value?.theme || 'light');
+provide('globalIsFullScreenContainer', props.isFullScreenContainer);
+provide('globalClickCloseClassName', options.value?.clickCloseClassName);
+provide('globalIgnoreClickClassName', options.value?.ignoreClickClassName);
+provide('globalIconFontClass', options.value?.iconFontClass || 'iconfont');
+provide('globalMenuTransitionProps', options.value?.menuTransitionProps);
+//check slot exists
+provide('globalHasSlot', (name: string) => {
+  return slots[name] !== undefined;
+});
+//render slot
+provide('globalRenderSlot', (name: string, params: Record<string, unknown>) => {
+  return renderSlot(slots, name, { ...params }, () => [ h('span', 'Render slot failed') ], false);
+});
+//provide menuContext for child use
+provide('menuContext', {
+  zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
+  container: container.value as unknown as HTMLElement,
+  adjustPadding: { x: 0, y: 0 },
+  getParentAbsY: () => options.value.x,
+  getParentAbsX: () => options.value.y,
+  getParentX: () => 0,
+  getParentY: () => 0,
+  getParentWidth: () => 0, 
+  getParentHeight: () => 0, 
+  getPositon: () => [options.value.x,options.value.y],
+  closeOtherSubMenuWithTimeOut: () => {/* Do nothing */}, 
+  checkCloseOtherSubMenuTimeOut: () => false, 
+  addOpenedSubMenu: () => {/* Do nothing */},
+  closeOtherSubMenu: () => {/* Do nothing */},
+  getParentContext: () => null,
+  getSubMenuInstanceContext: () => null,
+  getElement: () => null,
+  addChildMenuItem: () => {/* Do nothing */},
+  removeChildMenuItem: () => {/* Do nothing */},
+  markActiveMenuItem: () => {/* Do nothing */},
+  markThisOpenedByKeyBoard: () => {/* Do nothing */},
+  isOpenedByKeyBoardFlag: () => false,
+  isMenuItemDataCollectedFlag: () => false,
+} as SubMenuParentContext);
+
+//Expose instance function
+defineExpose(instance);
 </script>
 
 <style>

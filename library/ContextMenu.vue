@@ -44,24 +44,24 @@ export default defineComponent({
 
     return () => {  
       const { isNew, container, eleId } = genContainer(options.value);
-      const vnode = show.value ? [ h(ContextSubMenuWrapperConstructor as unknown as string, { 
-        options: options,
-        show: true,
-        container: container,
-        isFullScreenContainer: !isNew,
-        'onUpdate:show': (v: boolean) => ctx.emit('update:show', v),
-        onClose: (fromItem: undefined) => {
-          ctx.emit('update:show', false);
-          ctx.emit('close');
-          options.value.onClose?.(fromItem);
-        },
-      }, ctx.slots) ] : [];
       
       return [
         h(
           Teleport,
           { to: `#${eleId}` },
-          vnode
+          [
+            h(ContextSubMenuWrapperConstructor as unknown as string, { 
+              options: options,
+              show: show,
+              container: container,
+              isFullScreenContainer: !isNew,
+              onClose: (fromItem: undefined) => {
+                ctx.emit('update:show', false);
+                ctx.emit('close');
+                options.value.onClose?.(fromItem);
+              },
+            }, ctx.slots)
+          ]
         )
       ];
     }

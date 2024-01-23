@@ -1,8 +1,8 @@
-import { h, render } from "vue";
+import { h, ref, render } from "vue";
 import type { App, Slot } from "vue";
 import type { ContextMenuInstance } from "./ContextMenuDefine";
 import type { MenuOptions } from "./ContextMenuDefine";
-import { closeContextMenu } from "./ContextMenuMutex";
+import { checkOpenedContextMenu, closeContextMenu } from "./ContextMenuMutex";
 import { genContainer, transformMenuPosition } from "./ContextMenuUtils";
 import ContextMenuConstructor from './ContextMenu.vue'
 import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
@@ -17,14 +17,18 @@ function initInstance(
   isNew: boolean, 
   customSlots?: Record<string, Slot>,
 ) {
+  const show = ref(true);
   const vnode = h(ContextSubMenuWrapperConstructor, { 
     options: options,
-    show: true,
+    show: show,
     container: container,
     isFullScreenContainer: !isNew,
-    onClose: (item: undefined) => {
+    onCloseAnimFinished: () => {
       render(null, container);
+    },
+    onClose: (item: undefined) => {
       options.onClose?.(item);
+      show.value = false;
     },
   }, customSlots);
   render(vnode, container);
@@ -117,7 +121,7 @@ export default {
    * Get if there is a menu open now.
    */
   isAnyContextMenuOpen() {
-
+    return checkOpenedContextMenu();
   },
   /**
    * Close the currently open menu

@@ -240,7 +240,7 @@ const menuData = reactive<MenuOptions>({
       label: 'Test item dynamic show and hide',
       clickClose: false,
       onClick: () => {
-        menuData.items[4].hidden = !menuData.items[4].hidden;
+        menuData.items![4].hidden = !menuData.items![4].hidden;
       },
     },
     { 
@@ -251,10 +251,10 @@ const menuData = reactive<MenuOptions>({
       label: 'Test item dynamic change the label',
       clickClose: false,
       onClick: () => {
-        if (menuData.items[5].label === 'Test item dynamic change the label')
-          menuData.items[5].label = 'My label CHANGED!';
+        if (menuData.items![5].label === 'Test item dynamic change the label')
+          menuData.items![5].label = 'My label CHANGED!';
         else
-          menuData.items[5].label = 'Test item dynamic change the label';
+          menuData.items![5].label = 'Test item dynamic change the label';
       },
     },
     { 
@@ -272,7 +272,7 @@ const menuData = reactive<MenuOptions>({
       children: [
         { 
           label: "Left Top", 
-          direction: 'lt',
+          direction: 'tl',
           children: [
             { label: "Item1" },
             { label: "Item2" },
@@ -290,7 +290,7 @@ const menuData = reactive<MenuOptions>({
         },
         { 
           label: "Left Bottom", 
-          direction: 'lb',
+          direction: 'bl',
           children: [
             { label: "Item1" },
             { label: "Item2" },
@@ -299,7 +299,7 @@ const menuData = reactive<MenuOptions>({
         },
         { 
           label: "Right Top", 
-          direction: 'rt',
+          direction: 'tr',
           children: [
             { label: "Item1" },
             { label: "Item2" },
@@ -395,6 +395,9 @@ const menuData = reactive<MenuOptions>({
   iconFontClass: 'iconfont',
   customClass: "class-a",
   keyboardControl: true,
+  //menuTransitionProps: {
+  //  name: 'fade'
+  //},
   zIndex: 3,
   minWidth: 230,
   x: 0,
@@ -410,7 +413,7 @@ function onContextMenu(e : MouseEvent) {
   menuData.x = e.x;
   menuData.y = e.y;
   //show our menu
-  ContextMenu.showContextMenu(menuData);
+  ContextMenu.showContextMenu(menuData as MenuOptions);
 }
 
 function onContextMenu1(e : MouseEvent) {
@@ -488,5 +491,14 @@ function onContextMenu3(e : MouseEvent, direction: string) {
 <style>
 .class-a {
   font-family: 'Times New Roman', Times, serif;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
