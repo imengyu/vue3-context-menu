@@ -76,7 +76,8 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |
 | direction | 设置主菜单相对于坐标的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r'` | — | `'br'` |
 | ignoreClickClassName | 若菜单项中的元素有这个className，单击它将忽略事件。| `string` | — |
-| clickCloseOnOutside | 设置是否当用户点击其他位置时应关闭菜单。| `boolean` | `true` |
+| menuTransitionProps | 设置菜单显示隐藏时的 Vue Transition 组件属性。 | `TransitionProps` | — |
+| clickCloseOnOutside | 设置是否当用户点击其他位置时应关闭菜单。| `boolean` | — | `true` |
 | clickCloseClassName | 若菜单项中的元素有这个className，单击它将忽略事件，并且点击后会关闭菜单。| `string` | — |
 | updownButtonSpaceholder | 决定菜单项中的上/下按钮是否需要空白占位。设置这个变量的目的是因为有些菜单主题会在菜单上下添加空白边距，这一部分空白边距刚好可以放置上/下按钮。如果你的自定义主题菜单中没有空白边距，则可以设置此字段为上/下按提供要空白占位，防止遮挡菜单条目。 | `boolean` | — | `false` |
 | getContainer | 自定义菜单挂载容器。[详情请参考](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |

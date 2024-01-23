@@ -76,8 +76,9 @@ Global Function
 | adjustPadding | Padding for submenu position adjust. | `{ x: number, y: number }` or `number` | — | `{ x：0, y: 10 }` |
 | adjustPosition | By default, the menu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | `true` |
 | direction | Set the mian menu pop-up direction relative to coordinates. Default is `'br'`, if `adjustPosition` is true then the menu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | `'br'` |
+| menuTransitionProps | The Vue Transition props used when menu show or hide. | `TransitionProps` | — |
 | ignoreClickClassName | If your element in menu item has this className, click it will ignore event. | `string` | — |
-| clickCloseOnOutside | Set should close menu when the user click on other places. | `boolean` | `true` |
+| clickCloseOnOutside | Set should close menu when the user click on other places. | `boolean` | — | `true` |
 | clickCloseClassName | If your element in menu item has this className, click it will ignore event and close hole menu. | `string` | — |
 | updownButtonSpaceholder | Determine whether the up/down buttons in the menu item require space holder. The purpose of this variable is because some menu themes add blank padding above and below the menu, which are just enough to place up/down buttons. If there is no blank padding in your custom menu theme, you can set this field to provide blank space for up/down buttons to prevent obscuring menu items. | `boolean` | — | `false` |
 | getContainer | Return the mounted node for MenuRoot. [Guide](../guide/custom-container.md) | `HTMLElement` or `(() => HTMLElement)` | — | — |

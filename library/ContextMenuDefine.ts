@@ -148,7 +148,7 @@ export interface MenuOptions {
   iconFontClass ?:	string;
   /**
    * The Vue Transition props used when menu show or hide.
-   * @default ''
+   * @default undefined
    */
   menuTransitionProps ?: TransitionProps;
   /**

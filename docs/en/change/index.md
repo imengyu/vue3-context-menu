@@ -4,6 +4,9 @@ nav:
   title: Changelog
   order: 5
 ---
+## v1.3.7 - 2024/01/23
+
+* [Added] Add `MenuOptions.menuTransitionProps` attribute used set transition effects when menu display/hiding. ([#80](https://github.com/imengyu/vue3-context-menu/issues/80))
 
 ## v1.3.6 - 2024/01/17
 
