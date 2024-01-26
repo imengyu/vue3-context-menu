@@ -25,9 +25,9 @@ export default defineConfig({
           copyright: 'Copyright © 2022 imengyu.top'
         },
         nav: [
-          { text: 'Guide', link: '/guide/install' },
-          { text: 'API Reference', link: '/api/ContextMenu' },
-          { text: 'Changelog', link: '/change/index' },
+          { text: 'Guide', link: '/en/guide/install' },
+          { text: 'API Reference', link: '/en/api/ContextMenu' },
+          { text: 'Changelog', link: '/en/change/index' },
         ],
         sidebar: {
           '/en/guide/': [
