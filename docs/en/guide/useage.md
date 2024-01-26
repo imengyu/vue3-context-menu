@@ -20,14 +20,28 @@ There are two ways to display menus:
 
 The first is the function mode. You can use  `this.$contextmenu` or `showContextMenu` global function displays a menu with menu data:
 
-```js
+::: my-sandbox {template=vue3-ts}
+
+```ts /src/main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import ContextMenu from '@imengyu/vue3-context-menu'
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+
+createApp(App)
+  .use(ContextMenu)
+  .mount('#app')
+```
+
+```vue /src/App.vue [active]
+<script setup lang="ts">
 import ContextMenu from '@imengyu/vue3-context-menu'
 
-onContextMenu(e : MouseEvent) {
+function onContextMenu(e : MouseEvent) {
   //prevent the browser's default menu
   e.preventDefault();
   //show your menu
-  this.$contextmenu({
+  ContextMenu.showContextMenu({
     x: e.x,
     y: e.y,
     items: [
@@ -47,54 +61,79 @@ onContextMenu(e : MouseEvent) {
       },
     ]
   });
-
-  //Same as this.$contextmenu
-  ContextMenu.showContextMenu({ ... }); 
 }
+</script>
+
+<template>
+  <button @contextmenu="onContextMenu">Right click me to show context menu!</button>
+</template>
 ```
+
+:::
 
 > Note: `this.$contextmenu` can only be used in templates or optional api.
 
 The second is the component mode. You can use the component and template to display the menu:
 
-```html
-<context-menu
-  v-model:show="show"
-  :options="optionsComponent"
->
-  <context-menu-item label="Simple item" @click="onMenuClick(1)" />
-  <context-menu-sperator /><!--use this to add sperator-->
-  <context-menu-group label="Menu with child">
-    <context-menu-item label="Item1" @click="onMenuClick(2)" />
-    <context-menu-item label="Item2" @click="onMenuClick(3)" />
-    <context-menu-group label="Child with v-for 50">
-      <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="onLoopMenuClick(index)" />
-    </context-menu-group>
-  </context-menu-group>
-</context-menu>
+::: my-sandbox {template=vue3-ts}
+
+```ts /src/main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import ContextMenu from '@imengyu/vue3-context-menu'
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+
+createApp(App)
+  .use(ContextMenu)
+  .mount('#app')
 ```
 
-```js
-data() {
-  return {
-    show: false,
-    optionsComponent: {
-      zIndex: 3,
-      minWidth: 230,
-      x: 500,
-      y: 200
-    },
-  }
-},
-methods: {
-  onButtonClick(e : MouseEvent) {
-    //Show component mode menu
-    this.show = true;
-    this.options.x = e.x;
-    this.options.y = e.y;
-  },
+```vue /src/App.vue [active]
+<template>
+  <button @contextmenu="onContextMenu">Right click me to show context menu!</button>
+  <context-menu
+    v-model:show="show"
+    :options="options"
+  >
+    <context-menu-item label="Simple item" @click="onMenuClick(0)" />
+    <context-menu-sperator /><!--use this to add sperator-->
+    <context-menu-group label="Menu with child">
+      <context-menu-item label="Item1" @click="onMenuClick(1)" />
+      <context-menu-item label="Item2" @click="onMenuClick(2)" />
+      <context-menu-group label="Child with v-for 50">
+        <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="onMenuClick(index + 3)" />
+      </context-menu-group>
+    </context-menu-group>
+  </context-menu>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { MenuOptions } from '@imengyu/vue3-context-menu'
+
+const show = ref(false);
+const options = ref<MenuOptions>({
+  zIndex: 3,
+  minWidth: 230,
+  x: 500,
+  y: 200
+});
+
+function onMenuClick(index : number) {
+  alert('You clicked menu item ' + index)
 }
+function onContextMenu(e : MouseEvent) {
+  e.preventDefault();
+  //Show component mode menu
+  show.value = true;
+  options.value.x = e.x;
+  options.value.y = e.y;
+}
+
+</script>
 ```
+
+:::
 
 ## Dynamic change menu
 

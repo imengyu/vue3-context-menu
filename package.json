@@ -12,9 +12,8 @@
     "build-demo": "vite build examples",
     "build-lib": "vite build library",
     "build-types": "vue-tsc -p ./library/tsconfig.json --outDir ./lib --declaration --emitDeclarationOnly",
-    "docs:dev": "cd docs/zh && vitepress dev",
-    "docs:build-zh": "vitepress build ./docs/zh",
-    "docs:build-en": "vitepress build ./docs/en"
+    "docs:dev": "cd docs && vitepress dev",
+    "docs:build": "vitepress build ./docs"
   },
   "devDependencies": {
     "@tsconfig/node18": "^18.2.2",
@@ -22,12 +21,15 @@
     "@vitejs/plugin-vue": "^4.3.4",
     "@vitejs/plugin-vue-jsx": "^3.0.2",
     "@vue/tsconfig": "^0.4.0",
+    "markdown-it-container": "^4.0.0",
     "npm-run-all2": "^6.0.6",
+    "rimraf": "^5.0.5",
     "sass": "^1.69.5",
     "typescript": "~5.2.0",
     "vite": "^4.4.9",
     "vite-plugin-dts": "^3.6.4",
     "vitepress": "^1.0.0-rc.31",
+    "vitepress-plugin-sandpack": "^1.1.4",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vue-tsc": "^1.8.11"

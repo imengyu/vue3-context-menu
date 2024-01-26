@@ -103,7 +103,7 @@ export default defineComponent({
 
 ## Getting Started
 
-[Getting Started](./useage.md) 了。
+[Getting Started](./useage.md)
 
 ## Other questions
 
