@@ -215,9 +215,21 @@ export default defineComponent({
 
 This library comes with a menu bar component, which is very similar to the function of the right-click menu and the menu bar. Therefore, it is integrated into the library, and you can also use this component to implement the main menu bar function of desktop programs.
 
-For online examples, please refer to [here](https://imengyu.top/pages/vue3-context-menu-demo/#/MenuBar).
+::: my-sandbox {template=vue3-ts}
 
-```vue
+```ts /src/main.ts
+import { createApp } from 'vue'
+import App from './App.vue'
+import ContextMenu from '@imengyu/vue3-context-menu'
+import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
+
+createApp(App)
+  .use(ContextMenu)
+  .mount('#app')
+```
+
+```vue /src/App.vue [active]
+
 <template>
   <MenuBar :options="menuData" />
 </template>
@@ -282,3 +294,5 @@ const menuData : MenuBarOptions = {
 };
 </script>
 ```
+
+:::
