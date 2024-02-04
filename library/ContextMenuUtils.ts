@@ -134,7 +134,7 @@ export const VNodeRender = defineComponent({
      * @default null
      */
     data: {
-      type: Object,
+      type: null,
       default: null,
     },
   },
