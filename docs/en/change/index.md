@@ -4,6 +4,12 @@ nav:
   title: Changelog
   order: 5
 ---
+
+## v1.3.8 - 2024/01/23
+
+* [Added] Add `MenuBarOptions.barPopDirection` attribute to control the pop-up direction of the first level submenu in the menu bar.
+* [Fix] Remove VNodeRender prop type check warning.
+
 ## v1.3.7 - 2024/01/23
 
 * [Added] Add `MenuOptions.menuTransitionProps` attribute used set transition effects when menu display/hiding. ([#80](https://github.com/imengyu/vue3-context-menu/issues/80))

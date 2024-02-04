@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.3.8 - 2024/01/23
+
+* [Added] 添加 `MenuBarOptions.barPopDirection` 属性用于控制菜单栏一级子菜单弹出方向。
+* [Fix] 修复 VNodeRender 的类型告警。
+
 ## v1.3.7 - 2024/01/23
 
 * [Added] 添加 `MenuOptions.menuTransitionProps` 属性用于实现菜单显示/隐藏的过度动效。 ([#80](https://github.com/imengyu/vue3-context-menu/issues/80))

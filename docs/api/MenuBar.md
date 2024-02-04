@@ -24,7 +24,8 @@ nav:
 
 ## MenuBarOptions
 
-| 属性名 | 描述 | 类型 |
-| :----: | :----: | :----: |
-| mini | 指定当前菜单是否是迷你折叠模式 | `boolean` |
-| ... | 其他参数均继承自 [MenuOptions](./ContextMenuInstance.md#menuoptions) | - |
+| 属性名 | 描述 | 类型 | 默认值 |
+| :----: | :----: | :----: | :----: |
+| mini | 指定当前菜单是否是迷你折叠模式 | `boolean` | `false` |
+| barPopDirection | 控制菜单栏一级子菜单弹出方向 | `MenuPopDirection` | `'bl'` |
+| ... | 其他参数均继承自 [MenuOptions](./ContextMenuInstance.md#menuoptions) | - | - |

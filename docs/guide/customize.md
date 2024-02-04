@@ -7,7 +7,7 @@ order: 5
 
 ## 自定义样式
 
-如果你觉得默认菜单样式不好看，想修改掉它，还可以覆盖默认css样式（比起覆盖默认样式，但是还是推荐你使用自定义主题，更简单而且支持动态切换），所有的css样式定义都在 [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss) 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
+如果你觉得默认菜单样式不好看，想修改掉它，还可以覆盖默认css样式（比起覆盖默认样式，但是还是推荐你使用自定义主题，更简单而且支持动态切换），所有的css样式定义都在源代码 [`/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/library/ContextMenu.scss) 中。你可以将所有样式复制出来，按需修改，存放在你的文件中。然后在导入的地方覆盖默认样式：
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'

@@ -35,7 +35,7 @@ this.$contextmenu({
 
 你可以新写你自己的主题，只需要保证主题名字与内置名字不同即可。
 
-菜单所有的css样式定义都在 [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss) 中。
+菜单所有的css样式定义都在 [`/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/library/ContextMenu.scss) 中。
 你可以将所有样式复制出来，按需修改，存放在你的主题文件中。
 
 ### 自定义主题示例
@@ -63,6 +63,9 @@ this.$contextmenu({
   }
 
   //这里篇幅有限，完整的每个部件的样式请在 ContextMenu.scss 中查看
+}
+.mx-menu-bar.my-theme-name {
+  //自定义菜单栏的样式
 }
 ```
 

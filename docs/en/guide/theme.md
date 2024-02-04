@@ -35,7 +35,7 @@ this.$contextmenu({
 
 You can write your own theme, just make sure that the theme name is different from the built-in name.
 
-All CSS style definitions are in [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss). You can copy all the styles, modify them as needed, and store them in your file.
+All CSS style definitions are in [`/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/library/ContextMenu.scss). You can copy all the styles, modify them as needed, and store them in your file.
 
 ### Custom Theme Example
 
@@ -62,6 +62,9 @@ For example, the following is the implementation of an example theme `my-theme-n
   }
 
   //Please view the complete style of each part in ContextMenu.scss
+}
+.mx-menu-bar.my-theme-name {
+  //Customize the style of the menu bar
 }
 ```
 

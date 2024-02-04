@@ -7,7 +7,7 @@ order: 3
 
 ## Custom style
 
-It is recommended that you use a custom theme, but you still can override the default menu style. All CSS style definitions are in [`/src/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/src/ContextMenu.scss). You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
+It is recommended that you use a custom theme, but you still can override the default menu style. All CSS style definitions are in [`/ContextMenu.scss`](https://github.com/imengyu/vue3-context-menu/blob/main/library/ContextMenu.scss) source code. You can copy all the styles, modify them as needed, and store them in your file. Then overwrite the default style where you import:
 
 ```js
 import '@imengyu/vue3-context-menu/lib/vue3-context-menu.css'
