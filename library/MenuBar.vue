@@ -101,6 +101,26 @@ function showPrevSubMenu() {
     currentMenuIndex = menuItems.value.length - 1;
   showSubMenu(currentMenuIndex, menuItems.value[currentMenuIndex] as MenuItem);
 }
+function getMenuShowPos(ele: HTMLElement) {
+  const showDirection = props.options.barPopDirection ?? 'bl';
+  let x = 0; 
+  let y = 0;
+  if (showDirection.startsWith('b'))
+    y = getTop(ele) + ele.offsetHeight;
+  else if (showDirection.startsWith('t'))
+    y = getTop(ele);
+  else 
+    y = getTop(ele) + ele.offsetHeight / 2;
+
+  if (showDirection.endsWith('l'))
+    x = getLeft(ele);
+  else if (showDirection.startsWith('r'))
+    x = getLeft(ele) + ele.offsetWidth;
+  else 
+    x = getLeft(ele) + ele.offsetWidth / 2;
+
+  return { x, y }
+}
 function showSubMenu(index: number, item: MenuItem) {
   currentMenuIndex = index;
   if (!item.children)
@@ -113,11 +133,13 @@ function showSubMenu(index: number, item: MenuItem) {
   (menuActive.value as MenuItem) = item;
   const ele = menuBarContent.value?.children[index] as HTMLElement;
   if (ele) {
+    const { x, y } = getMenuShowPos(ele);
+
     currentMenu = ContextMenu.showContextMenu({
       ...props.options,
       items: item.children,
-      x: getLeft(ele),
-      y: getTop(ele) + ele.offsetHeight,
+      x,
+      y,
       onKeyFocusMoveLeft() {
         showPrevSubMenu();
       },
@@ -137,10 +159,11 @@ function showAllSubMenu() {
   currentMenuIndex = 0;
   const ele = menuBarContent.value as HTMLElement;
   if (ele) {
+    const { x, y } = getMenuShowPos(ele);
     currentMenu = ContextMenu.showContextMenu({
       ...props.options,
-      x: getLeft(ele),
-      y: getTop(ele) + ele.offsetHeight,
+      x,
+      y,
     });
   }
 }
