@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.3.8 - 2024/01/23
+## v1.3.8 - 2024/02/04
 
 * [Added] Add `MenuBarOptions.barPopDirection` attribute to control the pop-up direction of the first level submenu in the menu bar.
 * [Fix] Remove VNodeRender prop type check warning.

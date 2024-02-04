@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.3.8 - 2024/01/23
+## v1.3.8 - 2024/02/04
 
 * [Added] 添加 `MenuBarOptions.barPopDirection` 属性用于控制菜单栏一级子菜单弹出方向。
 * [Fix] 修复 VNodeRender 的类型告警。
