@@ -1,6 +1,6 @@
 import Inst from './ContextMenuInstance'
 export * from './ContextMenuInstance'
-
+export * from './MenuBar'
 import MenuBar from './MenuBar.vue';
 import ContextMenu from './ContextMenu.vue';
 import ContextMenuItem from './ContextMenuItem.vue';
