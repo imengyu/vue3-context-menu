@@ -109,7 +109,7 @@
   }
   &.down {
     bottom: -1px;
-    
+
     .mx-right-arrow {
       transform: translateX(-50%) rotate(90deg);
     }
@@ -177,11 +177,11 @@
       background-color: var(--mx-menu-open-hover-backgroud);
       color: var(--mx-menu-open-hover-text);
     }
-    
+
     .mx-right-arrow, .mx-checked-mark {
       fill: var(--mx-menu-open-text);
     }
-    
+
     .mx-shortcut {
       background-color: var(--mx-menu-shortcut-backgroud-open);
       color: var(--mx-menu-shortcut-text-open);
@@ -244,7 +244,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-right: 16px;
+    padding-inline-end: 16px;
   }
 }
 .mx-context-menu-item-wrapper {
@@ -282,7 +282,7 @@
   justify-self: flex-end;
   font-size: 11.5px;
   padding: 2px 4px;
-  
+
   background-color: var(--mx-menu-shortcut-backgroud);
   color: var(--mx-menu-shortcut-text);
 }
@@ -487,7 +487,7 @@
     --mx-menu-focus-color: transparent;
     --mx-menu-border-color: #222;
   }
-  
+
   padding: 8px 0;
   box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
   border: 1px solid var(--mx-menu-border-color);
@@ -496,7 +496,7 @@
     border-radius: 5px;
     margin: 0 6px;
     padding: 3px 6px;
-    
+
     //Focus by keyboard
     &.keyboard-focus {
       background-color: var(--mx-menu-active-backgroud);
