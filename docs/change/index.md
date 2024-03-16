@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.3.9 - 2024/03/16
+
+* [Fix] 修改 `padding-right` 为 `padding-inline-end`，以更好地支持RTL模式 (Thanks @hooray, [#83](https://github.com/imengyu/vue3-context-menu/pull/83))
+
 ## v1.3.8 - 2024/02/04
 
 * [Added] 添加 `MenuBarOptions.barPopDirection` 属性用于控制菜单栏一级子菜单弹出方向。

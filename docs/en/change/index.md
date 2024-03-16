@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.3.9 - 2024/03/16
+
+* [Fix] Change `padding-right` to `padding-inline-end` for better support RTL mode. (Thanks @hooray, [#83](https://github.com/imengyu/vue3-context-menu/pull/83))
+
 ## v1.3.8 - 2024/02/04
 
 * [Added] Add `MenuBarOptions.barPopDirection` attribute to control the pop-up direction of the first level submenu in the menu bar.
