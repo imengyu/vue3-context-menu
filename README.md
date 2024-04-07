@@ -125,7 +125,8 @@ methods: {
 
 ## AD: Author's other project
 
-* [vue-dock-layout A Vue editor layout component that like VSCode](https://github.com/imengyu/vue-dock-layout)
+* [vue-code-layout A Vue editor layout component that like VSCode](https://github.com/imengyu/vue-code-layout)
+* [vue-dock-layout A Vue editor layout component that like Visual Studio](https://github.com/imengyu/vue-dock-layout)
 * [vue-dynamic-form A data driven form component for vue3](https://github.com/imengyu/vue-dynamic-form)
 
 ## Development
