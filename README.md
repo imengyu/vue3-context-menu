@@ -110,17 +110,6 @@ methods: {
 }
 ```
 
-## Development
-
-```shell
-git clone git@github.com:imengyu/vue3-context-menu.git
-cd vue3-context-menu
-npm install
-npm run dev # Development serve project
-npm run build-demo # Build example project
-npm run build-lib # Build library project
-```
-
 ## Built-in themes
 
 |theme|explain|example image|
@@ -133,6 +122,22 @@ npm run build-lib # Build library project
 |`win10 dark`|Win10 like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10-dark.jpg)|
 |`mac`|Mac like theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac.jpg)|
 |`mac dark`|Mac like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac-dark.jpg)|
+
+## AD: Author's other project
+
+* [vue-dock-layout A Vue editor layout component that like VSCode](https://github.com/imengyu/vue-dock-layout)
+* [vue-dynamic-form A data driven form component for vue3](https://github.com/imengyu/vue-dynamic-form)
+
+## Development
+
+```shell
+git clone git@github.com:imengyu/vue3-context-menu.git
+cd vue3-context-menu
+npm install
+npm run dev # Development serve project
+npm run build-demo # Build example project
+npm run build-lib # Build library project
+```
 
 ## License
 
