@@ -18,9 +18,9 @@ English | [简体中文](https://github.com/imengyu/vue3-context-menu/blob/main/
 
 ## Documentation
 
-[View Documentation](https://imengyu.top/pages/vue3-context-menu-docs/en/)
+[View Documentation](https://docs.imengyu.top/vue3-context-menu-docs/en/)
 
-[Click here View online Demo](https://imengyu.top/pages/vue3-context-menu-demo/)
+[Click here View online Demo](https://docs.imengyu.top/vue3-context-menu-demo/)
 
 ### Usage
 

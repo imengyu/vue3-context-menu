@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.4.0 - 2024/04/10
+
+* [Fix] Value `options.theme` in component mode can update dynamically. ([#82](https://github.com/imengyu/vue3-context-menu/issues/82))
+
 ## v1.3.9 - 2024/03/16
 
 * [Fix] Change `padding-right` to `padding-inline-end` for better support RTL mode. (Thanks @hooray, [#83](https://github.com/imengyu/vue3-context-menu/pull/83))

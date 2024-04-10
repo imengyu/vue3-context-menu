@@ -3,7 +3,7 @@ import { renderSandbox } from 'vitepress-plugin-sandpack';
 import container from 'markdown-it-container';
 
 export default defineConfig({
-  base: '/pages/vue3-context-menu-docs/',
+  base: '/vue3-context-menu-docs/',
   lang: 'zh-CN',
   title: 'vue3-context-menu',
   description: '一个使用 Vue3 制作的简洁美观简单的右键菜单组件',

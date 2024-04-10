@@ -65,9 +65,9 @@ onContextMenu(e : MouseEvent) {
 
 ## 文档
 
-[查看文档](https://imengyu.top/pages/vue3-context-menu-docs/)
+[查看文档](https://docs.imengyu.top/vue3-context-menu-docs/)
 
-[查看在线演示](https://imengyu.top/pages/vue3-context-menu-demo/)
+[查看在线演示](https://docs.imengyu.top/vue3-context-menu-demo/)
 
 ## 已有主题
 

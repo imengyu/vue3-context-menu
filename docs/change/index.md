@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.4.0 - 2024/04/10
+
+* [Fix] 组件模式下 `options.theme` 支持动态修改 ([#82](https://github.com/imengyu/vue3-context-menu/issues/82))
+
 ## v1.3.9 - 2024/03/16
 
 * [Fix] 修改 `padding-right` 为 `padding-inline-end`，以更好地支持RTL模式 (Thanks @hooray, [#83](https://github.com/imengyu/vue3-context-menu/pull/83))
