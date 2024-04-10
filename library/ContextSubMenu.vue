@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="'mx-context-menu ' + (options.customClass ? options.customClass : '') + ' ' + globalTheme"
+    :class="[
+      'mx-context-menu',
+      (options.customClass ? options.customClass : ''),
+      (options.theme ?? '')
+    ]"
     :style="{
       maxWidth: (maxWidth ? solveNumberOrStringSize(maxWidth) : `${constOptions.defaultMaxWidth}px`),
       minWidth: minWidth ? solveNumberOrStringSize(minWidth) : `${constOptions.defaultMinWidth}px`,
@@ -97,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs } from 'vue'
+import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref } from 'vue'
 import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection } from './ContextMenuDefine'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { MenuConstOptions } from './ContextMenuDefine'
@@ -219,10 +223,9 @@ export default defineComponent({
     //#region Injects
 
     const parentContext = inject('menuContext') as SubMenuParentContext;
-    const options = inject('globalOptions') as MenuOptions;
+    const options = inject('globalOptions') as Ref<MenuOptions>;
     const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
-    const globalTheme = inject('globalTheme') as string;
 
     //#endregion
     
@@ -327,7 +330,7 @@ export default defineComponent({
     const thisMenuContext : SubMenuParentContext = {
       zIndex: zIndex + 1,
       container: parentContext.container,
-      adjustPadding: options.adjustPadding as { x: number, y: number } || MenuConstOptions.defaultAdjustPadding,
+      adjustPadding: options.value.adjustPadding as { x: number, y: number } || MenuConstOptions.defaultAdjustPadding,
       getParentWidth: () => menu.value?.offsetWidth || 0,
       getParentHeight: () => menu.value?.offsetHeight || 0,
       getParentX: () => position.value.x,
@@ -408,7 +411,7 @@ export default defineComponent({
       onScroll (e.deltaY > 0);
     }
     function onMouseWhell(e: WheelEvent) {
-      if (options.mouseScroll) {
+      if (options.value.mouseScroll) {
         e.preventDefault();
         e.stopPropagation();
         onScroll (e.deltaY > 0);
@@ -422,8 +425,8 @@ export default defineComponent({
     onMounted(() => {
       const pos = parentContext.getPositon();
       position.value = {
-        x: pos[0] ?? options.xOffset ?? 0,
-        y: pos[1] ?? options.yOffset ?? 0,
+        x: pos[0] ?? options.value.xOffset ?? 0,
+        y: pos[1] ?? options.value.yOffset ?? 0,
       };
 
       //Mark current item submenu is open
@@ -539,7 +542,6 @@ export default defineComponent({
       maxHeight,
       globalHasSlot,
       globalRenderSlot,
-      globalTheme,
       onScroll,
       onSubMenuBodyClick,
       onMouseWhell,

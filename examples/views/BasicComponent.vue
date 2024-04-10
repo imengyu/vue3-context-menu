@@ -37,6 +37,7 @@
         </context-menu-group>
       </context-menu-group>
     </context-menu-group>
+    <context-menu-item label="Test dynamic change theme" :clickClose="false" @click="optionsComponent.theme = (optionsComponent.theme === 'dark' ? '' : 'dark')" />
   </context-menu>
 
   

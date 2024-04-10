@@ -219,14 +219,9 @@ function checkTargetAndClose(target: HTMLElement) {
 }
 
 //provide globalOptions for child use
-provide('globalOptions', options.value);
+provide('globalOptions', options);
 provide('globalCloseMenu', closeMenu);
-provide('globalTheme', options.value?.theme || 'light');
 provide('globalIsFullScreenContainer', props.isFullScreenContainer);
-provide('globalClickCloseClassName', options.value?.clickCloseClassName);
-provide('globalIgnoreClickClassName', options.value?.ignoreClickClassName);
-provide('globalIconFontClass', options.value?.iconFontClass || 'iconfont');
-provide('globalMenuTransitionProps', options.value?.menuTransitionProps);
 //check slot exists
 provide('globalHasSlot', (name: string) => {
   return slots[name] !== undefined;

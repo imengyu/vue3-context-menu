@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, h, inject, toRefs } from 'vue'
-import type { PropType, SVGAttributes } from 'vue'
+import type { PropType, Ref, SVGAttributes } from 'vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 import ContextMenuItemConstructor from './ContextMenuItem.vue';
 import type { MenuOptions } from './ContextMenuDefine';
@@ -137,9 +137,9 @@ export default defineComponent({
   },
   setup(props, ctx) {
     
-    const options = inject('globalOptions') as MenuOptions;
+    const options = inject('globalOptions') as Ref<MenuOptions>;
     const { adjustSubMenuPosition, maxWidth, minWidth } = toRefs(props);
-    const adjustSubMenuPositionValue = typeof adjustSubMenuPosition.value !== 'undefined' ? adjustSubMenuPosition.value : options.adjustPosition;
+    const adjustSubMenuPositionValue = typeof adjustSubMenuPosition.value !== 'undefined' ? adjustSubMenuPosition.value : options.value.adjustPosition;
 
     //Create Item
     return () => h(ContextMenuItemConstructor, {

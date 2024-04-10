@@ -28,7 +28,7 @@
                 <use :xlink:href="svgIcon"></use>
               </svg>
               <VNodeRender v-else-if="(typeof icon !== 'string')" :vnode="icon" :data="icon" />
-              <i v-else-if="typeof icon === 'string' && icon !== ''" :class="icon + ' icon '+ iconFontClass + ' ' + globalIconFontClass"></i>
+              <i v-else-if="typeof icon === 'string' && icon !== ''" :class="icon + ' icon '+ iconFontClass + ' ' + options.iconFontClass"></i>
             </slot>
             <slot v-if="checked" name="check">
               <VNodeRender v-if="globalHasSlot('itemCheckRender')" :vnode="() => globalRenderSlot('itemCheckRender', getItemDataForChildren())" />
@@ -55,7 +55,7 @@
     </div>
     
     <!--Sub menu render-->
-    <Transition v-if="globalMenuTransitionProps" v-bind="globalMenuTransitionProps">
+    <Transition v-if="options.menuTransitionProps" v-bind="options.menuTransitionProps">
       <slot v-if="showSubMenu" name="submenu"></slot>
     </Transition>
     <slot v-else-if="showSubMenu" name="submenu"></slot>
@@ -63,10 +63,10 @@
 </template>
 
 <script setup lang="ts">
-import { inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type SVGAttributes, toRefs, type TransitionProps } from 'vue'
+import { inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type SVGAttributes, toRefs, type TransitionProps, type Ref, computed } from 'vue'
 import type { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
-import type { MenuItem } from './ContextMenuDefine'
+import type { MenuItem, MenuOptions } from './ContextMenuDefine'
 import { VNodeRender } from './ContextMenuUtils'
 import ContextMenuIconCheck from './ContextMenuIconCheck.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
@@ -218,13 +218,9 @@ const keyBoardFocusMenu = ref(false);
 
 const menuItemRef = ref<HTMLElement>();
 
+const options = inject('globalOptions') as Ref<MenuOptions>;
 const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
 const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
-const globalTheme = inject('globalTheme') as string;
-const globalIconFontClass = inject('globalIconFontClass') as string;
-const globalMenuTransitionProps = inject('globalMenuTransitionProps') as TransitionProps;
-const globalClickCloseClassName = inject('globalClickCloseClassName') as string;
-const globalIgnoreClickClassName = inject('globalIgnoreClickClassName') as string;
 const globalCloseMenu = inject('globalCloseMenu') as (fromItem: MenuItem|undefined) => void;
 
 const menuContext = inject('menuContext') as SubMenuParentContext;
@@ -293,9 +289,9 @@ function onClick(e: MouseEvent|KeyboardEvent) {
     const currentTarget = e.target as HTMLElement;
     if (currentTarget.classList.contains('mx-context-no-clickable'))
       return;
-    if (globalIgnoreClickClassName && currentTarget.classList.contains(globalIgnoreClickClassName))
+    if (options.value.ignoreClickClassName && currentTarget.classList.contains(options.value.ignoreClickClassName))
       return;
-    if (globalClickCloseClassName && currentTarget.classList.contains(globalClickCloseClassName)) {
+    if (options.value.clickCloseClassName && currentTarget.classList.contains(options.value.clickCloseClassName)) {
       e.stopPropagation();
       globalCloseMenu(props.rawMenuItem);
       return;
@@ -361,7 +357,7 @@ function getItemDataForChildren() {
     clickClose: clickClose.value,
     clickableWhenHasChildren: clickableWhenHasChildren.value,
     shortcut: shortcut.value,
-    theme: globalTheme,
+    theme: options.value.theme,
     isOpen: showSubMenu,
     hasChildren: hasChildren,
     onClick,
