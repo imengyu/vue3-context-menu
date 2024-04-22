@@ -99,6 +99,7 @@ watch(show, (v: boolean) => {
   if(v) {
     openMenu();
   } else {
+    removeOpenedContextMenu(instance);
     removeBodyEvents();
   }
 });

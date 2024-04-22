@@ -80,51 +80,53 @@ v-model:show="show"
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue'
+<script lang="ts" setup>
+import { onMounted, ref, reactive, watch } from 'vue'
 import type { MenuOptions } from '../../library/ContextMenuDefine';
 
-export default defineComponent({
-  mounted() {
-    (window as unknown as {
-      hljs: {
-        highlightAll: () => void
-      }
-    }).hljs?.highlightAll?.();
-  },
-  data() {
-    return {
-      show: false,
-      showItem: true,
-      itemText: 'Test item dynamic change label',
-      optionsComponent: {
-        iconFontClass: 'iconfont',
-        customClass: "class-a",
-        zIndex: 3,
-        minWidth: 230,
-        x: 500,
-        y: 200,
-        //menuTransitionProps: {
-        //  name: 'fade',
-        //}
-      } as MenuOptions,
-    }
-  },
-  methods: {
-    onContextMenu(e : MouseEvent) {
-      e.preventDefault();
-      //Set the mouse position
-      this.optionsComponent.x = e.x;
-      this.optionsComponent.y = e.y;
-      //Show menu
-      this.show = true;
-    },
-    changeLabelText() {
-      this.itemText = (this.itemText == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');
-    },
-    alertContextMenuItemClicked(name: string) {
-      alert('You clicked ' + name + ' !');
-    },
-  }
+const showItem = ref(true)
+const show = ref(false)
+const itemText = ref('Test item dynamic change label')
+const optionsComponent = reactive<MenuOptions>({
+  iconFontClass: 'iconfont',
+  customClass: "class-a",
+  zIndex: 3,
+  minWidth: 230,
+  x: 500,
+  y: 200,
+  //menuTransitionProps: {
+  //  name: 'fade',
+  //}
 });
+
+onMounted(() => {
+  (window as unknown as {
+    hljs: {
+      highlightAll: () => void
+    }
+  }).hljs?.highlightAll?.();
+  window.addEventListener('blur', ()=>{
+    console.log("窗口失去焦点",show.value)
+    show.value = false;
+  })
+});
+
+watch(() => show.value, (newValue, oldValue) => {
+  console.log("show的值变换了", oldValue, '->', newValue)
+})
+
+function onContextMenu(e : MouseEvent) {
+  e.preventDefault();
+  //Set the mouse position
+  optionsComponent.x = e.x;
+  optionsComponent.y = e.y;
+  //Show menu
+  show.value = true;
+}
+function changeLabelText() {
+  itemText.value = (itemText.value == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');
+}
+function alertContextMenuItemClicked(name: string) {
+  alert('You clicked ' + name + ' !');
+}
 </script>
