@@ -201,9 +201,9 @@ function onBodyScroll() {
     closeMenu();
 }
 function onBodyClick(e: MouseEvent) {
-  checkTargetAndClose(e.target as HTMLElement);
+  checkTargetAndClose(e.target as HTMLElement, e);
 }
-function checkTargetAndClose(target: HTMLElement) {
+function checkTargetAndClose(target: HTMLElement, e: MouseEvent) {
   //Loop target , Check whether the currently clicked element belongs to the current menu.
   // If yes, it will not be closed
   while (target) {
@@ -215,6 +215,8 @@ function checkTargetAndClose(target: HTMLElement) {
     //Close menu
     removeBodyEvents();
     closeMenu();
+  } else {
+    options.value.onClickOnOutside?.(e);
   }
 }
 

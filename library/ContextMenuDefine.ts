@@ -230,6 +230,10 @@ export interface MenuOptions {
    */
   onClose ?: ((lastClickItem: MenuItem|undefined) => void) | undefined;
   /**
+   * When `clickCloseOnOutside` is set to `false`, and user click on other places will emit this event.
+   */
+  onClickOnOutside ?: (e: MouseEvent) => void;
+  /**
    * Event for MenuBar component
    */
   onKeyFocusMoveLeft ?:  (() => void) | undefined;
