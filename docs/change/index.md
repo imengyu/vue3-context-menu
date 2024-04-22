@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.1 - 2024/04/22
+
+* [Fix] 修复组件模式下设置 show = false 关闭菜单后再打开需要打开两次问题 ([#88](https://github.com/imengyu/vue3-context-menu/issues/88))
+* [Added] 添加了 `MenuOptions.onClickOnOutside` 用于在 `clickCloseOnOutside = false` 时自定义处理点击菜单外部逻辑 ([#87](https://github.com/imengyu/vue3-context-menu/issues/87))
+
 ## v1.4.0 - 2024/04/10
 
 * [Fix] 组件模式下 `options.theme` 支持动态修改 ([#82](https://github.com/imengyu/vue3-context-menu/issues/82))

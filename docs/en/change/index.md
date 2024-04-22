@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.1 - 2024/04/22
+
+* [Fix] Fix the issue of setting show=false in component mode to close the menu and then open it twice ([#88](https://github.com/imengyu/vue3-context-menu/issues/88))
+* [Added] Added `MenuOptions.onClickOnOutside` used to when set `clickCloseOnOutside = false` can handle user click on other place event ([#87](https://github.com/imengyu/vue3-context-menu/issues/87))
+
 ## v1.4.0 - 2024/04/10
 
 * [Fix] Value `options.theme` in component mode can update dynamically. ([#82](https://github.com/imengyu/vue3-context-menu/issues/82))
