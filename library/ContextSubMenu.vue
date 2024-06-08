@@ -18,7 +18,7 @@
     @wheel="onMouseWhell"
   >
     <!--Child menu items-->
-    <div 
+    <div
       :class="[ 'mx-context-menu-items' ]"
       ref="menu"
       :style="{
@@ -56,7 +56,7 @@
           >
             <template v-if="item.children && item.children.length > 0" #submenu>
               <!--Sub menu-->
-              <ContextSubMenu 
+              <ContextSubMenu
                 :items="item.children"
                 :maxWidth="item.maxWidth"
                 :minWidth="item.minWidth"
@@ -72,9 +72,9 @@
         <div v-if="overflow && options.updownButtonSpaceholder" class="mx-context-menu-updown placeholder"></div>
       </slot>
     </div>
-        
+
     <!--Scroll button host-->
-    <div 
+    <div
       class="mx-context-menu-scroll"
       ref="scroll"
     >
@@ -82,15 +82,15 @@
       <div
         v-show="overflow"
         ref="upScrollButton"
-        :class="'mx-context-menu-updown mx-context-no-clickable up' + (overflow && scrollValue < 0 ? '' : ' disabled')" 
+        :class="'mx-context-menu-updown mx-context-no-clickable up' + (overflow && scrollValue < 0 ? '' : ' disabled')"
         @click="onScroll(false)"
         @wheel="onMouseWhellMx"
       >
         <ContextMenuIconRight />
       </div>
-      <div 
+      <div
         v-show="overflow"
-        :class="'mx-context-menu-updown mx-context-no-clickable down' + (overflow && scrollValue > -scrollHeight ? '' : ' disabled')" 
+        :class="'mx-context-menu-updown mx-context-no-clickable down' + (overflow && scrollValue > -scrollHeight ? '' : ' disabled')"
         @click="onScroll(true)"
         @wheel="onMouseWhellMx"
       >
@@ -149,6 +149,7 @@ export interface SubMenuParentContext {
   getParentAbsX: () => number;
   getParentAbsY: () => number;
   getPositon: () => [number,number];
+  getZoom: () => number;
 
   //SubMenu mutex
   addOpenedSubMenu: (closeFn: () => void) => void;
@@ -184,7 +185,7 @@ export default defineComponent({
     /**
      * Items from options
      */
-    items: { 
+    items: {
       type: Object as PropType<Array<MenuItem>>,
       default: null
     },
@@ -203,7 +204,7 @@ export default defineComponent({
       default: 0,
     },
     /**
-     * Specifies should submenu adjust it position 
+     * Specifies should submenu adjust it position
      * when the menu exceeds the screen. The default is true
      */
     adjustPosition: {
@@ -228,8 +229,8 @@ export default defineComponent({
     const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
 
     //#endregion
-    
-    const { zIndex, getParentWidth, getParentHeight } = parentContext;
+
+    const { zIndex, getParentWidth, getParentHeight, getZoom } = parentContext;
     const { adjustPosition } = toRefs(props);
 
     const menu = ref<HTMLElement>();
@@ -287,7 +288,7 @@ export default defineComponent({
       }
     }
     function onSubMenuBodyClick() {
-      //Mouse click can set current focused submenu 
+      //Mouse click can set current focused submenu
       globalSetCurrentSubMenu(thisMenuInsContext);
     }
 
@@ -338,6 +339,7 @@ export default defineComponent({
       getParentAbsX: () => menu.value ? getLeft(menu.value, parentContext.container) : 0,
       getParentAbsY: () => menu.value ? getTop(menu.value, parentContext.container) : 0,
       getPositon: () => [0,0],
+      getZoom: () => options.value.zoom||MenuConstOptions.defaultZoom,
       addOpenedSubMenu(closeFn: () => void) {
         openedSubMenuClose.push(closeFn);
       },
@@ -401,7 +403,7 @@ export default defineComponent({
     function onScroll(down : boolean) {
       if (down)
         scrollValue.value = Math.min(Math.max(scrollValue.value - 50, -scrollHeight.value), 0);
-      else 
+      else
         scrollValue.value = Math.min(scrollValue.value + 50, 0);
     }
 
@@ -425,8 +427,8 @@ export default defineComponent({
     onMounted(() => {
       const pos = parentContext.getPositon();
       position.value = {
-        x: pos[0] ?? options.value.xOffset ?? 0,
-        y: pos[1] ?? options.value.yOffset ?? 0,
+        x: (pos[0] ?? options.value.xOffset ?? 0) / getZoom(),
+        y: (pos[1] ?? options.value.yOffset ?? 0) / getZoom(),
       };
 
       //Mark current item submenu is open
@@ -447,15 +449,15 @@ export default defineComponent({
           const fillPaddingYAlways = typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.y ?? 0);
           const fillPaddingY = parentHeight > 0 ? fillPaddingYAlways : 0;
 
-          const windowHeight = document.documentElement.scrollHeight;
-          const windowWidth = document.documentElement.scrollWidth;
+          const windowHeight = document.documentElement.scrollHeight / getZoom();
+          const windowWidth = document.documentElement.scrollWidth / getZoom();
 
           const avliableWidth = Math.min(windowWidth, container.offsetWidth);
           const avliableHeight = Math.min(windowHeight, container.offsetHeight);
 
-          let absX = getLeft(menuEl, container), 
+          let absX = getLeft(menuEl, container),
             absY = getTop(menuEl, container);
-          
+
           //set x positon
           if (props.direction.includes('l')) {
             position.value.x -= menuEl.offsetWidth + fillPaddingX; //left
@@ -470,13 +472,14 @@ export default defineComponent({
 
           //set y positon
           if (props.direction.includes('t')) {
-            position.value.y -= menuEl.offsetHeight + fillPaddingYAlways * 2; //top
+            position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways * 2) / getZoom(); //top
           }
           else if (props.direction.includes('b')) {
-            position.value.y -= fillPaddingYAlways;  //bottom
+            position.value.y -= fillPaddingYAlways / getZoom();  //bottom
           }
           else {
-            position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways) / 2; //center
+            position.value.y += (parentHeight / 2) / getZoom();
+            position.value.y -= ((menuEl.offsetHeight + fillPaddingYAlways) / 2) / getZoom(); //center
           }
 
           //Overflow adjust
@@ -484,15 +487,15 @@ export default defineComponent({
             nextTick(() => {
               absX = getLeft(menuEl, container);
               absY = getTop(menuEl, container);
-              
+
               const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
               const yOverflow = (absY + menuEl.offsetHeight + fillPaddingY * 2) - (avliableHeight);
 
-              overflow.value = yOverflow > 0;              
+              overflow.value = yOverflow > 0;
               scrollHeight.value = menuEl.offsetHeight - avliableHeight + fillPaddingY * 2 /* Padding */;
 
               if (xOverflow > 0) {//X overflow
-                const ox = parentWidth + menuEl.offsetWidth - fillPaddingX; 
+                const ox = parentWidth + menuEl.offsetWidth - fillPaddingX;
                 const maxSubWidth = absX;
                 if (ox > maxSubWidth)
                   position.value.x -= maxSubWidth;

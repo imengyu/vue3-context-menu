@@ -1,12 +1,12 @@
 <template>
   <div class="mx-menu-ghost-host">
-    <Transition 
+    <Transition
       v-if="options.menuTransitionProps"
       appear
       v-bind="options.menuTransitionProps"
       @after-leave="emit('closeAnimFinished')"
     >
-      <ContextSubMenuConstructor 
+      <ContextSubMenuConstructor
         v-if="show"
         class="mx-menu-host"
         :items="options.items"
@@ -18,7 +18,7 @@
         <slot />
       </ContextSubMenuConstructor>
     </Transition>
-    <ContextSubMenuConstructor 
+    <ContextSubMenuConstructor
       v-else-if="show"
       class="mx-menu-host"
       :items="options.items"
@@ -104,7 +104,7 @@ watch(show, (v: boolean) => {
   }
 });
 
-const instance = { 
+const instance = {
   closeMenu,
   isClosed,
 };
@@ -240,13 +240,14 @@ provide('menuContext', {
   adjustPadding: { x: 0, y: 0 },
   getParentAbsY: () => options.value.x,
   getParentAbsX: () => options.value.y,
+  getZoom: () => options.value.zoom || MenuConstOptions.defaultZoom,
   getParentX: () => 0,
   getParentY: () => 0,
-  getParentWidth: () => 0, 
-  getParentHeight: () => 0, 
+  getParentWidth: () => 0,
+  getParentHeight: () => 0,
   getPositon: () => [options.value.x,options.value.y],
-  closeOtherSubMenuWithTimeOut: () => {/* Do nothing */}, 
-  checkCloseOtherSubMenuTimeOut: () => false, 
+  closeOtherSubMenuWithTimeOut: () => {/* Do nothing */},
+  checkCloseOtherSubMenuTimeOut: () => false,
   addOpenedSubMenu: () => {/* Do nothing */},
   closeOtherSubMenu: () => {/* Do nothing */},
   getParentContext: () => null,
