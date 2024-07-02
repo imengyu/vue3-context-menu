@@ -8,6 +8,7 @@ export const MenuConstOptions = {
   defaultMinWidth: 100,
   defaultMaxWidth: 600,
   defaultZindex: 100,
+  defaultZoom: 1,
   defaultAdjustPadding: {
     x: 0,
     y: 10.
@@ -15,7 +16,7 @@ export const MenuConstOptions = {
 }
 
 /**
- * ContextMenu Component ref interface, 
+ * ContextMenu Component ref interface,
  * You can use `(this.$refs.myMenu as ContextMenuInstance)` or `const mymenu = ref<ContextMenuInstance>()`
  */
 export interface ContextMenuInstance {
@@ -57,10 +58,10 @@ export interface MenuOptions {
   yOffset ?: number;
   /**
    * Set the mian menu pop-up direction relative to coordinates.
-   * 
+   *
    * Default is `'br'`, if `adjustPosition` is true then the menu will determine
    * the pop-up direction based on its distance from the screen edge.
-   * 
+   *
    * @default 'br'
    */
   direction ?: MenuPopDirection,
@@ -69,27 +70,31 @@ export interface MenuOptions {
    */
   zIndex ?: number;
   /**
+   * The zoom of this menu.
+   */
+  zoom ?: number;
+  /**
    * Custom menu class.
    */
   customClass	?:	string;
   /**
    * Set whether users can use the mouse scroll wheel to scroll through long menus in the menu area.
-   * 
+   *
    * @default false
    */
   mouseScroll ?: boolean;
   /**
-   * Determine whether the up/down buttons in the menu item require space holder. 
-   * The purpose of this variable is because some menu themes add blank padding above and below the menu, 
-   * which are just enough to place up/down buttons. 
+   * Determine whether the up/down buttons in the menu item require space holder.
+   * The purpose of this variable is because some menu themes add blank padding above and below the menu,
+   * which are just enough to place up/down buttons.
    * If there is no blank padding in your custom menu theme, you can set this field to provide blank space for up/down buttons to prevent obscuring menu items.
-   * 
+   *
    * @default false
    */
   updownButtonSpaceholder?: boolean;
   /**
    * Theme for this menu. Default is 'default'
-   * 
+   *
    * |theme|explain|example image|
    * |--|--|--|
    * |`default`|Default theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-default.jpg)|
@@ -100,8 +105,8 @@ export interface MenuOptions {
    * |`win10 dark`|Win10 like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-win10-dark.jpg)|
    * |`mac`|Mac like theme|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac.jpg)|
    * |`mac dark`|Mac like theme with dark|![example-default-dark.jpg](https://raw.githubusercontent.com/imengyu/vue3-context-menu/main/screenshot/example-mac-dark.jpg)|
-   * 
-   * You can write new theme in your own css, 
+   *
+   * You can write new theme in your own css,
    * customize your theme by overriding the default styles, for example:
    * ```scss
    * .mx-context-menu.my-theme-name {
@@ -110,7 +115,7 @@ export interface MenuOptions {
         --mx-menu-backgroud: #ececec;
         --mx-menu-hover-backgroud: #0165e1;
       }
-      
+
       //Customize the style of the menu here
       padding: 8px 0;
       box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
@@ -127,22 +132,22 @@ export interface MenuOptions {
    */
   theme	?: string;
   /**
-   * If your element in menu item has this className, click it will ignore event. 
+   * If your element in menu item has this className, click it will ignore event.
    */
   ignoreClickClassName?: string,
   /**
    * Set should close menu when the user click on other places.
-   * 
+   *
    * @default true
    */
   clickCloseOnOutside ?: boolean;
   /**
-   * If your element in menu item has this className, click it will ignore event and close hole menu. 
+   * If your element in menu item has this className, click it will ignore event and close hole menu.
    */
   clickCloseClassName?: string,
   /**
    * Custom icon library font class name. (global)
-   * 
+   *
    * Only for css font icon, If you use the svg icon, you do not need to use this.
    */
   iconFontClass ?:	string;
@@ -153,17 +158,17 @@ export interface MenuOptions {
   menuTransitionProps ?: TransitionProps;
   /**
    * Should a fixed-width icon area be reserved for menu items without icon. (global)
-   * 
+   *
    * Default is true.
-   * 
+   *
    * The width of icon area can be override with css var `--mx-menu-placeholder-width`.
    */
   preserveIconWidth ?: boolean;
   /**
    * Set whether the user can use keyboard keys to control the current menu.
-   * 
+   *
    * Default: true
-   * 
+   *
    * The control logic is consistent with the Windows right-click menu:
    * * Escape : Close current menu
    * * Enter : Click current menu item
@@ -193,24 +198,24 @@ export interface MenuOptions {
   adjustPadding?: { x: number, y: number }|number,
   /**
    * By default, the menu will automatically adjust its position to prevent it overflow the container.
-   * 
+   *
    * If you allow menu overflow containers, you can set this to false.
-   * 
+   *
    * Default is true.
    */
   adjustPosition?: boolean,
   /**
    * Return the mounted node for MenuRoot.
-   * 
-   * Note: After you change the mount node, the menu display position may be incorrect. 
-   * 
+   *
+   * Note: After you change the mount node, the menu display position may be incorrect.
+   *
    * * The MenuOptions.x is the distance from the menu to the left edge of the container (container should `position: relative;`);
    * * The MenuOptions.y is the distance from the menu to the top edge of the container (container should `position: relative;`);;
-   * 
+   *
    * So, you need to change the x and y values you passed in to ensure that the display position is correct.
-   * 
+   *
    * You may need to use `ContextMenu.transformMenuPosition` to transform the menu display position:
-   * 
+   *
    * ```
    * function onContextMenu(e: MouseEvent) {
       //MyContainerElement is the MenuRoot
@@ -245,11 +250,11 @@ export interface MenuOptions {
 export interface MenuItem {
   /**
    * The label of this menu item.
-   * 
+   *
    * Can be a callback. Use `h` to render custom content.
-   * 
+   *
    * ```js
-   * { 
+   * {
    *   label: h('div', {
    *     style: {
    *       fontSize: '20px',
@@ -266,15 +271,15 @@ export interface MenuItem {
   icon ?: string|VNode|((icon: string) => VNode),
   /**
    * Custom icon library font class name.
-   * 
+   *
    * Only for css font icon, If you use the svg icon, you do not need to use this.
    */
   iconFontClass ?: string,
   /**
    * Should a fixed-width icon area be reserved for menu items without icon. (this item)
-   * 
+   *
    * Default is inherit from `MenuOptions.preserveIconWidth` .
-   * 
+   *
    * The width of icon area can be override with css var `--mx-menu-placeholder-width`.
    */
   preserveIconWidth ?: boolean;
@@ -296,29 +301,29 @@ export interface MenuItem {
   hidden ?: boolean,
   /**
    * Is this menu item checked?
-   * 
+   *
    * The check mark are displayed on the left side of the icon, so it is not recommended to display the icon at the same time.
    */
   checked ?: boolean,
   /**
    * Shortcut key text display on the right.
-   * 
+   *
    * The shortcut keys here are only for display. You need to handle the key events by yourself.
    */
   shortcut ?: string|string,
   /**
    * Set the submenu pop-up direction relative to coordinates.
-   * 
+   *
    * Default is inherted from `MenuOptions.direction`, if `adjustSubMenuPosition` is true then the submenu will determine
    * the pop-up direction based on its distance from the screen edge.
-   * 
+   *
    */
   direction ?: MenuPopDirection,
   /**
    * By default, the submenu will automatically adjust its position to prevent it overflow the container.
-   * 
+   *
    * If you allow menu overflow containers, you can set this to false.
-   * 
+   *
    * Default is inherit from `MenuOptions.adjustPosition`.
    */
   adjustSubMenuPosition ?: boolean,
@@ -332,7 +337,7 @@ export interface MenuItem {
   clickClose ?: boolean,
   /**
    * Is this menu item separated from the menu item?
-   * 
+   *
    * * `true` or `'down'`: Separator is show below menu.
    * * `'up'`: Separator is show above menu.
    * * `'self'`: Mark this item is a Separator.
@@ -353,7 +358,7 @@ export interface MenuItem {
   minWidth ?: number|string,
   /**
    * Menu item click event handler.
-   * 
+   *
    * @param e The current event of `click` or `keydown` (when user use keyboard press this menu)
    */
   onClick ?: (e?: MouseEvent|KeyboardEvent) => void,
