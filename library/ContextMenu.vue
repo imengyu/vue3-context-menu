@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, h, Teleport, toRefs } from 'vue'
+import { defineComponent, h, Teleport, toRefs, ref, onMounted } from 'vue'
 import type { PropType, VNode } from 'vue'
 import type { MenuOptions } from './ContextMenuDefine'
 import { genContainer } from "./ContextMenuUtils";
@@ -37,9 +37,20 @@ export default defineComponent({
       show,
     } = toRefs(props);
 
+    const menuRef = ref<HTMLElement | null>(null);
+
     ctx.expose({
       closeMenu: () => ctx.emit('update:show', false),
       isClosed: () => !show.value,
+      getMenuDimensions: () => {
+        if (menuRef.value) {
+          return {
+            width: menuRef.value.offsetWidth,
+            height: menuRef.value.offsetHeight,
+          };
+        }
+        return { width: 0, height: 0 };
+      }
     });
 
     return () => {  
@@ -50,7 +61,8 @@ export default defineComponent({
           Teleport,
           { to: `#${eleId}` },
           [
-            h(ContextSubMenuWrapperConstructor as unknown as string, { 
+            h(ContextSubMenuWrapperConstructor as unknown as string, {
+              ref: menuRef,
               options: options,
               show: show,
               container: container,
