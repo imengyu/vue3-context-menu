@@ -34,6 +34,50 @@ Menu component.
 | itemShortcutRender | Global menu shortcut key badge render slot | MenuItemRenderData |
 | separatorRender | Global menu separator render slot  | - |
 
+## ContextMenuInstance
+
+ContextMenu Component ref interface,
+
+You can use `(this.$refs.myMenu as ContextMenuInstance)` or `const mymenu = ref<ContextMenuInstance>()`.
+
+### `closeMenu(fromItem?: MenuItem|undefined): void`
+
+  Close this menu..
+
+  | Param | Explain |
+  | :----: | :----: |
+  | fromItem | The last clicked menu item, will pass to `MenuOptions.onClose` callback, if user does not click any item, can be `undefined`. |
+
+### `isClosed(): boolean`
+
+  Check if the menu is currently closed.
+
+  Returns
+
+  | Explain |
+  | :----: |
+  | Is this menu currently closed |
+
+### `getMenuRef(): ContextSubMenuInstance`
+
+  Get current Menu root instance.
+
+  Returns
+
+  | Explain |
+  | :----: |
+  | Return [`ContextSubMenuInstance`](./ContextMenuGroup.md#contextsubmenuinstance) of root, return undefined if menu is not showing. |
+
+### `getMenuDimensions(): { width: number, height: number }`
+
+  Get root menu size.
+
+  Returns
+
+  | Explain |
+  | :----: |
+  | Return root menu size in pixel, return all zero if menu is not showing. |
+
 ## `MenuItemRenderData`
 
 | Property | Description | Type |

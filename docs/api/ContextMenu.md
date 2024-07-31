@@ -34,6 +34,50 @@ nav:
 | itemShortcutRender | 当前菜单全局快捷键标记渲染插槽 | MenuItemRenderData |
 | separatorRender | 当前菜单分隔符渲染插槽 | - |
 
+## ContextMenuInstance
+
+ContextMenu 组件接口，表示菜单基础实例。
+
+你可以使用 `(this.$refs.myMenu as ContextMenuInstance)` 或者 `const mymenu = ref<ContextMenuInstance>()` 来使用。
+
+### `closeMenu(fromItem?: MenuItem|undefined): void`
+
+  关闭菜单.
+
+  | 参数 | 说明 |
+  | :----: | :----: |
+  | fromItem | 最后单击的菜单项，将传递给 `MenuOptions.onClose` 回调，如果用户没有点击任何项，可以是 `undefined` 。 |
+
+### `isClosed(): boolean`
+
+  检查当前菜单是否关闭。
+
+  返回值
+
+  | 说明 |
+  | :----: |
+  | 当前实例是否已经关闭 |
+
+### `getMenuRef(): ContextSubMenuInstance`
+
+  获取当前菜单根实例。
+
+  返回值
+
+  | 说明 |
+  | :----: |
+  | 返回根的 [`ContextSubMenuInstance`](./ContextMenuGroup.md#contextsubmenuinstance)，如果菜单未显示则返回 `undefined` 。 |
+
+### `getMenuDimensions(): { width: number, height: number }`
+
+  获取当前菜单根的外框大小。
+
+  返回值
+
+  | 说明 |
+  | :----: |
+  | 以像素为单位返回根菜单大小，如果菜单未显示则返回全零。 |
+
 ## MenuItemRenderData 结构
 
 | 属性名 | 描述 | 类型 |

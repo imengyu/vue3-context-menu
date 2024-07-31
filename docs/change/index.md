@@ -5,6 +5,14 @@ nav:
   order: 5
 ---
 
+## v1.4.2 - 2024/07/31
+
+* [Added] 添加了 `ContextMenuInstance.getMenuRef` 用于在函数模式获取根子菜单实例。
+* [Added] 为 `ContextSubMenu` 暴露了 `ContextSubMenuInstance` 的多个方法，以实现对菜单项目更复杂的控制，包括获取菜单项，获取高度，位置，滚动，设置滚动数值，位置等等，参见 [ContextSubMenuInstance](../api/ContextMenuGroup.md#contextmenugroup)。
+* [Added] 为函数模式的菜单项目事件 `onSubMenuOpen`、`onSubMenuClose` 增加了 [`MenuItemContext`](../api/ContextMenuItem.md#menuitemcontext) 条目菜单实例参数。
+* [Fix] 暴露ContextMenu的高度和宽度和Ref对象 (Thanks @ZhiZunJava [#97](https://github.com/imengyu/vue3-context-menu/pull/97))
+* [Fix] 修复当body设置了zoom时，组件的位置发生异常的问题 (Thanks @lizhen789 [#94](https://github.com/imengyu/vue3-context-menu/pull/94))
+
 ## v1.4.1 - 2024/04/22
 
 * [Fix] 修复组件模式下设置 show = false 关闭菜单后再打开需要打开两次问题 ([#88](https://github.com/imengyu/vue3-context-menu/issues/88))

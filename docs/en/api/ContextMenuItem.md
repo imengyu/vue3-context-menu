@@ -12,13 +12,13 @@ Menu item component.
 | :----: | :----: | :----: | :----: |
 | label | The label of menu. | `string` | — |
 | icon | The icon for menu item. | `string` | — |
-| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
-| preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
-| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — | — |
-| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — | — |
+| iconFontClass | Custom icon library font class name. | `string` | `iconfont` |
+| preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | `true` |
+| svgIcon | Display icons use svg symbol (`<use xlink:href="...">`) ， only valid when icon attribute is empty. | `string` | — |
+| svgProps | The user-defined attribute of the svg tag, which is valid when using `svgIcon`. | `SVGAttributes` | — |
 | disabled | Disable menu item? | `boolean` | `false` |
-| checked | Is this menu item checked? | `boolean` | — | `false` |
-| shortcut | Shortcut key text display on the right. The shortcut keys here are only for display. You need to handle the key events by yourself. | `string` | — | `''` |
+| checked | Is this menu item checked? | `boolean`  | `false` |
+| shortcut | Shortcut key text display on the right. The shortcut keys here are only for display. You need to handle the key events by yourself. | `string` | `''` |
 | clickableWhenHasChildren | When there are subitems in this item, is it allowed to trigger its own click event? | `boolean` | `false` |
 | clickClose | Should close menu when Click this menu item ? | `boolean` | `true` |
 | customClass | Custom submenu class. | `string` | — |
@@ -42,3 +42,33 @@ Menu item component.
 | click | This event is triggered when the click this menu item | - |
 | subMenuOpen | Trigger this event when a submenu is opened | - |
 | subMenuClose | Trigger this event when the submenu is closed | - |
+
+## MenuItemContext
+
+Control instance of a menu item.
+
+### `getSubMenuInstance(): ContextSubMenuInstance|undefined`
+
+  Get current showing submenu instance.
+
+  Returns
+
+  | Explan |
+  | :----: |
+  | Return [ContextSubMenuInstance](./ContextMenuGroup.md#contextsubmenuinstance) of current submenu, return undefined if menu is not showing. |
+
+### `getElement(): HTMLElement`
+
+  Get html Element of this item.
+
+### `showSubMenu(): void`
+
+  Show submenu of this item.
+
+### `hideSubMenu(): void`
+
+  Force hide submenu of this item.
+
+### `isDisabledOrHidden(): boolean`
+
+  Check is this item disabled or hidden.

@@ -5,6 +5,14 @@ nav:
   order: 5
 ---
 
+## v1.4.2 - 2024/07/31
+
+* [Added] Added `ContextMenuInstance.getMenuRef` used to get the root submenu instance in function mode.
+* [Added] Exposed `ContextSubMenuInstance` several methods of `ContextSubMenu`, to achieve more complex control over menu items, including getting menu items, getting height, position, scrolling, setting scroll values, position, and more, see [ContextSubMenuInstance](../api/ContextMenuGroup.md#contextmenugroup)。
+* [Added] Add param [`MenuItemContext`](../api/ContextMenuItem.md#menuitemcontext) of function mode event `onSubMenuOpen`,`onSubMenuClose`.
+* [Fix] Expose the height and width of the ContextMenu and the Ref object (Thanks @ZhiZunJava [#97](https://github.com/imengyu/vue3-context-menu/pull/97))
+* [Fix] Fixed an issue where component positions were abnormal when zoom was set for the body (Thanks @lizhen789 [#94](https://github.com/imengyu/vue3-context-menu/pull/94))
+
 ## v1.4.1 - 2024/04/22
 
 * [Fix] Fix the issue of setting show=false in component mode to close the menu and then open it twice ([#88](https://github.com/imengyu/vue3-context-menu/issues/88))

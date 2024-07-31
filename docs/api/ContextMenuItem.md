@@ -42,3 +42,33 @@ title: ContextMenuItem
 | click | 点击菜单时触发此事件 | - |
 | subMenuOpen | 子菜单打开时触发此事件 | - |
 | subMenuClose | 子菜单关闭时触发此事件 | - |
+
+## MenuItemContext
+
+菜单条目的控制项实例。
+
+### `getSubMenuInstance(): ContextSubMenuInstance|undefined`
+
+  获取当前显示的子菜单实例。
+
+  返回值
+
+  | 说明 |
+  | :----: |
+  | 返回当前子菜单的 [ContextSubMenuInstance](./ContextMenuGroup.md#contextsubmenuinstance)，如果菜单未显示则返回undefined。 |
+
+### `getElement(): HTMLElement`
+
+  获取当前子菜单元素。
+
+### `showSubMenu(): void`
+
+  手动打开子菜单。
+
+### `hideSubMenu(): void`
+
+  手动关闭子菜单。
+
+### `isDisabledOrHidden(): boolean`
+
+  获取当前子菜单是否被隐藏或者禁用。
