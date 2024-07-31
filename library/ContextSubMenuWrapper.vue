@@ -8,6 +8,7 @@
     >
       <ContextSubMenuConstructor
         v-if="show"
+        ref="submenuInstance"
         class="mx-menu-host"
         :items="options.items"
         :adjustPosition="options.adjustPosition"
@@ -20,6 +21,7 @@
     </Transition>
     <ContextSubMenuConstructor
       v-else-if="show"
+      ref="submenuInstance"
       class="mx-menu-host"
       :items="options.items"
       :adjustPosition="options.adjustPosition"
@@ -34,7 +36,7 @@
 
 <script setup lang="ts">
 import { h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch, Transition, useSlots, type Ref } from 'vue'
-import type { MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
+import type { ContextMenuInstance, ContextSubMenuInstance, MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
 import { MenuConstOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { type SubMenuContext, type SubMenuParentContext } from './ContextSubMenu.vue';
@@ -81,6 +83,8 @@ const emit = defineEmits([ 'close', 'closeAnimFinished' ]);
 
 const slots = useSlots()
 
+const submenuInstance = ref<ContextSubMenuInstance>();
+
 const {
   options,
   show,
@@ -104,9 +108,11 @@ watch(show, (v: boolean) => {
   }
 });
 
-const instance = {
+const instance : ContextMenuInstance = {
   closeMenu,
   isClosed,
+  getMenuRef: () => submenuInstance.value,
+  getMenuDimensions: () => submenuInstance.value?.getMenuDimensions() ?? { width: 0, height: 0 },
 };
 let closed = false;
 

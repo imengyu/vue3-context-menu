@@ -63,10 +63,10 @@
 </template>
 
 <script setup lang="ts">
-import { inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type SVGAttributes, toRefs, type TransitionProps, type Ref, computed } from 'vue'
-import type { MenuItemContext, SubMenuParentContext } from './ContextSubMenu.vue'
+import { inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type SVGAttributes, toRefs, type TransitionProps, type Ref, computed, provide } from 'vue'
+import type { SubMenuParentContext } from './ContextSubMenu.vue'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
-import type { MenuItem, MenuOptions } from './ContextMenuDefine'
+import type { MenuItem, MenuItemContext, MenuOptions } from './ContextMenuDefine'
 import { VNodeRender } from './ContextMenuUtils'
 import ContextMenuIconCheck from './ContextMenuIconCheck.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
@@ -227,6 +227,7 @@ const menuContext = inject('menuContext') as SubMenuParentContext;
 
 //Instance Contet for keyboadr control
 const menuItemInstance : MenuItemContext = {
+  getSubMenuInstance: () => undefined,
   showSubMenu: () => {
     if (showSubMenu.value) {
       //Mark current item
@@ -238,12 +239,18 @@ const menuItemInstance : MenuItemContext = {
     }
     return false;
   },
+  hideSubMenu: () => {
+    //closeSubMenu();
+    menuContext.closeOtherSubMenu();
+  },
   isDisabledOrHidden: () => disabled.value || hidden.value,
   getElement: () => menuItemRef.value,
   focus: () => keyBoardFocusMenu.value = true,
   blur: () => keyBoardFocusMenu.value = false,
   click: onClick,
 }
+
+provide("menuItemInstance", menuItemInstance);
 
 onMounted(() => {
   if (menuContext.isMenuItemDataCollectedFlag()) {
@@ -335,17 +342,18 @@ function onMouseEnter(e?: MouseEvent) {
       if (!e)
         menuContext.markThisOpenedByKeyBoard();
       //Open sub menu
-      menuContext.addOpenedSubMenu(() => {
-        keyBoardFocusMenu.value = false;
-        showSubMenu.value = false;
-        emit('subMenuClose');
-      });
+      menuContext.addOpenedSubMenu(closeSubMenu);
       showSubMenu.value = true;
-      emit('subMenuOpen');
+      nextTick(() => emit('subMenuOpen', menuItemInstance));
     }
   }
 }
- 
+function closeSubMenu() 
+{
+  keyBoardFocusMenu.value = false;
+  showSubMenu.value = false;
+  emit('subMenuClose', menuItemInstance);
+}
 //Data for custom render
 function getItemDataForChildren() {
   return {

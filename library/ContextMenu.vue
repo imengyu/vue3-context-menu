@@ -1,7 +1,7 @@
 <script lang="ts">
-import { defineComponent, h, Teleport, toRefs, ref, onMounted } from 'vue'
+import { defineComponent, h, Teleport, toRefs, ref } from 'vue'
 import type { PropType, VNode } from 'vue'
-import type { MenuOptions } from './ContextMenuDefine'
+import type { ContextMenuInstance, MenuOptions } from './ContextMenuDefine'
 import { genContainer } from "./ContextMenuUtils";
 import ContextSubMenuWrapperConstructor from './ContextSubMenuWrapper.vue'
 
@@ -37,20 +37,13 @@ export default defineComponent({
       show,
     } = toRefs(props);
 
-    const menuRef = ref<HTMLElement | null>(null);
+    const menuRef = ref<ContextMenuInstance | null>(null);
 
     ctx.expose({
       closeMenu: () => ctx.emit('update:show', false),
       isClosed: () => !show.value,
-      getMenuDimensions: () => {
-        if (menuRef.value) {
-          return {
-            width: menuRef.value.offsetWidth,
-            height: menuRef.value.offsetHeight,
-          };
-        }
-        return { width: 0, height: 0 };
-      }
+      getMenuRef: () => menuRef.value?.getMenuRef(),
+      getMenuDimensions: () => menuRef.value?.getMenuDimensions() ?? { width: 0, height: 0 },
     });
 
     return () => {  

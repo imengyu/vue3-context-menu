@@ -1,4 +1,4 @@
-import type { SVGAttributes, TransitionProps, VNode } from "vue";
+import type { Ref, SVGAttributes, TransitionProps, VNode } from "vue";
 
 /**
  * Default config
@@ -29,6 +29,107 @@ export interface ContextMenuInstance {
    * Check if the menu is currently closed.
    */
   isClosed(): boolean;
+  /**
+   * Get current Menu root instance
+   * @returns Return ContextSubMenuInstance of root, return undefined if menu is not showing.
+   */
+  getMenuRef(): ContextSubMenuInstance|undefined;
+  /**
+   * Get root menu size.
+   * @returns Return root menu size in pixel, return all zero if menu is not showing.
+   */
+  getMenuDimensions(): { width: number, height: number };
+}
+
+/**
+ * Define that Submenu holder component exposed props
+ * 
+ * Can get by `ContextMenuInstance.getMenuRef`.
+ */
+export interface ContextSubMenuInstance 
+{
+  /**
+   * Root element of this submenu
+   */
+  getSubmenuRoot: () => HTMLElement | undefined;
+  /**
+   * Inner container element of this submenu
+   */
+  getMenu: () => HTMLElement | undefined;
+  /**
+   * Get child menu item by array index, Only after the parent submenu is displayed can the child items be retrieved.
+   * @param index Array index 
+   * @returns 
+   */
+  getChildItem: (index: number) => MenuItemContext;
+  /**
+   * Get root menu size.
+   * @returns Return root menu size in pixel, return all zero if menu is not showing.
+   */
+  getMenuDimensions(): { width: number, height: number };
+  /**
+   * Get submenu current scroll value (same as element.scrollTop)
+   * @returns 
+   */
+  getScrollValue: () => number,
+  /**
+   * Set submenu current scroll value (same as element.scrollTop)
+   * @returns 
+   */
+  setScrollValue: (v: number) => void,
+  /**
+   * Get submenu max scroll height (same as element.scrollHeight)
+   * @returns 
+   */
+  getScrollHeight: () => number,
+  /**
+   * Get max submenu height
+   * @returns 
+   */
+  getMaxHeight: () => number,
+  /**
+   * Get submenu current position (Relative to the parent item)
+   * @returns 
+   */
+  getPosition: () => { x: number, y: number },
+  /**
+   * Set submenu current position (Relative to the parent item)
+   * @returns 
+   */
+  setPosition: (x: number, y: number) => void;
+}
+
+/**
+ * The internal info context for menu item
+ */
+export interface MenuItemContext {
+  /**
+   * Get current showing submenu instance.
+   * @returns Return ContextSubMenuInstance of current submenu, return undefined if menu is not showing.
+   */
+  getSubMenuInstance: () => ContextSubMenuInstance|undefined;
+  /**
+   * Show submenu of this item.
+   * @returns 
+   */
+  showSubMenu: () => boolean,
+  /**
+   * Force hide submenu of this item.
+   */
+  hideSubMenu: () => void,
+  /**
+   * Get html Element of this item
+   */
+  getElement: () => HTMLElement|undefined,
+  /**
+   * Check is this item disabled or hidden.
+   * @returns 
+   */
+  isDisabledOrHidden: () => boolean,
+
+  focus: () => void,
+  blur: () => void,
+  click: (e: MouseEvent|KeyboardEvent) => void,
 }
 
 export type MenuPopDirection = 'br'|'b'|'bl'|'tr'|'t'|'tl'|'l'|'r';
@@ -365,11 +466,11 @@ export interface MenuItem {
   /**
    * This event emit when submenu of this item is closing.
    */
-  onSubMenuClose ?: (() => void) | undefined;
+  onSubMenuClose ?: ((itemInstance: MenuItemContext) => void) | undefined;
   /**
    * This event emit when submenu of this item is showing.
    */
-  onSubMenuOpen ?: (() => void) | undefined;
+  onSubMenuOpen ?: ((itemInstance: MenuItemContext) => void) | undefined;
   /**
    * A custom render callback that allows you to customize the rendering
    *  of the current item.

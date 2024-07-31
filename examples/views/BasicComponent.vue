@@ -8,6 +8,7 @@
 
   <!--this is component mode of context-menu-->
   <context-menu
+    ref="refTest"
     v-model:show="show"
     :options="optionsComponent"
   >
@@ -17,21 +18,21 @@
     <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
     <context-menu-sperator v-if="showItem" />
     <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
-    <context-menu-group label="Menu with child">
+    <context-menu-group label="Menu with child" @subMenuOpen="handleSubMenuOpen">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-1')" />
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-2')" />
     </context-menu-group>
-    <context-menu-group label="Menu with child child child">
+    <context-menu-group label="Menu with child child child" @subMenuOpen="handleSubMenuOpen">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
       <context-menu-sperator />
       <context-menu-group label="Child with v-for 50">
         <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item2-3-' + index)" />
       </context-menu-group>
-      <context-menu-group label="Childs">
+      <context-menu-group label="Childs" @subMenuOpen="handleSubMenuOpen">
         <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item3-1-1')" />
         <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item3-1-2')" />
         <context-menu-sperator />
-        <context-menu-group label="Childs">
+        <context-menu-group label="Childs" @subMenuOpen="handleSubMenuOpen">
           <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item3-2-1')" />
           <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item3-2-2')" />
         </context-menu-group>
@@ -82,7 +83,7 @@ v-model:show="show"
 
 <script lang="ts" setup>
 import { onMounted, ref, reactive, watch } from 'vue'
-import type { MenuOptions } from '../../library/ContextMenuDefine';
+import type { ContextMenuInstance, MenuItemContext, MenuOptions } from '../../library/ContextMenuDefine';
 
 const showItem = ref(true)
 const show = ref(false)
@@ -98,6 +99,8 @@ const optionsComponent = reactive<MenuOptions>({
   //  name: 'fade',
   //}
 });
+
+const refTest = ref<ContextMenuInstance>();
 
 onMounted(() => {
   (window as unknown as {
@@ -115,6 +118,11 @@ watch(() => show.value, (newValue, oldValue) => {
   console.log("show的值变换了", oldValue, '->', newValue)
 })
 
+function handleSubMenuOpen(instance: MenuItemContext) 
+{
+  console.log('子弹窗大小：', instance.getSubMenuInstance()?.getMenuDimensions());
+}
+
 function onContextMenu(e : MouseEvent) {
   e.preventDefault();
   //Set the mouse position
@@ -122,6 +130,12 @@ function onContextMenu(e : MouseEvent) {
   optionsComponent.y = e.y;
   //Show menu
   show.value = true;
+
+  setTimeout(() => {
+    console.log('菜单大小', refTest.value?.getMenuDimensions());
+    console.log('1s后显示第五个子菜单');
+    refTest.value?.getMenuRef()?.getChildItem(5).showSubMenu();
+  }, 1000);
 }
 function changeLabelText() {
   itemText.value = (itemText.value == 'My label CHANGED!' ? 'Test item dynamic change label' : 'My label CHANGED!');

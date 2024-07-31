@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="submenuRoot"
     :class="[
       'mx-context-menu',
       (options.customClass ? options.customClass : ''),
@@ -51,8 +52,8 @@
             :showRightArrow="item.children && item.children.length > 0"
             :hasChildren="item.children && item.children.length > 0"
             :rawMenuItem="item"
-            @sub-menu-open="item.onSubMenuOpen"
-            @sub-menu-close="item.onSubMenuClose"
+            @sub-menu-open="(v: any) => item.onSubMenuOpen?.(v)"
+            @sub-menu-close="(v: any) => item.onSubMenuClose?.(v)"
           >
             <template v-if="item.children && item.children.length > 0" #submenu>
               <!--Sub menu-->
@@ -101,8 +102,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref } from 'vue'
-import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection } from './ContextMenuDefine'
+import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref, onBeforeUnmount } from 'vue'
+import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection, MenuItemContext, ContextSubMenuInstance } from './ContextMenuDefine'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { MenuConstOptions } from './ContextMenuDefine'
 import { getLeft, getTop, solveNumberOrStringSize } from './ContextMenuUtils'
@@ -110,15 +111,6 @@ import ContextMenuItem from './ContextMenuItem.vue'
 import ContextMenuSeparator from './ContextMenuSeparator.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
 
-//The internal info context for menu item
-export interface MenuItemContext {
-  focus: () => void,
-  blur: () => void,
-  showSubMenu: () => boolean,
-  getElement: () => HTMLElement|undefined,
-  isDisabledOrHidden: () => boolean,
-  click: (e: MouseEvent|KeyboardEvent) => void,
-}
 
 //The internal info context for submenu instance
 export interface SubMenuContext {
@@ -233,6 +225,7 @@ export default defineComponent({
     const { zIndex, getParentWidth, getParentHeight, getZoom } = parentContext;
     const { adjustPosition } = toRefs(props);
 
+    const submenuRoot = ref<HTMLElement>();
     const menu = ref<HTMLElement>();
     const scroll = ref<HTMLElement>();
     const upScrollButton = ref<HTMLElement>();
@@ -367,9 +360,13 @@ export default defineComponent({
           menuItems.push(item);
         else
           menuItems.splice(index, 0, item);
+        //item.getSubMenuInstance = () => {
+        //  return subMenuRefs.value[menuItems.indexOf(item)]?.value;
+        //}
       },
       removeChildMenuItem: (item: MenuItemContext) => {
         menuItems.splice(menuItems.indexOf(item), 1);
+        item.getSubMenuInstance = () => undefined;
       },
       markActiveMenuItem: (item: MenuItemContext, updateState = false) => {
         blurCurrentMenu();
@@ -393,6 +390,42 @@ export default defineComponent({
       getSubMenuInstanceContext: () => thisMenuInsContext,
     };
     provide('menuContext', thisMenuContext);
+
+    //#endregion
+
+    //#region expose user use context
+
+    const exposeContext : ContextSubMenuInstance = {
+      getChildItem: (index: number) => menuItems[index],
+      getMenuDimensions: () => {
+        if (submenuRoot.value) {
+          return {
+            width: submenuRoot.value.offsetWidth,
+            height: submenuRoot.value.offsetHeight,
+          };
+        }
+        return { width: 0, height: 0 };
+      },
+      getSubmenuRoot: () => submenuRoot.value,
+      getMenu: () => menu.value,
+      getScrollValue: () => scrollValue.value,
+      setScrollValue: (v: number) => scrollValue.value = v,
+      getScrollHeight: () => scrollHeight.value,
+      getMaxHeight: () => maxHeight.value,
+      getPosition: () => position.value,
+      setPosition: (x: number, y: number) => { 
+        position.value.x = x;
+        position.value.y = y;
+      },
+    };
+    
+    //#endregion
+
+    //#region set parent item context
+
+    const menuItemInstance = inject<MenuItemContext|undefined>('menuItemInstance', undefined);
+    if (menuItemInstance)
+      menuItemInstance.getSubMenuInstance = () => exposeContext;
 
     //#endregion
 
@@ -530,8 +563,13 @@ export default defineComponent({
         isMenuItemDataCollectedFlag = true;
       });
     });
+    onBeforeUnmount(() => {
+      if (menuItemInstance)
+        menuItemInstance.getSubMenuInstance = () => undefined;
+    });
 
     return {
+      submenuRoot,
       menu,
       scroll,
       options,
@@ -543,6 +581,7 @@ export default defineComponent({
       position,
       scrollHeight,
       maxHeight,
+      ...exposeContext,
       globalHasSlot,
       globalRenderSlot,
       onScroll,
