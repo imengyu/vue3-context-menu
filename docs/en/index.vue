@@ -21,7 +21,7 @@ function goStart() {
   location.href = './guide/install.html'
 }
 function goView() {
-  window.open('https://imengyu.top/pages/vue3-context-menu-demo/');
+  window.open('https://docs.imengyu.top/vue3-context-menu-demo/');
 }
 </script>
 
