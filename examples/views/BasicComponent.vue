@@ -22,7 +22,7 @@
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-1')" />
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-2')" />
     </context-menu-group>
-    <context-menu-group label="Menu with child child child" @subMenuOpen="handleSubMenuOpen">
+    <context-menu-group ref="refGroup" label="Menu with child child child" @subMenuOpen="handleSubMenuOpen">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
       <context-menu-sperator />
       <context-menu-group label="Child with v-for 50">
@@ -101,6 +101,7 @@ const optionsComponent = reactive<MenuOptions>({
 });
 
 const refTest = ref<ContextMenuInstance>();
+const refGroup = ref();
 
 onMounted(() => {
   (window as unknown as {
@@ -135,6 +136,13 @@ function onContextMenu(e : MouseEvent) {
     console.log('菜单大小', refTest.value?.getMenuDimensions());
     console.log('1s后显示第五个子菜单');
     refTest.value?.getMenuRef()?.getChildItem(5).showSubMenu();
+
+
+    console.log("refGroup", refGroup.value);
+    setTimeout(() => {
+      console.log("refGroup2", refGroup.value);
+    }, 100);
+    
   }, 1000);
 }
 function changeLabelText() {

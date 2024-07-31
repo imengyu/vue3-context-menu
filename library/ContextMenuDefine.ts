@@ -30,7 +30,7 @@ export interface ContextMenuInstance {
    */
   isClosed(): boolean;
   /**
-   * Get current Menu root instance
+   * Get current Menu root instance.
    * @returns Return ContextSubMenuInstance of root, return undefined if menu is not showing.
    */
   getMenuRef(): ContextSubMenuInstance|undefined;
@@ -49,21 +49,21 @@ export interface ContextMenuInstance {
 export interface ContextSubMenuInstance 
 {
   /**
-   * Root element of this submenu
+   * Get Root element of this submenu
    */
   getSubmenuRoot: () => HTMLElement | undefined;
   /**
-   * Inner container element of this submenu
+   * Get Inner container element of this submenu
    */
   getMenu: () => HTMLElement | undefined;
   /**
    * Get child menu item by array index, Only after the parent submenu is displayed can the child items be retrieved.
    * @param index Array index 
-   * @returns 
+   * @returns You can obtain control instance `MenuItemContext according to the index to control menu items.
    */
-  getChildItem: (index: number) => MenuItemContext;
+  getChildItem: (index: number) => MenuItemContext | undefined;
   /**
-   * Get root menu size.
+   * Get submenu root element size.
    * @returns Return root menu size in pixel, return all zero if menu is not showing.
    */
   getMenuDimensions(): { width: number, height: number };
@@ -100,6 +100,21 @@ export interface ContextSubMenuInstance
 }
 
 /**
+ * Ref define of ContextMenuGroup
+ */
+export interface ContextMenuGroupRef
+{
+  /**
+   * Get ContextSubMenuInstance of this group
+   */
+  getSubMenuRef(): ContextSubMenuInstance;
+  /**
+   * Get MenuItemContext of this item.
+   */
+  getMenuItemRef(): ContextSubMenuInstance;
+}
+
+/**
  * The internal info context for menu item
  */
 export interface MenuItemContext {
@@ -118,7 +133,7 @@ export interface MenuItemContext {
    */
   hideSubMenu: () => void,
   /**
-   * Get html Element of this item
+   * Get html Element of this item.
    */
   getElement: () => HTMLElement|undefined,
   /**

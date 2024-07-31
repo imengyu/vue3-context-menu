@@ -374,10 +374,7 @@ function getItemDataForChildren() {
   }
 }
 
-defineExpose({
-  showSubMenu,
-  keyBoardFocusMenu,
-});
+defineExpose(menuItemInstance);
 </script>
 
 <style>
