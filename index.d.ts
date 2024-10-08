@@ -9,7 +9,7 @@ export * from './lib';
 
 declare module 'vue3-context-menu' {
 }
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface ComponentCustomProperties {
     /**
      * Show a ContextMenu .
