@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.3 - 2024/10/10
+
+* [Change] Change the augmentation module (Thanks @linspw [#103](https://github.com/imengyu/vue3-context-menu/pull/103))
+* [Fix] Add ComputedRef definitions for checked and hidden attributes, prevent error prompts when using Computed.
+
 ## v1.4.2 - 2024/07/31
 
 * [Added] Added `ContextMenuInstance.getMenuRef` used to get the root submenu instance in function mode.
