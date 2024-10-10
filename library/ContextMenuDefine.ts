@@ -1,4 +1,4 @@
-import type { Ref, SVGAttributes, TransitionProps, VNode } from "vue";
+import type { ComputedRef, Ref, SVGAttributes, TransitionProps, VNode } from "vue";
 
 /**
  * Default config
@@ -410,23 +410,23 @@ export interface MenuItem {
   /**
    * Disable menu item?
    */
-  disabled ?: boolean,
+  disabled ?: boolean|ComputedRef<boolean>,
   /**
    * Hide menu item?
    */
-  hidden ?: boolean,
+  hidden ?: boolean|ComputedRef<boolean>,
   /**
    * Is this menu item checked?
    *
    * The check mark are displayed on the left side of the icon, so it is not recommended to display the icon at the same time.
    */
-  checked ?: boolean,
+  checked ?: boolean|ComputedRef<boolean>,
   /**
    * Shortcut key text display on the right.
    *
    * The shortcut keys here are only for display. You need to handle the key events by yourself.
    */
-  shortcut ?: string|string,
+  shortcut ?: string,
   /**
    * Set the submenu pop-up direction relative to coordinates.
    *
