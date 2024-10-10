@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.3 - 2024/10/10
+
+* [Change] 更新挂载到 Vue 全局实例上的定义 (Thanks @linspw [#103](https://github.com/imengyu/vue3-context-menu/pull/103))
+* [Fix] 为菜单项的 checked 和 hidden 添加了 ComputedRef 定义，防止在使用 Computed 时提示错误。
+
 ## v1.4.2 - 2024/07/31
 
 * [Added] 添加了 `ContextMenuInstance.getMenuRef` 用于在函数模式获取根子菜单实例。
