@@ -5,6 +5,8 @@ node_modules
 /examples/dist
 /library/dist
 
+/examples/vue3-context-menu.css
+/examples/vue3-context-menu.umd.js
 
 # local env files
 .env.local

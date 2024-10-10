@@ -98,7 +98,7 @@ createApp(App)
 </template>
 
 <script setup lang="ts">
-import { onMounted, reactive } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import type { MenuOptions } from '../../library/ContextMenuDefine';
 import ContextMenu from '../../library/ContextMenuInstance';
 
@@ -109,6 +109,17 @@ onMounted(() => {
         highlightAll: () => void
       }
     }).hljs?.highlightAll?.();
+});
+
+const members = [
+  '1',
+  '2',
+  '3',
+];
+const issue = ref({
+  members: [
+    '3'
+  ]
 });
 
 const menuData = reactive<MenuOptions>({
@@ -386,6 +397,21 @@ const menuData = reactive<MenuOptions>({
       svgProps: {
         fill: '#f60',
       },
+    },
+    {
+      label: 'members',
+      children: members.map(member => ({
+        label: member,
+        checked: computed(() => issue.value.members?.find(m => m === member) ? true : false),
+        clickClose: false,
+        onClick: () => {
+          if (issue.value.members.find(m => m === member)) {
+            issue.value.members = issue.value.members.filter(m => m !== member);
+          } else {
+            issue.value.members.push(member);
+          }
+        },
+      })),
     },
     { 
       label: "Disabled Item",
