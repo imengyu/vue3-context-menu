@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.4 - 2024/12/06
+
+* [Change] 在 package.json 中添加 es 定义。 ([#106](https://github.com/imengyu/vue3-context-menu/issues/106))
+* [Fix] 修复 MenuBar 组件没有发出 `onSubMenuOpen` 事件的问题。
+
 ## v1.4.3 - 2024/10/10
 
 * [Change] 更新挂载到 Vue 全局实例上的定义 (Thanks @linspw [#103](https://github.com/imengyu/vue3-context-menu/pull/103))

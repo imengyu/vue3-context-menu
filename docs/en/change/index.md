@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.4 - 2024/12/06
+
+* [Change] Add es module def in package.json ([#106](https://github.com/imengyu/vue3-context-menu/issues/106))
+* [Fix] Fix MenuBar that do not emit `onSubMenuOpen` event
+
 ## v1.4.3 - 2024/10/10
 
 * [Change] Change the augmentation module (Thanks @linspw [#103](https://github.com/imengyu/vue3-context-menu/pull/103))
