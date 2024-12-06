@@ -1,0 +1,26 @@
+{
+  "name": "@imengyu/vue3-context-menu",
+  "version": "1.4.3",
+  "description": "A context menu component for Vue3",
+  "scripts": {
+    "parcel-run": "parcel index.html",
+    "parcel-build": "parcel build index.html"
+  },
+  "devDependencies": {
+    "@parcel/optimizer-data-url": "^2.12.0",
+    "@parcel/transformer-inline-string": "^2.12.0",
+    "@parcel/transformer-vue": "^2.12.0",
+    "@tsconfig/node18": "^18.2.2",
+    "@types/node": "^18.17.17",
+    "@vue/compiler-sfc": "^3.5.12",
+    "@vue/tsconfig": "^0.4.0",
+    "parcel": "^2.12.0",
+    "sass": "^1.69.5",
+    "vue-loader": "^17.3.1",
+    "vue-router": "^4.2.5"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "@imengyu/vue3-context-menu": "^1.4.3"
+  }
+}
