@@ -35,8 +35,8 @@
           <ContextMenuItem
             v-else
             :clickHandler="item.onClick ? (e) => item.onClick!(e) : undefined"
-            :disabled="item.disabled"
-            :hidden="item.hidden"
+            :disabled="typeof item.disabled === 'object' ? item.disabled.value : item.disabled"
+            :hidden="typeof item.hidden === 'object' ? item.hidden.value : item.hidden"
             :icon="item.icon"
             :iconFontClass="item.iconFontClass"
             :svgIcon="item.svgIcon"
@@ -44,7 +44,7 @@
             :label="item.label"
             :customRender="(item.customRender as Function)"
             :customClass="item.customClass"
-            :checked="item.checked"
+            :checked="typeof item.checked === 'object' ? item.checked.value : item.checked"
             :shortcut="item.shortcut"
             :clickClose="item.clickClose"
             :clickableWhenHasChildren="item.clickableWhenHasChildren"
@@ -102,7 +102,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref, onBeforeUnmount } from 'vue'
+import { defineComponent, inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref, onBeforeUnmount, type ComputedRef } from 'vue'
 import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection, MenuItemContext, ContextSubMenuInstance } from './ContextMenuDefine'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { MenuConstOptions } from './ContextMenuDefine'

@@ -43,12 +43,18 @@ const menuData : MenuBarOptions = {
             { label: "File 4...." },
             { label: "File 5...." },
           ],
+          onSubMenuOpen(itemInstance) {
+            console.log('onSubMenuOpen2', itemInstance);
+          },
         },
         { label: "Save", divided: true },
         { label: "Save as..." },
         { label: "Close" },
         { label: "Exit" },
       ],
+      onSubMenuOpen(itemInstance) {
+        console.log('onSubMenuOpen', itemInstance);
+      },
     },
     {
       label: "Edit",

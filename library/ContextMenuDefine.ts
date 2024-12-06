@@ -480,12 +480,16 @@ export interface MenuItem {
   onClick ?: (e?: MouseEvent|KeyboardEvent) => void,
   /**
    * This event emit when submenu of this item is closing.
+   * 
+   * @param itemInstance The instance of this submenu, undefined if in topmost level. 
    */
-  onSubMenuClose ?: ((itemInstance: MenuItemContext) => void) | undefined;
+  onSubMenuClose ?: ((itemInstance?: MenuItemContext) => void) | undefined;
   /**
    * This event emit when submenu of this item is showing.
+   * 
+   * @param itemInstance The instance of this submenu, undefined if in topmost level. 
    */
-  onSubMenuOpen ?: ((itemInstance: MenuItemContext) => void) | undefined;
+  onSubMenuOpen ?: ((itemInstance?: MenuItemContext) => void) | undefined;
   /**
    * A custom render callback that allows you to customize the rendering
    *  of the current item.

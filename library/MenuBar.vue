@@ -48,7 +48,7 @@
 /**
  * Menu bar component
  */
-import { ref, type PropType, onMounted, watch } from 'vue';
+import { ref, nextTick, type PropType, onMounted, watch } from 'vue';
 import type { MenuBarOptions } from './MenuBar';
 import type { ContextMenuInstance, MenuItem } from './ContextMenuDefine';
 import { getTop, getLeft } from './ContextMenuUtils';
@@ -151,8 +151,13 @@ function showSubMenu(index: number, item: MenuItem) {
           menuBarActive.value = false;
           menuActive.value = null;
         }
+        if (typeof item.onSubMenuClose === 'function')
+          item.onSubMenuClose(undefined);
       },
     });
+
+    if (currentMenu && typeof item.onSubMenuOpen === 'function')
+      item.onSubMenuOpen(undefined);
   }
 }
 function showAllSubMenu() {
