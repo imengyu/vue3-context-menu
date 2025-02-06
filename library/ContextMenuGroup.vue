@@ -158,17 +158,21 @@ export default defineComponent({
       minWidth: undefined,
       adjustSubMenuPosition: undefined,
       hasChildren: typeof ctx.slots.default !== undefined,
-    }, ctx.slots.default ? {
-      //Create SubMenu
-      submenu: () => h(ContextSubMenuConstructor, {
-        ref: subMenuRef,
-        maxWidth: maxWidth.value,
-        minWidth: minWidth.value,
-        adjustPosition: adjustSubMenuPositionValue,
-      }, {
-        default: ctx.slots.default,
+    }, {
+      // Slot Icon
+      ...(ctx.slots.icon && { icon: ctx.slots.icon }),
+      // Create SubMenu
+      ...(ctx.slots.default && {
+        submenu: () => h(ContextSubMenuConstructor, {
+          ref: subMenuRef,
+          maxWidth: maxWidth.value,
+          minWidth: minWidth.value,
+          adjustPosition: adjustSubMenuPositionValue,
+        }, {
+          default: ctx.slots.default,
+        })
       })
-    } : undefined);
+    });
   },
 })
 </script>

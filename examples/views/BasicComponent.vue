@@ -19,6 +19,9 @@
     <context-menu-sperator v-if="showItem" />
     <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
     <context-menu-group label="Menu with child" @subMenuOpen="handleSubMenuOpen">
+      <template #icon>
+        <i class="iconfont icon-yidong"></i>
+      </template>
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-1')" />
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-2')" />
     </context-menu-group>
