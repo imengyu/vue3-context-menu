@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.4.5 - 2025/03/13
+
+* [Fix] Fix `ContextMenuGroup` component does not display the corresponding slot issue. (Thanks @kovalewvladimir [#112](https://github.com/imengyu/vue3-context-menu/issues/112))
+
 ## v1.4.4 - 2024/12/06
 
 * [Change] Add es module def in package.json ([#106](https://github.com/imengyu/vue3-context-menu/issues/106))

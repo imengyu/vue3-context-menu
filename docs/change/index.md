@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.4.5 - 2025/03/13
+
+* [Fix] 修复 `ContextMenuGroup` 组件没有显示对应插槽的问题。 (Thanks @kovalewvladimir [#112](https://github.com/imengyu/vue3-context-menu/issues/112))
+
 ## v1.4.4 - 2024/12/06
 
 * [Change] 在 package.json 中添加 es 定义。 ([#106](https://github.com/imengyu/vue3-context-menu/issues/106))
