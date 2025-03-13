@@ -143,3 +143,15 @@ export const VNodeRender = defineComponent({
     return () => typeof vnode.value === 'function' ? (vnode.value as unknown as (data: unknown) => VNode)(data.value) : vnode.value as unknown as VNode;
   },
 })
+
+/**
+ * 从对象中移除指定的键，并返回一个新对象，新对象不包含该键
+ * @param obj 要操作的对象
+ * @param key 要移除的键
+ * @returns 移除指定键后的新对象
+ */
+export function removeObjectKey<T extends Record<string, unknown>>(obj: T, key: string) {
+  const other = { ...obj };
+  delete other[key];
+  return other;
+}

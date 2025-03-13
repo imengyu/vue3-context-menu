@@ -4,6 +4,7 @@ import type { PropType, Ref, SVGAttributes } from 'vue'
 import ContextSubMenuConstructor from './ContextSubMenu.vue';
 import ContextMenuItemConstructor from './ContextMenuItem.vue';
 import type { MenuOptions } from './ContextMenuDefine';
+import { removeObjectKey } from './ContextMenuUtils';
 
 export default defineComponent({
   name: 'ContextMenuGroup',
@@ -148,7 +149,6 @@ export default defineComponent({
       getSubMenuRef: () => subMenuRef.value,
       getMenuItemRef: () => itemRef.value,
     })
-
     //Create Item
     return () => h(ContextMenuItemConstructor, {
       ...props,
@@ -158,21 +158,19 @@ export default defineComponent({
       minWidth: undefined,
       adjustSubMenuPosition: undefined,
       hasChildren: typeof ctx.slots.default !== undefined,
-    }, {
-      // Slot Icon
-      ...(ctx.slots.icon && { icon: ctx.slots.icon }),
-      // Create SubMenu
-      ...(ctx.slots.default && {
-        submenu: () => h(ContextSubMenuConstructor, {
-          ref: subMenuRef,
-          maxWidth: maxWidth.value,
-          minWidth: minWidth.value,
-          adjustPosition: adjustSubMenuPositionValue,
-        }, {
-          default: ctx.slots.default,
-        })
-      })
-    });
+    }, ctx.slots.default ? {
+      //Create SubMenu
+      submenu: () => h(ContextSubMenuConstructor, {
+        ref: subMenuRef,
+        maxWidth: maxWidth.value,
+        minWidth: minWidth.value,
+        adjustPosition: adjustSubMenuPositionValue,
+      }, {
+        default: ctx.slots.default,
+      }),
+      //Add other slots
+      ...removeObjectKey(ctx.slots, 'default'), 
+    } : ctx.slots);
   },
 })
 </script>

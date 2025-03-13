@@ -113,7 +113,7 @@ onMounted(() => {
   }).hljs?.highlightAll?.();
   window.addEventListener('blur', ()=>{
     console.log("窗口失去焦点",show.value)
-    show.value = false;
+    //show.value = false;
   })
 });
 
