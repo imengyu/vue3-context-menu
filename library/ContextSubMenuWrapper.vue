@@ -140,7 +140,7 @@ function installBodyEvents() {
     if (!props.isFullScreenContainer && container.value)
       container.value.addEventListener("scroll", onBodyScroll, true);
     if (options.value.keyboardControl !== false)
-      document.addEventListener('keydown', onMenuKeyDown);
+      document.addEventListener('keydown', onMenuKeyDown, true);
   }, 50);
 }
 function removeBodyEvents() {
@@ -150,7 +150,7 @@ function removeBodyEvents() {
   if (!props.isFullScreenContainer && container.value)
     container.value.removeEventListener("scroll", onBodyScroll, true);
   if (options.value.keyboardControl !== false)
-    document.removeEventListener('keydown', onMenuKeyDown);
+    document.removeEventListener('keydown', onMenuKeyDown, true);
 }
 
 //For keyboard event, remember which submenu is active

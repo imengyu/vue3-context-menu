@@ -19,10 +19,15 @@
           <div @contextmenu="onContextMenu3($event, 'b')">Bottom Center</div>
           <div @contextmenu="onContextMenu3($event, 'br')">Bottom Right</div>
         </div>
+        <div class="box2" style="width: 170px; height: 140px" :tabindex="1" @contextmenu="onContextMenu($event)" @keydown="handleKeyPress">
+          Test keyboard event: Use arrow key to navigate menus.
+          <br>
+          Down div event catch: {{ testDownDivKey }}
+        </div>
       </div>
       <div class="box1" style="flex:1;padding: 50px" @contextmenu="onContextMenu1($event)">
         Test nested menus: Contextmenu In parent
-        <div class="box2" style="width: 170px; height: 100px" @contextmenu="onContextMenu2($event)">
+        <div class="box2" style="width: 170px; height: 50px" @contextmenu="onContextMenu2($event)">
           Contextmenu In child
         </div>
       </div>
@@ -110,6 +115,13 @@ onMounted(() => {
       }
     }).hljs?.highlightAll?.();
 });
+
+const testDownDivKey = ref('None');
+
+function handleKeyPress(e: KeyboardEvent) {
+  console.log('Key press: ', e.key);
+  testDownDivKey.value = e.key;
+}
 
 const members = [
   '1',
