@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.6 - 2025/03/28
+
+* [Fix] Fix this `ContextMenuItem`.`shortcut` slot not displaying properly. ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))
+* [Fix] Fixed the issue of incorrect keyboard events penetrating to the components below. ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))
+
 ## v1.4.5 - 2025/03/13
 
 * [Fix] Fix `ContextMenuGroup` component does not display the corresponding slot issue. (Thanks @kovalewvladimir [#112](https://github.com/imengyu/vue3-context-menu/issues/112))

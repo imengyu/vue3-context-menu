@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.4.6 - 2025/03/28
+
+* [Fix] 修复 `ContextMenuItem` `slot` 插槽在自定义时未正常显示的问题。 ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))
+* [Fix] 修复键盘事件不正确的穿透至下方组件问题。 ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))
+
 ## v1.4.5 - 2025/03/13
 
 * [Fix] 修复 `ContextMenuGroup` 组件没有显示对应插槽的问题。 (Thanks @kovalewvladimir [#112](https://github.com/imengyu/vue3-context-menu/issues/112))
