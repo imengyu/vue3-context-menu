@@ -42,6 +42,48 @@
       </context-menu-group>
     </context-menu-group>
     <context-menu-item label="Test dynamic change theme" :clickClose="false" @click="optionsComponent.theme = (optionsComponent.theme === 'dark' ? '' : 'dark')" />
+    <context-menu-group label="Test Menu item slot" @subMenuOpen="handleSubMenuOpen">
+      <template #icon>
+        <i class="iconfont icon-yidong"></i>
+      </template>
+      <context-menu-item>
+        <template #label>
+          Custom label slot <span class="test-tag">tag name</span>
+        </template>
+      </context-menu-item>
+      <context-menu-item>
+        <template #label>
+          Custom shortcut slot
+        </template>
+        <template #shortcut>
+          <span class="test-tag2">#shortcut: my</span>
+        </template>
+      </context-menu-item>
+      <context-menu-item>
+        <template #label>
+          Custom icon slot
+        </template>
+        <template #icon>
+          <i class="iconfont icon-terminal"></i>
+        </template>
+      </context-menu-item>
+      <context-menu-item checked>
+        <template #label>
+          Custom check slot
+        </template>
+        <template #check>
+          ✔
+        </template>
+      </context-menu-item>
+      <context-menu-item showRightArrow>
+        <template #label>
+          Custom rightArrow slot
+        </template>
+        <template #rightArrow>
+          >>
+        </template>
+      </context-menu-item>
+    </context-menu-group>
   </context-menu>
 
   
@@ -147,3 +189,18 @@ function alertContextMenuItemClicked(name: string) {
   alert('You clicked ' + name + ' !');
 }
 </script>
+
+<style>
+.test-tag {
+  background-color: #efefef;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+.test-tag2 {
+  background-color: #ff9a9a;
+  padding: 5px;
+  border-radius: 25px;
+  margin-left: 10px;
+}
+</style>

@@ -19,7 +19,7 @@
           <div @contextmenu="onContextMenu3($event, 'b')">Bottom Center</div>
           <div @contextmenu="onContextMenu3($event, 'br')">Bottom Right</div>
         </div>
-        <div class="box2" style="width: 170px; height: 140px" :tabindex="1" @contextmenu="onContextMenu($event)" @keydown="handleKeyPress">
+        <div class="box2" style="width: 270px; height: 80px; font-style: 15px;" :tabindex="1" @contextmenu="onContextMenu($event)" @keydown="handleKeyPress">
           Test keyboard event: Use arrow key to navigate menus.
           <br>
           Down div event catch: {{ testDownDivKey }}

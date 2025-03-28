@@ -42,7 +42,7 @@
           </slot>
         </div>
         <div class="mx-item-row">
-          <slot v-if="shortcut" name="shortcut">
+          <slot v-if="shortcut || $slots.shortcut" name="shortcut">
             <VNodeRender v-if="globalHasSlot('itemShortcutRender')" :vnode="() => globalRenderSlot('itemShortcutRender', getItemDataForChildren())" />
             <span class="mx-shortcut">{{ shortcut }}</span>
           </slot>
