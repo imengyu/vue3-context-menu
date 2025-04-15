@@ -83,6 +83,11 @@ export interface ContextSubMenuInstance
    */
   getScrollHeight: () => number,
   /**
+   * Force adjust menu position and update scroll rect height to fit content. Usually manually called when menu content changes. 
+   * @returns 
+   */
+  adjustPosition: () => void,
+  /**
    * Get max submenu height
    * @returns 
    */

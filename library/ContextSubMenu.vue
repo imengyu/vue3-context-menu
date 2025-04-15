@@ -382,6 +382,9 @@ const exposeContext : ContextSubMenuInstance = {
   getScrollValue: () => scrollRectRef.value?.getScrollContainer()?.scrollTop || 0,
   setScrollValue: (v: number) => scrollRectRef.value?.scrollTo(0, v),
   getScrollHeight: () => scrollHeight.value,
+  adjustPosition: () => {
+    doAdjustPosition();
+  },
   getMaxHeight: () => maxHeight.value,
   getPosition: () => position.value,
   setPosition: (x: number, y: number) => { 
@@ -405,25 +408,7 @@ const overflow = ref(false);
 const position = ref({ x: 0, y: 0 } as ContextMenuPositionData)
 const maxHeight = ref(0);
 
-onMounted(() => {
-  mounted.value = true;
-
-  //Set base position
-  const parentElement = props.parentMenuItemContext?.getElement();
-  if (parentElement) {
-    const x = getLeft(parentElement, parentContext.container);
-    const y = getTop(parentElement, parentContext.container);
-    position.value.x = x;
-    position.value.y = y;
-  } else {
-    const [ x, y ] = parentContext.getPositon();
-    position.value.x = x;
-    position.value.y = y;
-  }
-  
-  //Mark current item submenu is open
-  globalSetCurrentSubMenu(thisMenuInsContext);
-
+function doAdjustPosition() {
   nextTick(() => {
     const menuEl = menu.value;
 
@@ -520,6 +505,28 @@ onMounted(() => {
 
     isMenuItemDataCollectedFlag = true;
   });
+}
+
+onMounted(() => {
+  mounted.value = true;
+
+  //Set base position
+  const parentElement = props.parentMenuItemContext?.getElement();
+  if (parentElement) {
+    const x = getLeft(parentElement, parentContext.container);
+    const y = getTop(parentElement, parentContext.container);
+    position.value.x = x;
+    position.value.y = y;
+  } else {
+    const [ x, y ] = parentContext.getPositon();
+    position.value.x = x;
+    position.value.y = y;
+  }
+  
+  //Mark current item submenu is open
+  globalSetCurrentSubMenu(thisMenuInsContext);
+
+  doAdjustPosition();
 });
 onBeforeUnmount(() => {
   mounted.value = false;
