@@ -1,25 +1,12 @@
 <template>
-  <div :id="menuHostId" class="mx-menu-ghost-host">
-    <Transition
-      v-if="options.menuTransitionProps"
-      appear
-      v-bind="options.menuTransitionProps"
-      @after-leave="emit('closeAnimFinished')"
-    >
-      <ContextSubMenuConstructor
-        v-if="show"
-        ref="submenuInstance"
-        :items="options.items"
-        :adjustPosition="options.adjustPosition"
-        :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
-        :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
-        :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
-      >
-        <slot />
-      </ContextSubMenuConstructor>
-    </Transition>
+  <Transition
+    v-if="options.menuTransitionProps"
+    appear
+    v-bind="options.menuTransitionProps"
+    @after-leave="emit('closeAnimFinished')"
+  >
     <ContextSubMenuConstructor
-      v-else-if="show"
+      v-if="show"
       ref="submenuInstance"
       :items="options.items"
       :adjustPosition="options.adjustPosition"
@@ -29,16 +16,26 @@
     >
       <slot />
     </ContextSubMenuConstructor>
-  </div>
+  </Transition>
+  <ContextSubMenuConstructor
+    v-else-if="show"
+    ref="submenuInstance"
+    :items="options.items"
+    :adjustPosition="options.adjustPosition"
+    :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
+    :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
+    :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
+  >
+    <slot />
+  </ContextSubMenuConstructor>
 </template>
 
 <script setup lang="ts">
-import { h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch, Transition, useSlots, type Ref } from 'vue'
+import { h, onBeforeUnmount, onMounted, type PropType, provide, ref, renderSlot, toRefs, type VNode, watch, Transition, useSlots } from 'vue'
 import type { ContextMenuInstance, ContextSubMenuInstance, MenuItem, MenuOptions, MenuPopDirection } from './ContextMenuDefine'
 import { MenuConstOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { type SubMenuContext, type SubMenuParentContext } from './ContextSubMenu.vue';
-import { genSubContainerId } from './ContextMenuUtils';
 
 /**
  * Context menu component
@@ -59,7 +56,7 @@ const props = defineProps({
    * Show menu?
    */
   show: {
-    type: Object as PropType<Ref<boolean>>,
+    type: Boolean,
     default: null
   },
   /**
@@ -153,9 +150,8 @@ function removeBodyEvents() {
 
 //For keyboard event, remember which submenu is active
 const currentOpenedMenu = ref<SubMenuContext|null>();
-const menuHostId = genSubContainerId();
 provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
-provide('globalGetMenuHostId', menuHostId);
+provide('globalGetMenuHostId', container.value.id);
 
 function onMenuKeyDown(e: KeyboardEvent) {
   let handled = true;
@@ -239,7 +235,7 @@ provide('globalCloseMenu', closeMenu);
 provide('globalIsFullScreenContainer', props.isFullScreenContainer);
 //check slot exists
 provide('globalHasSlot', (name: string) => {
-  return slots[name] !== undefined;
+  return (slots as any)[name] !== undefined;
 });
 //render slot
 provide('globalRenderSlot', (name: string, params: Record<string, unknown>) => {

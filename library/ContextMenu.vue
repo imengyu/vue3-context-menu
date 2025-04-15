@@ -1,5 +1,22 @@
-<script lang="ts">
-import { defineComponent, h, Teleport, toRefs, ref } from 'vue'
+<template>
+  <Teleport :to="`#${eleId}`">
+    <ContextSubMenuWrapperConstructor
+      ref="menuRef"
+      :options="options"
+      :show="show"
+      :container="container"
+      :isFullScreenContainer="!isNew"
+      @close="onClose"
+    >
+      <template v-for="(_, name) in slots" v-slot:[name]="data">
+        <slot :name="name" v-bind="data"/>
+      </template>
+    </ContextSubMenuWrapperConstructor>
+  </Teleport>
+</template>
+
+<script setup lang="ts">
+import { Teleport, toRefs, ref, useSlots } from 'vue'
 import type { PropType, VNode } from 'vue'
 import type { ContextMenuInstance, MenuOptions } from './ContextMenuDefine'
 import { genContainer } from "./ContextMenuUtils";
@@ -11,65 +28,43 @@ export type GlobalRenderSlot = (name: string, params: Record<string, unknown>) =
 /**
  * Context menu component
  */
-export default defineComponent({
-  name: 'ContextMenu',
-  emits: [ 'update:show', 'close' ],
-  props: {
-    /**
-     * Menu options
-     */
-    options: {
-      type: Object as PropType<MenuOptions>,
-      default: null
-    },
-    /**
-     * Show menu?
-     */
-    show: {
-      type: Boolean,
-      default: false
-    },
+
+const emit = defineEmits([ 'update:show', 'close' ]);
+const props = defineProps({
+  /**
+   * Menu options
+   */
+  options: {
+    type: Object as PropType<MenuOptions>,
+    default: null
   },
-  setup(props, ctx) {
-
-    const {
-      options,
-      show,
-    } = toRefs(props);
-
-    const menuRef = ref<ContextMenuInstance | null>(null);
-
-    ctx.expose({
-      closeMenu: () => ctx.emit('update:show', false),
-      isClosed: () => !show.value,
-      getMenuRef: () => menuRef.value?.getMenuRef(),
-      getMenuDimensions: () => menuRef.value?.getMenuDimensions() ?? { width: 0, height: 0 },
-    });
-
-    return () => {  
-      const { isNew, container, eleId } = genContainer(options.value);
-      
-      return [
-        h(
-          Teleport,
-          { to: `#${eleId}` },
-          [
-            h(ContextSubMenuWrapperConstructor as unknown as string, {
-              ref: menuRef,
-              options: options,
-              show: show,
-              container: container,
-              isFullScreenContainer: !isNew,
-              onClose: (fromItem: undefined) => {
-                ctx.emit('update:show', false);
-                ctx.emit('close');
-                options.value.onClose?.(fromItem);
-              },
-            }, ctx.slots)
-          ]
-        )
-      ];
-    }
+  /**
+   * Show menu?
+   */
+  show: {
+    type: Boolean,
+    default: false
   },
 })
+
+const { options, show } = toRefs(props);
+const { isNew, container, eleId } = genContainer(options.value);
+
+const menuRef = ref<ContextMenuInstance | null>(null);
+const slots = useSlots() as any;
+
+function onClose(fromItem: undefined) {
+  emit('update:show', false);
+  emit('close');
+  options.value.onClose?.(fromItem);
+}
+
+defineExpose({
+  closeMenu: () => emit('update:show', false),
+  isClosed: () => !show.value,
+  getMenuRef: () => menuRef.value?.getMenuRef(),
+  getMenuDimensions: () => menuRef.value?.getMenuDimensions() ?? { width: 0, height: 0 },
+});
+
+
 </script>

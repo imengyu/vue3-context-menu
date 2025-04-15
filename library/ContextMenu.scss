@@ -39,9 +39,6 @@
   --mx-menu-shortcut-text-open: #424242;
   --mx-menu-shortcut-text-disabled: #a5a5a5;
 
-  //Focus border color
-  --mx-menu-focus-color: #0085f1;
-
   //Icon placeholder width
   --mx-menu-placeholder-width: 24px;
 }
@@ -142,7 +139,6 @@
   //Focus by keyboard
   &.keyboard-focus {
     background-color: var(--mx-menu-active-backgroud);
-    outline: 2px solid var(--mx-menu-focus-color);
   }
   //disabled
   &.disabled {
@@ -404,7 +400,6 @@
     --mx-menu-shortcut-text-disabled: #a5a5a5;
 
     //Focus border color
-    --mx-menu-focus-color: transparent;
     --mx-menu-border-color: #bbbbbb;
   }
   &.dark {
@@ -441,7 +436,6 @@
     --mx-menu-shortcut-text-disabled: #6a6a6a;
 
     //Focus border color
-    --mx-menu-focus-color: transparent;
     --mx-menu-border-color: #222;
   }
 

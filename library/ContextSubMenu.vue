@@ -522,6 +522,7 @@ onMounted(() => {
   });
 });
 onBeforeUnmount(() => {
+  mounted.value = false;
   if (menuItemInstance)
     menuItemInstance.getSubMenuInstance = () => undefined;
 });

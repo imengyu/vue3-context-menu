@@ -20,7 +20,7 @@ function initInstance(
   const show = ref(true);
   const vnode = h(ContextSubMenuWrapperConstructor, { 
     options: options,
-    show: show,
+    show: show.value,
     container: container,
     isFullScreenContainer: !isNew,
     onCloseAnimFinished: () => {
