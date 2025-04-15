@@ -160,11 +160,12 @@ export default defineComponent({
       hasChildren: typeof ctx.slots.default !== undefined,
     }, ctx.slots.default ? {
       //Create SubMenu
-      submenu: () => h(ContextSubMenuConstructor, {
+      submenu: (data: any) => h(ContextSubMenuConstructor, {
         ref: subMenuRef,
         maxWidth: maxWidth.value,
         minWidth: minWidth.value,
         adjustPosition: adjustSubMenuPositionValue,
+        parentMenuItemContext: data.context,
       }, {
         default: ctx.slots.default,
       }),

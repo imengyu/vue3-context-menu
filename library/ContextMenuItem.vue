@@ -1,5 +1,11 @@
 <template>
-  <div v-if="!hidden" class="mx-context-menu-item-wrapper" ref="menuItemRef" data-type="ContextMenuItem">
+  <div 
+    v-if="!hidden"
+    class="mx-context-menu-item-wrapper"
+    ref="menuItemRef"
+    data-type="ContextMenuItem"
+
+  >
     <!--Custom render-->
     <VNodeRender v-if="globalHasSlot('itemRender')" :vnode="() => globalRenderSlot('itemRender', getItemDataForChildren())" />
     <VNodeRender v-else-if="customRender" :vnode="customRender" :data="getItemDataForChildren()" />
@@ -56,9 +62,9 @@
     
     <!--Sub menu render-->
     <Transition v-if="options.menuTransitionProps" v-bind="options.menuTransitionProps">
-      <slot v-if="showSubMenu" name="submenu"></slot>
+      <slot v-if="showSubMenu" name="submenu" :context="menuItemInstance"></slot>
     </Transition>
-    <slot v-else-if="showSubMenu" name="submenu"></slot>
+    <slot v-else-if="showSubMenu" name="submenu" :context="menuItemInstance"></slot>
   </div>
 </template>
 

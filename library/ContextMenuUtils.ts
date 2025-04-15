@@ -66,8 +66,13 @@ export function transformMenuPosition(e: HTMLElement, offsetX: number, offsetY: 
 
 const DEFAULT_CONTAINER_ID = 'mx-menu-default-container';
 const GEN_CONTAINER_ID = 'mx-menu-container-';
+const GEN_SUB_CONTAINER_ID = 'mx-menu-sub-container-';
 let containerId = 0;
+let subContainerId = 0;
 
+export function genSubContainerId() : string {
+  return GEN_SUB_CONTAINER_ID + (subContainerId++);
+}
 export function removeContainer(container: HTMLElement) : void {
   container.parentNode?.removeChild(container);
 }
