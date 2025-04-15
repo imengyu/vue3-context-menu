@@ -468,7 +468,7 @@ onMounted(() => {
         position.value.y -= fillPaddingYAlways / getZoom();  //bottom
       }
       else {
-        position.value.y += (parentHeight / 2) / getZoom();
+        //position.value.y += (parentHeight / 2) / getZoom();
         position.value.y -= ((menuEl.offsetHeight + fillPaddingYAlways) / 2) / getZoom(); //center
       }
 
