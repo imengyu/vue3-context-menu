@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-menu-ghost-host">
+  <div :id="menuHostId" class="mx-menu-ghost-host">
     <Transition
       v-if="options.menuTransitionProps"
       appear
@@ -9,7 +9,6 @@
       <ContextSubMenuConstructor
         v-if="show"
         ref="submenuInstance"
-        class="mx-menu-host"
         :items="options.items"
         :adjustPosition="options.adjustPosition"
         :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
@@ -22,7 +21,6 @@
     <ContextSubMenuConstructor
       v-else-if="show"
       ref="submenuInstance"
-      class="mx-menu-host"
       :items="options.items"
       :adjustPosition="options.adjustPosition"
       :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
@@ -40,6 +38,7 @@ import type { ContextMenuInstance, ContextSubMenuInstance, MenuItem, MenuOptions
 import { MenuConstOptions } from './ContextMenuDefine'
 import { addOpenedContextMenu, removeOpenedContextMenu } from './ContextMenuMutex';
 import ContextSubMenuConstructor, { type SubMenuContext, type SubMenuParentContext } from './ContextSubMenu.vue';
+import { genSubContainerId } from './ContextMenuUtils';
 
 /**
  * Context menu component
@@ -131,7 +130,6 @@ function isClosed() {
   return closed;
 }
 
-
 function installBodyEvents() {
   setTimeout(() => {
     document.addEventListener("click", onBodyClick, true);
@@ -155,7 +153,9 @@ function removeBodyEvents() {
 
 //For keyboard event, remember which submenu is active
 const currentOpenedMenu = ref<SubMenuContext|null>();
+const menuHostId = genSubContainerId();
 provide('globalSetCurrentSubMenu', (menu: SubMenuContext|null) => currentOpenedMenu.value = menu);
+provide('globalGetMenuHostId', menuHostId);
 
 function onMenuKeyDown(e: KeyboardEvent) {
   let handled = true;
@@ -202,28 +202,34 @@ function onMenuKeyDown(e: KeyboardEvent) {
     e.preventDefault();
   }
 }
-function onBodyScroll() {
+function onBodyScroll(e: Event) {
   //close when docunment scroll
-  if (options.value.closeWhenScroll !== false)
-    closeMenu();
+  if (options.value.closeWhenScroll !== false) {
+    checkTargetAndClose(e.target as HTMLElement, null);
+  }
 }
 function onBodyClick(e: MouseEvent) {
   checkTargetAndClose(e.target as HTMLElement, e);
 }
-function checkTargetAndClose(target: HTMLElement, e: MouseEvent) {
+function checkTargetAndClose(target: HTMLElement, e: MouseEvent|null) {
   //Loop target , Check whether the currently clicked element belongs to the current menu.
   // If yes, it will not be closed
   while (target) {
-    if (target.classList && target.classList.contains('mx-menu-host'))
+    if (target.classList && target.classList.contains('mx-context-menu'))
       return;
     target = target.parentNode as HTMLElement;
   }
-  if (options.value.clickCloseOnOutside !== false) {
-    //Close menu
+  if (e) {
+    if (options.value.clickCloseOnOutside !== false) {
+      //Close menu
+      removeBodyEvents();
+      closeMenu();
+    } else {
+      options.value.onClickOnOutside?.(e);
+    }
+  } else {
     removeBodyEvents();
     closeMenu();
-  } else {
-    options.value.onClickOnOutside?.(e);
   }
 }
 
@@ -244,11 +250,7 @@ provide('menuContext', {
   zIndex: options.value.zIndex || MenuConstOptions.defaultZindex,
   container: container.value as unknown as HTMLElement,
   adjustPadding: { x: 0, y: 0 },
-  getParentAbsY: () => options.value.x,
-  getParentAbsX: () => options.value.y,
   getZoom: () => options.value.zoom || MenuConstOptions.defaultZoom,
-  getParentX: () => 0,
-  getParentY: () => 0,
   getParentWidth: () => 0,
   getParentHeight: () => 0,
   getPositon: () => [options.value.x,options.value.y],
