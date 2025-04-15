@@ -53,5 +53,8 @@
   "bugs": {
     "url": "https://github.com/imengyu/vue3-context-menu/issues"
   },
-  "homepage": "https://github.com/imengyu/vue3-context-menu#readme"
+  "homepage": "https://github.com/imengyu/vue3-context-menu#readme",
+  "dependencies": {
+    "@imengyu/vue-scroll-rect": "^0.1.1"
+  }
 }
