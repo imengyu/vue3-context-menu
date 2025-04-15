@@ -5,6 +5,13 @@ nav:
   order: 5
 ---
 
+## v1.4.7 - 2025/04/15
+
+* [Added] Add overflow scrolling and scrollbar functionality to the menu. ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))
+* [Removed] Remove the original menu up and down scroll button function.
+* [Fix] Fix the issue of incorrect adjustment of submenu overflow spacing. ([#111](https://github.com/imengyu/vue3-context-menu/issues/111))
+* [Change] The submenus will now be displayed in the top-level container instead of the previous hierarchical nesting.
+
 ## v1.4.6 - 2025/03/28
 
 * [Fix] Fix the `ContextMenuItem`.`shortcut` slot not displaying properly. ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))

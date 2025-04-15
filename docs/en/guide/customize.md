@@ -59,6 +59,11 @@ The style of the menu has extracted some css variables for you to use. You can e
 --mx-menu-shadow-color: rgba(0, 0, 0, 0.1); //Menu Background Shadow Color
 --mx-menu-backgroud-radius: 10px; //Menu background radius size
 
+//Scroll Bar
+--mx-menu-scrollbar-thumb-color: rgba(0, 0, 0, .2); //Scroll Bar default color
+--mx-menu-scrollbar-thumb-color-light: rgba(0, 0, 0, .3); //Scroll bar mouse hover color
+--mx-menu-scrollbar-thumb-color-pressed: rgba(0, 0, 0, .1); //Scroll bar mouse pressed color
+
 //Shortcut badge
 --mx-menu-shortcut-backgroud: #ebebeb; //The background color of the menu shortcut key badge, and its four states
 --mx-menu-shortcut-backgroud-hover:#ebebeb;

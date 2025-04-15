@@ -5,6 +5,13 @@ nav:
   order: 5
 ---
 
+## v1.4.7 - 2025/04/15
+
+* [Added] 参考 VSCode 的菜单增加菜单的溢出滚动与滚动条功能。 ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))
+* [Removed] 移除原有菜单上下滚动按钮功能。
+* [Fix] 修复子菜单溢出间距调整不正确的问题。 ([#111](https://github.com/imengyu/vue3-context-menu/issues/111))
+* [Change] 子菜单现在将在顶层容器中显示而不是之前的逐级嵌套。
+
 ## v1.4.6 - 2025/03/28
 
 * [Fix] 修复 `ContextMenuItem` `slot` 插槽在自定义时未正常显示的问题。 ([#113](https://github.com/imengyu/vue3-context-menu/issues/113))

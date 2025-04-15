@@ -39,6 +39,11 @@ import '你的样式scss文件路径.scss'
 --mx-menu-shadow-color: rgba(0, 0, 0, 0.1); //菜单背景阴影颜色
 --mx-menu-backgroud-radius: 10px; //菜单背景圆角大小
 
+//Scroll Bar
+--mx-menu-scrollbar-thumb-color: rgba(0, 0, 0, .2); //滚动条默认颜色
+--mx-menu-scrollbar-thumb-color-light: rgba(0, 0, 0, .3); //滚动条鼠标悬浮颜色
+--mx-menu-scrollbar-thumb-color-pressed: rgba(0, 0, 0, .1); //滚动条鼠标按下颜色
+
 //Shortcut badge
 --mx-menu-shortcut-backgroud: #ebebeb; //菜单快捷键标记的背景颜色，下方是它的四个状态
 --mx-menu-shortcut-backgroud-hover:#ebebeb;
