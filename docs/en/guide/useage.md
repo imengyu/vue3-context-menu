@@ -96,7 +96,7 @@ createApp(App)
     :options="options"
   >
     <context-menu-item label="Simple item" @click="onMenuClick(0)" />
-    <context-menu-sperator /><!--use this to add sperator-->
+    <context-menu-separator /><!--use this to add separator-->
     <context-menu-group label="Menu with child">
       <context-menu-item label="Item1" @click="onMenuClick(1)" />
       <context-menu-item label="Item2" @click="onMenuClick(2)" />
@@ -173,7 +173,7 @@ The following example shows how to dynamically display/hide menus and dynamicall
   >
     <context-menu-item label="Test item dynamic show and hide" :clickClose="false" @click="showItem=!showItem" />
     <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
-    <context-menu-sperator v-if="showItem" />
+    <context-menu-separator v-if="showItem" />
     <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
   </context-menu>
 </template>

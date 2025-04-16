@@ -49,7 +49,7 @@ Then import components where you need to use them:
   >
     <context-menu-item label="Simple item" @click="alertContextMenuItemClicked('Item1')" />
     <context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
-    <context-menu-sperator />
+    <context-menu-separator />
     <context-menu-group label="Menu with child">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-2')" />
