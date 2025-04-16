@@ -11,6 +11,7 @@ nav:
 * [Removed] Remove the original menu up and down scroll button function.
 * [Fix] Fix the issue of incorrect adjustment of submenu overflow spacing. ([#111](https://github.com/imengyu/vue3-context-menu/issues/111))
 * [Change] The submenus will now be displayed in the top-level container instead of the previous hierarchical nesting.
+* [Docs] Change the spelling error of the separator.
 
 ## v1.4.6 - 2025/03/28
 
