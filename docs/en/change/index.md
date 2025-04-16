@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.4.7 - 2025/04/15
+## v1.4.8 - 2025/04/16
 
 * [Added] Add overflow scrolling and scrollbar functionality to the menu. ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))
 * [Removed] Remove the original menu up and down scroll button function.
