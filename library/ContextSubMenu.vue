@@ -26,6 +26,7 @@
           width: 'auto',
           height: `${overflow ? maxHeight : scrollHeight}px`,
         }"
+        containerClass="mx-context-menu-scroll"
       >
         <!--Child menu items-->
         <div
