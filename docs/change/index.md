@@ -5,6 +5,12 @@ nav:
   order: 5
 ---
 
+## v1.4.9 - 2025/05/15
+
+* [Add] 新增 maxHeight 用于控制子菜单最高高度。 ([#120](https://github.com/imengyu/vue3-context-menu/issues/120))
+* [Change] 调整子菜单弹出自动位置；子菜单滚动容器更新，现在支持在条目显示变更后自动调整容器大小。
+* [Fix] 阻止菜单滚动事件触发至上层元素。 ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))
+
 ## v1.4.8 - 2025/04/16
 
 * [Added] 参考 VSCode 的菜单增加菜单的溢出滚动与滚动条功能。 ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))

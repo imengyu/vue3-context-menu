@@ -5,6 +5,12 @@ nav:
   order: 5
 ---
 
+## v1.4.9 - 2025/05/15
+
+* [Add] Add maxHeight to control max height of submenu ([#120](https://github.com/imengyu/vue3-context-menu/issues/120))
+* [Change] Adjust the submenu to popup position; Update vue-scroll-rect now supports automatic resizing of containers after item display changes.
+* [Fix] No scroll outside when in menu ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))
+
 ## v1.4.8 - 2025/04/16
 
 * [Added] Add overflow scrolling and scrollbar functionality to the menu. ([#116](https://github.com/imengyu/vue3-context-menu/issues/116))

@@ -73,6 +73,7 @@ Global Function
 | theme | The [theme](../guide/theme.md) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | minWidth | Submenu minimum width (in pixels). | `number` or `string` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` or `string` | — | `600` |
+| maxHeight | Submenu maximum height (in pixels). | `number` | — | - |
 | adjustPadding | Padding for submenu position adjust. | `{ x: number, y: number }` or `number` | — | `{ x：0, y: 10 }` |
 | adjustPosition | By default, the menu will automatically adjust its position to prevent it overflow the container. If you allow menu overflow containers, you can set this to false. | `boolean` | — | `true` |
 | direction | Set the mian menu pop-up direction relative to coordinates. Default is `'br'`, if `adjustPosition` is true then the menu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | `'br'` |
@@ -105,6 +106,7 @@ Global Function
 | customClass | Custom submenu class. | `string` | — | — |
 | minWidth | Submenu minimum width (in pixels). | `number` or `string` | — | `100` |
 | maxWidth | Submenu maximum width (in pixels). | `number` or `string` | — | `600` |
+| maxHeight | Submenu maximum height (in pixels). | `number` | — | - |
 | direction | Set the submenu pop-up direction relative to coordinates. Default is inherted from `MenuOptions.direction`, if `adjustSubMenuPosition` is true then the submenu will determine the pop-up direction based on its distance from the screen edge. | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | inherit from `MenuOptions.direction` |
 | onClick | Menu item click event handler. | `Function()` | — | — |
 | onSubMenuClose | This event emit when submenu of this item is closing. | `(() => void)` | — | — |

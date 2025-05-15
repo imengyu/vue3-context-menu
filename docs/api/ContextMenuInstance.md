@@ -65,8 +65,9 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | iconFontClass | 自定义图标字体类名 | `string` | — | `iconfont` |
 | zIndex | 菜单的`z-index` | `number` | — | `2` |
 | customClass | 自定义菜单类名 | `string` | — | — |
-| minWidth | 主菜单最小宽度 | `number ` or `string` | — | `100` |
-| maxWidth | 主菜单最大宽度 | `number ` or `string` | — | `600` |
+| minWidth | 主菜单最小宽度（像素） | `number` or `string` | — | `100` |
+| maxWidth | 主菜单最大宽度（像素） | `number` or `string` | — | `600` |
+| maxHeight | 主菜单最大高度（像素） | `number` | — | - |
 | keyboardControl | 设置用户是否可以使用键盘键控制当前菜单 | `boolean` | — | `true` |
 | theme | 菜单的[主题](../guide/theme.md) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
@@ -102,8 +103,9 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | clickClose | 点击当前菜单项是否自动关闭整个菜单 | `boolean` | — | `true` |
 | divided | 是否显示分割线。分割线显示逻辑<ul><li>`true` or `'down'`: 分割线显示在菜单项下方。</li><li> `'up'`: 分割线显示在菜单项上方。</li><li> `'self'`: 把当前菜单项变成分割线。</li><li> `false`: 没有分割线。 </li></ul> | `boolean` or `'up'` or `'down'` or `'self'` | — | `false` |
 | customClass | 自定义子菜单class | `string` | — | — |
-| minWidth | 子菜单最小宽度 | `number` or `string` | — | `100` |
-| maxWidth | 子菜单最大宽度 | `number` or `string` | — | `600` |
+| minWidth | 子菜单最小宽度（像素） | `number` or `string` | — | `100` |
+| maxWidth | 子菜单最大宽度（像素） | `number` or `string` | — | `600` |
+| maxHeight | 子菜单最大高度（像素） | `number` | — | - |
 | direction | 设置子菜单的弹出方向。如果 `adjustPosition` 为 `true` ，则菜单会根据可用空间自动调整弹出方向。 | `'br' or 'b' or 'bl' or 'tr' or 't' or 'tl' or 'l' or 'r'` | — | 继承自 `MenuOptions.direction` |
 | onClick | 菜单项点击事件 | `Function()` | — | — |
 | onSubMenuClose | 子菜单关闭事件回调 | `(() => void)` | — | — |
