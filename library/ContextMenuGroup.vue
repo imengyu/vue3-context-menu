@@ -122,6 +122,13 @@ export default defineComponent({
       default: undefined
     },
     /**
+     * Max height of submenu
+     */
+    maxHeight: {
+      type: [String, Number],
+      default: 0,
+    },
+    /**
      * Max width of submenu
      */
     maxWidth: {
@@ -139,7 +146,7 @@ export default defineComponent({
   setup(props, ctx) {
     
     const options = inject('globalOptions') as Ref<MenuOptions>;
-    const { adjustSubMenuPosition, maxWidth, minWidth } = toRefs(props);
+    const { adjustSubMenuPosition, maxWidth, minWidth, maxHeight } = toRefs(props);
     const adjustSubMenuPositionValue = typeof adjustSubMenuPosition.value !== 'undefined' ? adjustSubMenuPosition.value : options.value.adjustPosition;
     
     const subMenuRef = ref();
@@ -156,6 +163,7 @@ export default defineComponent({
       showRightArrow: true,
       maxWidth: undefined,
       minWidth: undefined,
+      maxHeight: undefined,
       adjustSubMenuPosition: undefined,
       hasChildren: typeof ctx.slots.default !== undefined,
     }, ctx.slots.default ? {
@@ -164,6 +172,7 @@ export default defineComponent({
         ref: subMenuRef,
         maxWidth: maxWidth.value,
         minWidth: minWidth.value,
+        maxHeight: maxHeight.value,
         adjustPosition: adjustSubMenuPositionValue,
         parentMenuItemContext: data.context,
       }, {

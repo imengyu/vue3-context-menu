@@ -12,6 +12,7 @@
       :adjustPosition="options.adjustPosition"
       :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
       :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
+      :maxHeight="options.maxHeight"
       :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
     >
       <slot />
@@ -24,6 +25,7 @@
     :adjustPosition="options.adjustPosition"
     :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
     :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
+    :maxHeight="options.maxHeight"
     :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
   >
     <slot />

@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { Teleport, toRefs, ref, useSlots } from 'vue'
+import { toRefs, ref, useSlots } from 'vue'
 import type { PropType, VNode } from 'vue'
 import type { ContextMenuInstance, MenuOptions } from './ContextMenuDefine'
 import { genContainer } from "./ContextMenuUtils";

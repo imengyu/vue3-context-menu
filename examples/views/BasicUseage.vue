@@ -225,8 +225,41 @@ const menuData = reactive<MenuOptions>({
             { label: "Test26" },
           ]
         },
+        {
+          label: "Long submenu (With maxHeight)",
+          divided: true, 
+          maxHeight: 300,
+          children: [
+            { label: "Test1" },
+            { label: "Test2" },
+            { label: "Test3" },
+            { label: "Test4" },
+            { label: "Test5" },
+            { label: "Test6" },
+            { label: "Test7" },
+            { label: "Test8" },
+            { label: "Test9" },
+            { label: "Test10" },
+            { label: "Test11" },
+            { label: "Test12" },
+            { label: "Test13" },
+            { label: "Test14" },
+            { label: "Test15" },
+            { label: "Test16" },
+            { label: "Test17" },
+            { label: "Test18" },
+            { label: "Test19" },
+            { label: "Test20" },
+            { label: "Test21" },
+            { label: "Test22" },
+            { label: "Test23" },
+            { label: "Test24" },
+            { label: "Test25" },
+            { label: "Test26" },
+          ]
+        },
         { 
-          label: "Test submenu maxWidth", 
+          label: "Submenu with maxWidth", 
           maxWidth: 230,
           children: [
             { label: "1 this is long text text text text text text text text" },
@@ -267,7 +300,7 @@ const menuData = reactive<MenuOptions>({
       },
     },
     { 
-      label: 'Click the item above to show/hide me',
+      label: 'Click the item above ↑ to show/hide me',
       divided: true,
     },
     { 

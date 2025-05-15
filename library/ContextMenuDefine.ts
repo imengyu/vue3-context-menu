@@ -306,6 +306,10 @@ export interface MenuOptions {
    */
   maxWidth ?: number;
   /**
+   * Maximum height of main menu (in pixels)
+   */
+  maxHeight ?: number;
+  /**
    * Minimum width of main menu (pixels)
    */
   minWidth ?: number;
@@ -469,6 +473,10 @@ export interface MenuItem {
    * Custom css class for submenu
    */
   customClass ?: string,
+  /**
+   * Submenu maximum height (in pixels).
+   */
+  maxHeight ?: number,
   /**
    * Submenu maximum width (in pixels).
    */

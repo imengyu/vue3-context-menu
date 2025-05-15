@@ -11,7 +11,6 @@
       :style="{
         maxWidth: (maxWidth ? solveNumberOrStringSize(maxWidth) : `${MenuConstOptions.defaultMaxWidth}px`),
         minWidth: minWidth ? solveNumberOrStringSize(minWidth) : `${MenuConstOptions.defaultMinWidth}px`,
-        maxHeight: overflow && maxHeight > 0 ? `${maxHeight}px` : undefined,
         zIndex: zIndex,
         left: `${position.x}px`,
         top: `${position.y}px`,
@@ -21,11 +20,8 @@
     >
       <ScrollRect 
         ref="scrollRectRef"
-        :scroll="overflow ? 'vertical' : 'none'"
-        :style="{
-          width: 'auto',
-          height: `${overflow ? maxHeight : scrollHeight}px`,
-        }"
+        scroll="vertical"
+        :maxHeight="scrollTargetMaxHeight"
         containerClass="mx-context-menu-scroll"
       >
         <!--Child menu items-->
@@ -68,6 +64,7 @@
                     :items="item.children"
                     :maxWidth="item.maxWidth"
                     :minWidth="item.minWidth"
+                    :maxHeight="item.maxHeight"
                     :adjustPosition="item.adjustSubMenuPosition !== undefined ? item.adjustSubMenuPosition : options.adjustPosition"
                     :direction="item.direction !== undefined ? item.direction : options.direction"
                   />
@@ -152,6 +149,13 @@ const props = defineProps({
     items: {
     type: Object as PropType<Array<MenuItem>>,
     default: null
+  },
+  /**
+   * Max height for this submenu
+   */
+  maxHeight: {
+    type: Number,
+    default: 0,
   },
   /**
    * Max width for this submenu
@@ -250,11 +254,10 @@ function setAndFocusCurrentMenu(index?: number) {
   currentItem.focus();
 
   //Scroll to current item
-  if (overflow.value) {
-    const element = currentItem.getElement();
-    if (element)
-      scrollRectRef.value?.scrollTo(0, Math.min(Math.max(-scrollHeight.value, -element.offsetTop - element.offsetHeight + maxHeight.value), 0));
-  }
+  const element = currentItem.getElement();
+  if (element)
+    scrollRectRef.value?.scrollTo(0, Math.min(Math.max(-scrollHeight.value, -element.offsetTop - element.offsetHeight + scrollTargetMaxHeight.value), 0));
+
 }
 function onSubMenuBodyClick() {
   //Mouse click can set current focused submenu
@@ -386,7 +389,7 @@ const exposeContext : ContextSubMenuInstance = {
   adjustPosition: () => {
     doAdjustPosition();
   },
-  getMaxHeight: () => maxHeight.value,
+  getMaxHeight: () => scrollTargetMaxHeight.value,
   getPosition: () => position.value,
   setPosition: (x: number, y: number) => { 
     position.value.x = x;
@@ -405,24 +408,27 @@ if (menuItemInstance)
 //#endregion
 
 const scrollHeight = ref(0);
+const scrollTargetMaxHeight = ref(0);
 const overflow = ref(false);
 const position = ref({ x: 0, y: 0 } as ContextMenuPositionData)
-const maxHeight = ref(0);
 
 function doAdjustPosition() {
   nextTick(() => {
     const menuEl = menu.value;
+    const submenuRootEl = submenuRoot.value
 
     //adjust submenu position
-    if (menuEl && scrollRectRef.value) {
+    if (menuEl && submenuRootEl && scrollRectRef.value) {
 
       const { container } = parentContext;
 
       const parentWidth = getParentWidth?.() ?? 0;
       const parentHeight = getParentHeight?.() ?? 0;
 
-      const fillPaddingX = typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.x ?? 0);
-      const fillPaddingYAlways = typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.y ?? 0);
+      const rootStyle = getComputedStyle(submenuRootEl);
+
+      const fillPaddingX = parseFloat(rootStyle.paddingLeft) //typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.x ?? 0);
+      const fillPaddingYAlways = parseFloat(rootStyle.paddingTop) //typeof parentContext.adjustPadding === 'number' ? parentContext.adjustPadding : (parentContext.adjustPadding?.y ?? 0);
       const fillPaddingY = parentHeight > 0 ? fillPaddingYAlways : 0;
 
       const windowHeight = document.documentElement.scrollHeight / getZoom();
@@ -449,50 +455,49 @@ function doAdjustPosition() {
       //set y positon
       if (props.direction.includes('t')) {
         position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways * 2) / getZoom(); //top
-      }
-      else if (props.direction.includes('b')) {
+      } else if (props.direction.includes('b')) {
         position.value.y -= fillPaddingYAlways / getZoom();  //bottom
-      }
-      else {
-        //position.value.y += (parentHeight / 2) / getZoom();
+      } else {
         position.value.y -= ((menuEl.offsetHeight + fillPaddingYAlways) / 2) / getZoom(); //center
       }
 
       //Overflow adjust
-      if (adjustPosition.value) {
-        nextTick(() => {
-          absX = getLeft(menuEl, container);
-          absY = getTop(menuEl, container);
+      nextTick(() => {
+        absX = getLeft(menuEl, container);
+        absY = getTop(menuEl, container);
 
-          //scrollHeight.value = menuEl.offsetHeight - avliableHeight + fillPaddingY * 2 /* Padding */;
-          scrollHeight.value = scrollRectRef.value?.getScrollContainer()?.scrollHeight || 0;
-          
-          const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
-          const yOverflow = (absY + scrollHeight.value + fillPaddingY * 2) - (avliableHeight);
-          overflow.value = yOverflow > 0;
+        scrollHeight.value = Math.min(
+          props.maxHeight || 100000, 
+          scrollRectRef.value?.getScrollContainer()?.scrollHeight || 0
+        );
+        
+        const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
+        const yOverflow = (absY + scrollHeight.value + fillPaddingY * 2) - (avliableHeight);
+        overflow.value = yOverflow > 0;
 
-          if (xOverflow > 0) {//X overflow
-            const ox = parentWidth + menuEl.offsetWidth - fillPaddingX;
-            const maxSubWidth = absX;
-            if (ox > maxSubWidth)
-              position.value.x -= maxSubWidth;
-            else
-              position.value.x -= ox;
-          }
+        if (adjustPosition.value && xOverflow > 0) {//X overflow
+          const ox = parentWidth + menuEl.offsetWidth - fillPaddingX;
+          const maxSubWidth = absX;
+          if (ox > maxSubWidth)
+            position.value.x -= maxSubWidth;
+          else
+            position.value.x -= ox;
+        }
 
-          if (overflow.value) { //Y overflow
+        if (overflow.value) { //Y overflow
+          if (adjustPosition.value) {
             const oy = yOverflow;
             const maxSubHeight = absY;
             if (oy > maxSubHeight)
               position.value.y -= maxSubHeight - fillPaddingY;
             else
               position.value.y -= oy - fillPaddingY;
-            maxHeight.value = (avliableHeight - fillPaddingY * 2);
-          } else {
-            maxHeight.value = 0;
           }
-        });
-      }
+          scrollTargetMaxHeight.value = avliableHeight - (position.value.y + fillPaddingYAlways);
+        } else {
+          scrollTargetMaxHeight.value = 0;
+        }
+      });
     }
 
     //Focus this submenu
@@ -528,6 +533,7 @@ onMounted(() => {
   globalSetCurrentSubMenu(thisMenuInsContext);
 
   doAdjustPosition();
+
 });
 onBeforeUnmount(() => {
   mounted.value = false;
