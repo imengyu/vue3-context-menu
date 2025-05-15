@@ -55,6 +55,6 @@
   },
   "homepage": "https://github.com/imengyu/vue3-context-menu#readme",
   "dependencies": {
-    "@imengyu/vue-scroll-rect": "^0.1.1"
+    "@imengyu/vue-scroll-rect": "^0.1.3"
   }
 }
