@@ -466,10 +466,10 @@ function doAdjustPosition() {
         absX = getLeft(menuEl, container);
         absY = getTop(menuEl, container);
 
-        scrollHeight.value = Math.min(
-          props.maxHeight || 100000, 
-          scrollRectRef.value?.getScrollContainer()?.scrollHeight || 0
-        );
+        const height = scrollRectRef.value?.getScrollContainer()?.scrollHeight || 0;
+        const maxHeight = props.maxHeight;
+
+        scrollHeight.value = props.maxHeight ? Math.min(height, props.maxHeight) : height;
         
         const xOverflow = (absX + menuEl.offsetWidth) - (avliableWidth);
         const yOverflow = (absY + scrollHeight.value + fillPaddingY * 2) - (avliableHeight);
@@ -495,7 +495,7 @@ function doAdjustPosition() {
           }
           scrollTargetMaxHeight.value = avliableHeight - (position.value.y + fillPaddingYAlways);
         } else {
-          scrollTargetMaxHeight.value = 0;
+          scrollTargetMaxHeight.value = maxHeight || 0;
         }
       });
     }
