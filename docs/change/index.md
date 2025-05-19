@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.4.9 - 2025/05/15
+## v1.5.0 - 2025/05/19
 
 * [Add] 新增 maxHeight 用于控制子菜单最高高度。 ([#120](https://github.com/imengyu/vue3-context-menu/issues/120))
 * [Change] 调整子菜单弹出自动位置；子菜单滚动容器更新，现在支持在条目显示变更后自动调整容器大小。
