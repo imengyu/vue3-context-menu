@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.1 - 2025/06/19
+
+* [Fix] Update vue-scroll-rect version and fix the issue of browser scrollbar displaying incorrectly in Firefox. ([#121](https://github.com/imengyu/vue3-context-menu/issues/121))
+* [Fix] Fix the issue of menu transition not take effect. ([#122](https://github.com/imengyu/vue3-context-menu/issues/122))
+
 ## v1.5.0 - 2025/05/19
 
 * [Add] Add maxHeight to control max height of submenu ([#120](https://github.com/imengyu/vue3-context-menu/issues/120))

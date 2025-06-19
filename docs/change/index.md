@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.1 - 2025/06/19
+
+* [Fix] 更新 vue-scroll-rect 版本，修复系统滚动条在 Firefox 错误显示问题。 ([#121](https://github.com/imengyu/vue3-context-menu/issues/121))
+* [Fix] 修复菜单 Transition 无效问题。 ([#122](https://github.com/imengyu/vue3-context-menu/issues/122))
+
 ## v1.5.0 - 2025/05/19
 
 * [Add] 新增 maxHeight 用于控制子菜单最高高度。 ([#120](https://github.com/imengyu/vue3-context-menu/issues/120))
