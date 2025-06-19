@@ -61,10 +61,7 @@
     </div>
     
     <!--Sub menu render-->
-    <Transition v-if="options.menuTransitionProps" v-bind="options.menuTransitionProps">
-      <slot v-if="showSubMenu" name="submenu" :context="menuItemInstance"></slot>
-    </Transition>
-    <slot v-else-if="showSubMenu" name="submenu" :context="menuItemInstance"></slot>
+    <slot name="submenu" :context="menuItemInstance" :show="showSubMenu"></slot>
   </div>
 </template>
 

@@ -466,9 +466,9 @@ const menuData = reactive<MenuOptions>({
   iconFontClass: 'iconfont',
   customClass: "class-a",
   keyboardControl: true,
-  //menuTransitionProps: {
-  //  name: 'fade'
-  //},
+  menuTransitionProps: {
+   name: 'fade'
+  },
   zIndex: 3,
   minWidth: 230,
   x: 0,

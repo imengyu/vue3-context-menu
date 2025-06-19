@@ -48,7 +48,7 @@
 /**
  * Menu bar component
  */
-import { ref, nextTick, type PropType, onMounted, watch } from 'vue';
+import { ref, type PropType, onMounted, watch } from 'vue';
 import type { MenuBarOptions } from './MenuBar';
 import type { ContextMenuInstance, MenuItem } from './ContextMenuDefine';
 import { getTop, getLeft } from './ContextMenuUtils';
@@ -119,7 +119,7 @@ function getMenuShowPos(ele: HTMLElement) {
   else 
     x = getLeft(ele) + ele.offsetWidth / 2;
 
-  return { x, y }
+  return { x: x, y: y + 5 }
 }
 function showSubMenu(index: number, item: MenuItem) {
   currentMenuIndex = index;

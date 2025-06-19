@@ -170,6 +170,7 @@ export default defineComponent({
       //Create SubMenu
       submenu: (data: any) => h(ContextSubMenuConstructor, {
         ref: subMenuRef,
+        show: data.show,
         maxWidth: maxWidth.value,
         minWidth: minWidth.value,
         maxHeight: maxHeight.value,

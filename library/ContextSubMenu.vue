@@ -1,88 +1,98 @@
 <template>
-  <Teleport v-if="mounted" :to="`#${globalGetMenuHostId}`">
-    <div
-      ref="submenuRoot"
-      v-bind="$attrs"
-      :class="[
-        'mx-context-menu',
-        (options.customClass ? options.customClass : ''),
-        (options.theme ?? '')
-      ]"
-      :style="{
-        maxWidth: (maxWidth ? solveNumberOrStringSize(maxWidth) : `${MenuConstOptions.defaultMaxWidth}px`),
-        minWidth: minWidth ? solveNumberOrStringSize(minWidth) : `${MenuConstOptions.defaultMinWidth}px`,
-        zIndex: zIndex,
-        left: `${position.x}px`,
-        top: `${position.y}px`,
+  <Teleport v-if="mounted" :to="`#${globalGetMenuHostId}`">  
+    <Transition
+      appear
+      v-bind="options.menuTransitionProps || {
+        duration: 10
       }"
-      data-type="ContextSubMenu"
-      @click="onSubMenuBodyClick"
+      @after-leave="emit('closeAnimFinished')"
     >
-      <ScrollRect 
-        ref="scrollRectRef"
-        scroll="vertical"
-        :maxHeight="scrollTargetMaxHeight"
-        containerClass="mx-context-menu-scroll"
+      <div
+        ref="submenuRoot"
+        v-if="show"
+        v-bind="$attrs"
+        :class="[
+          'mx-context-menu',
+          (options.customClass ? options.customClass : ''),
+          (options.theme ?? '')
+        ]"
+        :style="{
+          maxWidth: (maxWidth ? solveNumberOrStringSize(maxWidth) : `${MenuConstOptions.defaultMaxWidth}px`),
+          minWidth: minWidth ? solveNumberOrStringSize(minWidth) : `${MenuConstOptions.defaultMinWidth}px`,
+          zIndex: zIndex,
+          left: `${position.x}px`,
+          top: `${position.y}px`,
+        }"
+        data-type="ContextSubMenu"
+        @click="onSubMenuBodyClick"
       >
-        <!--Child menu items-->
-        <div
-          :class="[ 'mx-context-menu-items' ]"
-          ref="menu"
+        <ScrollRect 
+          ref="scrollRectRef"
+          scroll="vertical"
+          :maxHeight="scrollTargetMaxHeight"
+          containerClass="mx-context-menu-scroll"
         >
-          <slot>
-            <template v-for="(item, i) in items" :key="i" >
-              <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'up'" />
-              <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'self'" />
-              <!--Menu Item-->
-              <ContextMenuItem
-                v-else
-                :clickHandler="item.onClick ? (e) => item.onClick!(e) : undefined"
-                :disabled="typeof item.disabled === 'object' ? item.disabled.value : item.disabled"
-                :hidden="typeof item.hidden === 'object' ? item.hidden.value : item.hidden"
-                :icon="item.icon"
-                :iconFontClass="item.iconFontClass"
-                :svgIcon="item.svgIcon"
-                :svgProps="item.svgProps"
-                :label="item.label"
-                :customRender="(item.customRender as Function)"
-                :customClass="item.customClass"
-                :checked="typeof item.checked === 'object' ? item.checked.value : item.checked"
-                :shortcut="item.shortcut"
-                :clickClose="item.clickClose"
-                :clickableWhenHasChildren="item.clickableWhenHasChildren"
-                :preserveIconWidth="item.preserveIconWidth !== undefined ? item.preserveIconWidth : options.preserveIconWidth"
-                :showRightArrow="item.children && item.children.length > 0"
-                :hasChildren="item.children && item.children.length > 0"
-                :rawMenuItem="item"
-                @sub-menu-open="(v: any) => item.onSubMenuOpen?.(v)"
-                @sub-menu-close="(v: any) => item.onSubMenuClose?.(v)"
-              >
-                <template v-if="item.children && item.children.length > 0" #submenu="{ context }">
-                  <!--Sub menu-->
-                  <ContextSubMenu
-                    :parentMenuItemContext="context"
-                    :items="item.children"
-                    :maxWidth="item.maxWidth"
-                    :minWidth="item.minWidth"
-                    :maxHeight="item.maxHeight"
-                    :adjustPosition="item.adjustSubMenuPosition !== undefined ? item.adjustSubMenuPosition : options.adjustPosition"
-                    :direction="item.direction !== undefined ? item.direction : options.direction"
-                  />
-                </template>
-              </ContextMenuItem>
-              <!--Separator-->
-              <!--Custom render-->
-              <ContextMenuSeparator v-if="item.hidden !== true && (item.divided === 'down' || item.divided === true)" />
-            </template>
-          </slot>
-        </div>
-      </ScrollRect>
-    </div>
+          <!--Child menu items-->
+          <div
+            :class="[ 'mx-context-menu-items' ]"
+            ref="menu"
+          >
+            <slot>
+              <template v-for="(item, i) in items" :key="i" >
+                <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'up'" />
+                <ContextMenuSeparator v-if="item.hidden !== true && item.divided === 'self'" />
+                <!--Menu Item-->
+                <ContextMenuItem
+                  v-else
+                  :clickHandler="item.onClick ? (e) => item.onClick!(e) : undefined"
+                  :disabled="typeof item.disabled === 'object' ? item.disabled.value : item.disabled"
+                  :hidden="typeof item.hidden === 'object' ? item.hidden.value : item.hidden"
+                  :icon="item.icon"
+                  :iconFontClass="item.iconFontClass"
+                  :svgIcon="item.svgIcon"
+                  :svgProps="item.svgProps"
+                  :label="item.label"
+                  :customRender="(item.customRender as Function)"
+                  :customClass="item.customClass"
+                  :checked="typeof item.checked === 'object' ? item.checked.value : item.checked"
+                  :shortcut="item.shortcut"
+                  :clickClose="item.clickClose"
+                  :clickableWhenHasChildren="item.clickableWhenHasChildren"
+                  :preserveIconWidth="item.preserveIconWidth !== undefined ? item.preserveIconWidth : options.preserveIconWidth"
+                  :showRightArrow="item.children && item.children.length > 0"
+                  :hasChildren="item.children && item.children.length > 0"
+                  :rawMenuItem="item"
+                  @sub-menu-open="(v: any) => item.onSubMenuOpen?.(v)"
+                  @sub-menu-close="(v: any) => item.onSubMenuClose?.(v)"
+                >
+                  <template v-if="item.children && item.children.length > 0" #submenu="{ context, show }">
+                    <!--Sub menu-->
+                    <ContextSubMenu
+                      :show="show"
+                      :parentMenuItemContext="context"
+                      :items="item.children"
+                      :maxWidth="item.maxWidth"
+                      :minWidth="item.minWidth"
+                      :maxHeight="item.maxHeight"
+                      :adjustPosition="item.adjustSubMenuPosition !== undefined ? item.adjustSubMenuPosition : options.adjustPosition"
+                      :direction="item.direction !== undefined ? item.direction : options.direction"
+                    />
+                  </template>
+                </ContextMenuItem>
+                <!--Separator-->
+                <!--Custom render-->
+                <ContextMenuSeparator v-if="item.hidden !== true && (item.divided === 'down' || item.divided === true)" />
+              </template>
+            </slot>
+          </div>
+        </ScrollRect>
+      </div>
+    </Transition>
   </Teleport>
 </template>
 
 <script setup lang="ts">
-import { inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref, onBeforeUnmount, type ComputedRef } from 'vue'
+import { inject, nextTick, onMounted, type PropType, provide, ref, toRefs, type Ref, onBeforeUnmount, type ComputedRef, watch } from 'vue'
 import type { MenuOptions, MenuItem, ContextMenuPositionData, MenuPopDirection, MenuItemContext, ContextSubMenuInstance } from './ContextMenuDefine'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import { MenuConstOptions } from './ContextMenuDefine'
@@ -146,9 +156,16 @@ const props = defineProps({
   /**
    * Items from options
    */
-    items: {
+  items: {
     type: Object as PropType<Array<MenuItem>>,
     default: null
+  },
+  /**
+   * Show
+   */
+  show: {
+    type: Boolean,
+    default: false,
   },
   /**
    * Max height for this submenu
@@ -192,6 +209,7 @@ const props = defineProps({
   }
 })
 
+const emit = defineEmits([ 'closeAnimFinished' ]);
 const mounted = ref(false);
 
 //#region Injects
@@ -513,9 +531,10 @@ function doAdjustPosition() {
   });
 }
 
-onMounted(() => {
-  mounted.value = true;
-
+function hideSolve() {
+  
+}
+function showSolve() {
   //Set base position
   const parentElement = props.parentMenuItemContext?.getElement();
   if (parentElement) {
@@ -528,12 +547,18 @@ onMounted(() => {
     position.value.x = x;
     position.value.y = y;
   }
-  
+  doAdjustPosition();
+}
+
+watch(() => props.show, (v) => {
+  v ? showSolve() : hideSolve();
+})
+
+onMounted(() => {
+  mounted.value = true;
   //Mark current item submenu is open
   globalSetCurrentSubMenu(thisMenuInsContext);
-
-  doAdjustPosition();
-
+  showSolve();
 });
 onBeforeUnmount(() => {
   mounted.value = false;

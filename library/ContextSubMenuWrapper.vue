@@ -1,32 +1,14 @@
 <template>
-  <Transition
-    v-if="options.menuTransitionProps"
-    appear
-    v-bind="options.menuTransitionProps"
-    @after-leave="emit('closeAnimFinished')"
-  >
-    <ContextSubMenuConstructor
-      v-if="show"
-      ref="submenuInstance"
-      :items="options.items"
-      :adjustPosition="options.adjustPosition"
-      :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
-      :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
-      :maxHeight="options.maxHeight"
-      :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
-    >
-      <slot />
-    </ContextSubMenuConstructor>
-  </Transition>
   <ContextSubMenuConstructor
-    v-else-if="show"
     ref="submenuInstance"
+    :show="show"
     :items="options.items"
     :adjustPosition="options.adjustPosition"
     :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
     :minWidth="options.minWidth || MenuConstOptions.defaultMinWidth"
     :maxHeight="options.maxHeight"
     :direction="(options.direction || MenuConstOptions.defaultDirection as MenuPopDirection)"
+    @closeAnimFinished="emit('closeAnimFinished')"
   >
     <slot />
   </ContextSubMenuConstructor>
@@ -58,7 +40,7 @@ const props = defineProps({
    * Show menu?
    */
   show: {
-    type: Boolean,
+    type: null,
     default: null
   },
   /**
