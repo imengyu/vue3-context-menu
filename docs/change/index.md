@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.2 - 2025/08/04
+
+* [Fix] 修复键盘控制失效问题 ([#124](https://github.com/imengyu/vue3-context-menu/issues/124))。
+* [Fix] 修复键盘控制在过长滚动区域中没有正确滚动显示问题。 
+
 ## v1.5.1 - 2025/06/19
 
 * [Fix] 更新 vue-scroll-rect 版本，修复系统滚动条在 Firefox 错误显示问题。 ([#121](https://github.com/imengyu/vue3-context-menu/issues/121))

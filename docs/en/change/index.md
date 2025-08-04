@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.2 - 2025/08/04
+
+* [Fix] Fix submenu keyboard control not work issue ([#124](https://github.com/imengyu/vue3-context-menu/issues/124)).
+* [Fix] Fix keyboard control in long scroll area not scroll to correct position issue. ([#125](https://github.com/imengyu/vue3-context-menu/issues/125))
+
 ## v1.5.1 - 2025/06/19
 
 * [Fix] Update vue-scroll-rect version and fix the issue of browser scrollbar displaying incorrectly in Firefox. ([#121](https://github.com/imengyu/vue3-context-menu/issues/121))
