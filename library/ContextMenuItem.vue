@@ -70,7 +70,7 @@ import { inject, nextTick, onBeforeUnmount, onMounted, type PropType, ref, type 
 import type { SubMenuParentContext } from './ContextSubMenu.vue'
 import type { GlobalHasSlot, GlobalRenderSlot } from './ContextMenu.vue'
 import type { MenuItem, MenuItemContext, MenuOptions } from './ContextMenuDefine'
-import { VNodeRender } from './ContextMenuUtils'
+import { hashCode, VNodeRender } from './ContextMenuUtils'
 import ContextMenuIconCheck from './ContextMenuIconCheck.vue'
 import ContextMenuIconRight from './ContextMenuIconRight.vue'
 
@@ -227,6 +227,16 @@ const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
 const globalCloseMenu = inject('globalCloseMenu') as (fromItem: MenuItem|undefined) => void;
 
 const menuContext = inject('menuContext') as SubMenuParentContext;
+
+const nameForDebug = computed(() => {
+  if (typeof label.value === 'string')
+    return label.value;
+  else if (typeof label.value === 'function')
+    return hashCode(label.value.toString());
+  return 'MenuItem[unknow]';
+})
+
+provide('MenuItemName', nameForDebug);
 
 //Instance Contet for keyboadr control
 const menuItemInstance : MenuItemContext = {

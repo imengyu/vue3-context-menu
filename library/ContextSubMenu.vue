@@ -107,6 +107,8 @@ import ContextMenuSeparator from './ContextMenuSeparator.vue'
 
 //The internal info context for submenu instance
 export interface SubMenuContext {
+  name: Ref<string>,
+  el: Ref<HTMLElement|undefined>;
   isTopLevel: () => boolean;
   closeSelfAndActiveParent: () => boolean,
   openCurrentItemSubMenu: () => boolean,
@@ -219,6 +221,8 @@ const parentContext = inject('menuContext') as SubMenuParentContext;
 const options = inject('globalOptions') as Ref<MenuOptions>;
 const globalHasSlot = inject('globalHasSlot') as GlobalHasSlot;
 const globalRenderSlot = inject('globalRenderSlot') as GlobalRenderSlot;
+const debugMenuItemNameDefault = ref('UnknowOrRoot');
+const debugMenuItemName = inject<Ref<string>>('MenuItemName', debugMenuItemNameDefault);
 
 //#endregion
 
@@ -283,6 +287,8 @@ function onSubMenuBodyClick() {
 }
 
 const thisMenuInsContext : SubMenuContext = {
+  el: menu,
+  name: debugMenuItemName,
   isTopLevel: () => parentContext.getParentContext() === null,
   closeSelfAndActiveParent: () => {
     const parent = thisMenuContext.getParentContext();
@@ -518,16 +524,6 @@ function doAdjustPosition() {
       });
     }
 
-    //Focus this submenu
-    menuEl?.focus({
-      preventScroll: true
-    });
-
-    //Is this submenu opened by keyboard? If yes then select first item
-    if (parentContext.isOpenedByKeyBoardFlag())
-      setAndFocusNotDisableItem(true);
-
-    isMenuItemDataCollectedFlag = true;
   });
 }
 
@@ -547,6 +543,22 @@ function showSolve() {
     position.value.x = x;
     position.value.y = y;
   }
+  //Focus current
+  nextTick(() => {
+
+    //Mark current item submenu is open
+    globalSetCurrentSubMenu(thisMenuInsContext);
+
+    //Focus this submenu
+    menu.value?.focus({ preventScroll: true });
+
+    //Is this submenu opened by keyboard? If yes then select first item
+    if (parentContext.isOpenedByKeyBoardFlag())
+      nextTick(() => setAndFocusNotDisableItem(true));
+
+    isMenuItemDataCollectedFlag = true;
+  });
+  //
   doAdjustPosition();
 }
 
@@ -556,9 +568,8 @@ watch(() => props.show, (v) => {
 
 onMounted(() => {
   mounted.value = true;
-  //Mark current item submenu is open
-  globalSetCurrentSubMenu(thisMenuInsContext);
-  showSolve();
+  if (props.show)
+    showSolve();
 });
 onBeforeUnmount(() => {
   mounted.value = false;
