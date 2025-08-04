@@ -278,8 +278,11 @@ function setAndFocusCurrentMenu(index?: number) {
   //Scroll to current item
   const element = currentItem.getElement();
   if (element)
-    scrollRectRef.value?.scrollTo(0, Math.min(Math.max(-scrollHeight.value, -element.offsetTop - element.offsetHeight + scrollTargetMaxHeight.value), 0));
-
+    element.scrollIntoView({
+      behavior: 'auto',
+      block: 'nearest',
+      inline: 'nearest',
+    });
 }
 function onSubMenuBodyClick() {
   //Mouse click can set current focused submenu
@@ -570,6 +573,8 @@ onMounted(() => {
   mounted.value = true;
   if (props.show)
     showSolve();
+  else
+    doAdjustPosition();
 });
 onBeforeUnmount(() => {
   mounted.value = false;
