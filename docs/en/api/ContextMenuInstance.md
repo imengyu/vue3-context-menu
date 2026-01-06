@@ -65,7 +65,6 @@ Global Function
 | yOffset | Y-coordinate offset of submenu and parent menu. | `number` | — | `0` |
 | iconFontClass | Custom icon library font class name. (global). Only for css font icon, If you use the svg icon, you do not need to use this. | `string` | — | `iconfont` |
 | zIndex | The `z-index` of this menu | `number` | — | `2` |
-| iconFontClass | Custom icon library font class name. | `string` | — | `iconfont` |
 | preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
 | keyboardControl | Set whether the user can use keyboard keys to control the current menu. | `boolean` | — | `true` |
 | closeWhenScroll | Set whether to close the menu when the user scrolls the mouse. | `boolean` | - | `true` |
