@@ -48,6 +48,10 @@
     "菜单",
     "contextmenu"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
+  },
   "author": "imengyu",
   "license": "MIT",
   "bugs": {
