@@ -481,11 +481,14 @@ function doAdjustPosition() {
 
       //set y positon
       if (props.direction.includes('t')) {
-        position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways * 2) / getZoom(); //top
+        const parentElement = props.parentMenuItemContext?.getElement();
+        if (parentElement)
+          position.value.y += parentElement.offsetHeight;
+        position.value.y -= (menuEl.offsetHeight + fillPaddingYAlways) / getZoom(); //top
       } else if (props.direction.includes('b')) {
         position.value.y -= fillPaddingYAlways / getZoom();  //bottom
       } else {
-        position.value.y -= ((menuEl.offsetHeight + fillPaddingYAlways) / 2) / getZoom(); //center
+        position.value.y -= ((menuEl.offsetHeight) / 2) / getZoom(); //center
       }
 
       //Overflow adjust
