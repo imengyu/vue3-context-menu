@@ -6,6 +6,7 @@ import Theme from '../views/Theme.vue'
 import ComponentCustomize from '../views/ComponentCustomize.vue'
 import MenuBar from '../views/MenuBar.vue'
 import ChangeContainer from '../views/ChangeContainer.vue'
+import DestroyOnClose from '../views/DestroyOnClose.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -42,6 +43,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/ChangeContainer',
     name: 'ChangeContainer',
     component: ChangeContainer,
+  },
+  {
+    path: '/DestroyOnClose',
+    name: 'DestroyOnClose',
+    component: DestroyOnClose,
   }
 ]
 
