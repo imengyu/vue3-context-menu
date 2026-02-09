@@ -112,3 +112,4 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | onSubMenuOpen | 子菜单打开事件回调 | `(() => void)` | — | — |
 | customRender | 菜单项整体自定义渲染回调 | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | 子菜单结构信息 | `MenuItem[]` | — | — |
+| attrs | 菜单条目的自定义属性 | `object` | — | — |

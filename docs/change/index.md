@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.4 - 2026/02/09
+
+* [Fix] 修改 separator 拼写错误。 ([#130](https://github.com/imengyu/vue3-context-menu/issues/130))
+* [Add] 为 ContextMenuItem 添加自定义 attrs 属性。 ([#133](https://github.com/imengyu/vue3-context-menu/issues/133))
+
 ## v1.5.3 - 2026/01/06
 
 * [Fix] 修复向上弹出菜单定位问题 ([#127](https://github.com/imengyu/vue3-context-menu/issues/127))。
@@ -12,7 +17,7 @@ nav:
 ## v1.5.2 - 2025/08/04
 
 * [Fix] 修复键盘控制失效问题 ([#124](https://github.com/imengyu/vue3-context-menu/issues/124))。
-* [Fix] 修复键盘控制在过长滚动区域中没有正确滚动显示问题。 
+* [Fix] 修复键盘控制在过长滚动区域中没有正确滚动显示问题。
 
 ## v1.5.1 - 2025/06/19
 

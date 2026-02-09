@@ -112,3 +112,4 @@ Global Function
 | onSubMenuOpen | This event emit when submenu of this item is showing. | `(() => void)` | — | — |
 | customRender | A custom render callback that allows you to customize the rendering of the current item. | `VNode` or `((item: MenuItemRenderData) => VNode)` | — | — |
 | children | Submenu items. | `MenuItem[]` | — | — |
+| attrs | The custom attributes of the menu item element. | `object` | — | — |

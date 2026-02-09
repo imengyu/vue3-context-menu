@@ -5,6 +5,11 @@ nav:
   order: 5
 ---
 
+## v1.5.4 - 2026/02/09
+
+* [Fix] Fix typo of separator ([#130](https://github.com/imengyu/vue3-context-menu/issues/130))
+* [Add] Add custom attrs for ContextMenuItem ([#133](https://github.com/imengyu/vue3-context-menu/issues/133))
+
 ## v1.5.3 - 2026/01/06
 
 * [Fix] Fix the issue of submenu popup position not correct when direction is top. ([#127](https://github.com/imengyu/vue3-context-menu/issues/127))

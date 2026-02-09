@@ -486,7 +486,7 @@ export interface MenuItem {
    */
   minWidth ?: number|string,
   /**
-   * The attributes of the menu item element.
+   * The custom attributes of the menu item element.
    * 
    * You can use this to pass attributes to the menu item element.
    * For example:
