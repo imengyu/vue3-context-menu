@@ -7,8 +7,9 @@ nav:
 
 ## v1.5.4 - 2026/02/09
 
-* [Fix] 修改 separator 拼写错误。 ([#130](https://github.com/imengyu/vue3-context-menu/issues/130))
+* [Add] 为组件模式添加 destroy-on-close 选项，控制显隐是否销毁组件。 Thanks @[EralChen](https://github.com/EralChen) ([#132](https://github.com/imengyu/vue3-context-menu/pull/132))
 * [Add] 为 ContextMenuItem 添加自定义 attrs 属性。 ([#133](https://github.com/imengyu/vue3-context-menu/issues/133))
+* [Fix] 修改 separator 拼写错误。 ([#130](https://github.com/imengyu/vue3-context-menu/issues/130))
 
 ## v1.5.3 - 2026/01/06
 

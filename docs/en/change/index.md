@@ -7,6 +7,7 @@ nav:
 
 ## v1.5.4 - 2026/02/09
 
+* [Add] Add the `destroy-on-close` option to the component mode to control whether the component is destroyed when it is hidden. Thanks @[EralChen](https://github.com/EralChen) ([#132](https://github.com/imengyu/vue3-context-menu/pull/132))
 * [Fix] Fix typo of separator ([#130](https://github.com/imengyu/vue3-context-menu/issues/130))
 * [Add] Add custom attrs for ContextMenuItem ([#133](https://github.com/imengyu/vue3-context-menu/issues/133))
 
