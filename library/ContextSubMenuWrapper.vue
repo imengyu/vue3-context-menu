@@ -2,6 +2,7 @@
   <ContextSubMenuConstructor
     ref="submenuInstance"
     :show="show"
+    :destroyOnClose="destroyOnClose"
     :items="options.items"
     :adjustPosition="options.adjustPosition"
     :maxWidth="options.maxWidth || MenuConstOptions.defaultMaxWidth"
@@ -44,6 +45,13 @@ const props = defineProps({
     default: null
   },
   /**
+   * Should the menu be destroyed when it is closed?
+   */
+  destroyOnClose: {
+    type: Boolean,
+    default: true
+  },
+  /**
    * Current container, For calculation only
    */
   container: {
@@ -68,6 +76,7 @@ const submenuInstance = ref<ContextSubMenuInstance>();
 const {
   options,
   show,
+  destroyOnClose,
   container,
 } = toRefs(props);
 

@@ -9,7 +9,8 @@
     >
       <div
         ref="submenuRoot"
-        v-if="show"
+        v-if="!destroyOnClose || show"
+        v-show="show"
         v-bind="$attrs"
         :class="[
           'mx-context-menu',
@@ -69,6 +70,7 @@
                     <!--Sub menu-->
                     <ContextSubMenu
                       :show="show"
+                      :destroyOnClose="destroyOnClose"
                       :parentMenuItemContext="context"
                       :items="item.children"
                       :maxWidth="item.maxWidth"
@@ -168,6 +170,13 @@ const props = defineProps({
   show: {
     type: Boolean,
     default: false,
+  },
+  /**
+   * Should the menu be destroyed when it is closed?
+   */
+  destroyOnClose: {
+    type: Boolean,
+    default: true
   },
   /**
    * Max height for this submenu
