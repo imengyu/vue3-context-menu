@@ -486,6 +486,19 @@ export interface MenuItem {
    */
   minWidth ?: number|string,
   /**
+   * The attributes of the menu item element.
+   * 
+   * You can use this to pass attributes to the menu item element.
+   * For example:
+   * ```ts
+   * {
+   *   attrs: {
+   *     'data-test-id': 'menu-item-1',
+   *   },
+   * },
+   */
+  attrs ?: Record<string, unknown>,
+  /**
    * Menu item click event handler.
    *
    * @param e The current event of `click` or `keydown` (when user use keyboard press this menu)

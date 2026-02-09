@@ -4,7 +4,10 @@
     class="mx-context-menu-item-wrapper"
     ref="menuItemRef"
     data-type="ContextMenuItem"
-
+    v-bind="{
+      ...$attrs,
+      ...(rawMenuItem?.attrs || {}),
+    }"
   >
     <!--Custom render-->
     <VNodeRender v-if="globalHasSlot('itemRender')" :vnode="() => globalRenderSlot('itemRender', getItemDataForChildren())" />
@@ -86,6 +89,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+
   /**
    * Is this menu hidden? 
    */
