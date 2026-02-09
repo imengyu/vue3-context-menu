@@ -314,6 +314,12 @@ export interface MenuOptions {
    */
   minWidth ?: number;
   /**
+   * Should the menu be destroyed when it is closed? (Only for component mode)
+   * 
+   * Default: true
+   */
+  destroyOnClose ?: boolean;
+  /**
    * Close when user scroll mouse ? Default is true.
    */
   closeWhenScroll ?: boolean;

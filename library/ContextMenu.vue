@@ -4,6 +4,7 @@
       ref="menuRef"
       :options="options"
       :show="show"
+      :destroyOnClose="destroyOnClose"
       :container="container"
       :isFullScreenContainer="!isNew"
       @close="onClose"
@@ -45,9 +46,16 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
+  /**
+   * Should the menu be destroyed when it is closed?
+   */
+  destroyOnClose: {
+    type: Boolean,
+    default: true
+  },
 })
 
-const { options, show } = toRefs(props);
+const { options, show, destroyOnClose } = toRefs(props);
 const { isNew, container, eleId } = genContainer(options.value);
 
 const menuRef = ref<ContextMenuInstance | null>(null);
