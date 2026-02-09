@@ -195,7 +195,8 @@
   position: relative;
 }
 
-//Sperator
+//Separator
+.mx-context-menu-item-separator,
 .mx-context-menu-item-sperator  {
   display: block;
   padding: 5px 0;
@@ -314,6 +315,7 @@
       padding: 2px 4px;
       margin: 0 4px;
     }
+    .mx-context-menu-item-separator,
     .mx-context-menu-item-sperator {
       margin: 0 4px;
     }
@@ -344,6 +346,7 @@
       padding: 6px 12px;
       margin: 0;
     }
+    .mx-context-menu-item-separator,
     .mx-context-menu-item-sperator {
       margin: 0 7px;
     }
@@ -459,6 +462,7 @@
       }
     }
   }
+  .mx-context-menu-item-separator,
   .mx-context-menu-item-sperator {
     margin: 0 12px;
   }

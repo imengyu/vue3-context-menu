@@ -33,18 +33,18 @@
         <context-menu-item label="Item1" />
         <context-menu-item label="Item1" />
       </context-menu-group>
-      <context-menu-sperator />
+      <context-menu-separator />
       <context-menu-group label="Menu with child child child">
         <context-menu-item label="Item1" />
         <context-menu-item label="Item2" />
-        <context-menu-sperator />
+        <context-menu-separator />
         <context-menu-group label="Child with v-for 50">
           <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" />
         </context-menu-group>
         <context-menu-group label="Childs">
           <context-menu-item label="Item1-1" />
           <context-menu-item label="Item1-2" />
-          <context-menu-sperator />
+          <context-menu-separator />
           <context-menu-group label="Childs">
             <context-menu-item label="Item2-1" />
             <context-menu-item label="Item2-2" />

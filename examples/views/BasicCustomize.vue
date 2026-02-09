@@ -248,7 +248,7 @@ export default defineComponent({
   font-size: 20px;
   color: #f05;
 }
-.my-menu-sperator {
+.my-menu-separator {
   border-bottom: 1px dashed #f00;
 }
 </style>

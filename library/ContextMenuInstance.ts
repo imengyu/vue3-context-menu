@@ -106,7 +106,7 @@ export default {
    *       h('span', label),
    *       showRightArrow ? h('span', { class: 'right-arraw' }, '>>') : h('div'),
    *     ]) ],
-   *     separatorRender: () => [ h('div', { class: 'my-menu-sperator' }) ]
+   *     separatorRender: () => [ h('div', { class: 'my-menu-separator' }) ]
    *   })
    * ```
    * 

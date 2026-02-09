@@ -73,18 +73,18 @@
         <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
         <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
       </context-menu-group>
-      <div class="my-menu-sperator"></div>
+      <div class="my-menu-separator"></div>
       <context-menu-group label="Menu with child child child">
         <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1')" />
         <context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2')" />
         <context-menu-group label="Child with v-for 50">
           <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item3' + index)" />
         </context-menu-group>
-        <div class="my-menu-sperator"></div>
+        <div class="my-menu-separator"></div>
         <context-menu-group label="Childs">
           <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item1-1')" />
           <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item1-2')" />
-          <div class="my-menu-sperator"></div>
+          <div class="my-menu-separator"></div>
           <context-menu-group label="Childs">
             <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item2-1')" />
             <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item2-2')" />
@@ -184,7 +184,7 @@ export default defineComponent({
   font-size: 20px;
   color: #f05;
 }
-.my-menu-sperator {
+.my-menu-separator {
   border-bottom: 1px dashed #f00;
 }
 </style>

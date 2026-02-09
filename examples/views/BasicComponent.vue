@@ -16,7 +16,7 @@
     <context-menu-item label="Item with a icon" icon="icon-reload-1" @click="alertContextMenuItemClicked('Item2')" />
     <context-menu-item label="Test item dynamic show and hide" :clickClose="false" @click="showItem=!showItem" />
     <context-menu-item v-if="showItem" label="Click the item above to show/hide me" />
-    <context-menu-sperator v-if="showItem" />
+    <context-menu-separator v-if="showItem" />
     <context-menu-item :label="itemText" :clickClose="false" @click="changeLabelText" />
     <context-menu-group label="Menu with child" @subMenuOpen="handleSubMenuOpen">
       <template #icon>
@@ -27,14 +27,14 @@
     </context-menu-group>
     <context-menu-group label="Menu with child child child" @subMenuOpen="handleSubMenuOpen">
       <context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" />
-      <context-menu-sperator />
+      <context-menu-separator />
       <context-menu-group label="Child with v-for 50">
         <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item2-3-' + index)" />
       </context-menu-group>
       <context-menu-group label="Childs" @subMenuOpen="handleSubMenuOpen">
         <context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item3-1-1')" />
         <context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item3-1-2')" />
-        <context-menu-sperator />
+        <context-menu-separator />
         <context-menu-group label="Childs" @subMenuOpen="handleSubMenuOpen">
           <context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item3-2-1')" />
           <context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item3-2-2')" />
@@ -102,18 +102,18 @@ v-model:show="show"
   &lt;context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-1')" /&gt;
   &lt;context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item1-2')" /&gt;
 &lt;/context-menu-group&gt;
-&lt;context-menu-sperator /&gt;
+&lt;context-menu-separator /&gt;
 &lt;context-menu-group label="Menu with child child child"&gt;
   &lt;context-menu-item label="Item1" @click="alertContextMenuItemClicked('Item2-1')" /&gt;
   &lt;context-menu-item label="Item2" @click="alertContextMenuItemClicked('Item2-2')" /&gt;
-  &lt;context-menu-sperator /&gt;
+  &lt;context-menu-separator /&gt;
   &lt;context-menu-group label="Child with v-for 50"&gt;
     &lt;context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" @click="alertContextMenuItemClicked('Item2-3-' + index)" /&gt;
   &lt;/context-menu-group&gt;
   &lt;context-menu-group label="Childs"&gt;
     &lt;context-menu-item label="Item1-1" @click="alertContextMenuItemClicked('Item3-1-1')" /&gt;
     &lt;context-menu-item label="Item1-2" @click="alertContextMenuItemClicked('Item3-1-2')" /&gt;
-    &lt;context-menu-sperator /&gt;
+    &lt;context-menu-separator /&gt;
     &lt;context-menu-group label="Childs"&gt;
       &lt;context-menu-item label="Item2-1" @click="alertContextMenuItemClicked('Item3-2-1')" /&gt;
       &lt;context-menu-item label="Item2-2" @click="alertContextMenuItemClicked('Item3-2-2')" /&gt;

@@ -57,7 +57,7 @@ function onContextMenu2(e) {
     :options="optionsComponent"
   >
     <context-menu-item label="Simple item" @click="onMenuClick(1)" />
-    <context-menu-sperator /><!--use this to add sperator-->
+    <context-menu-separator /><!--use this to add separator-->
     <context-menu-group label="Menu with child">
       <context-menu-item label="Item1" @click="onMenuClick(2)" />
       <context-menu-item label="Item2" @click="onMenuClick(3)" />
