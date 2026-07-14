@@ -2,7 +2,7 @@
   <div class="test">
     <div class="test-top">
       <h1>Vue3 Context menu</h1>
-      <router-link :to="{ name: 'BasicUseage' }" class="first">Base useage</router-link>
+      <router-link :to="{ name: 'BasicUseage' }">Base useage</router-link>
       <router-link :to="{ name: 'BasicCustomize' }">Base customize</router-link>
       <router-link :to="{ name: 'BasicComponent' }">Component useage</router-link>
       <router-link :to="{ name: 'ComponentCustomize' }">Component customize</router-link>
@@ -29,31 +29,52 @@ html, body, #app {
   position: relative;
   width: 100%;
   margin: 0;
+  background-color: #fafbfc;
 }
 .test {
   position: relative;
 
   .test-host {
-    margin-top: 30px;
-    margin-left: 20px;
-    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+    margin-left: 24px;
+    margin-right: 24px;
+    gap: 8px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
   .test-top {
-    padding-top: 25px;
-    height: 40px;
-    margin-left: 140px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 
     h1 {
       margin: 0;
-      color: #000;
+      margin-right: 16px;
+      color: #1a1a1a;
+      font-size: 22px;
+      font-weight: 600;
     }
     a {
-      margin: 0 15px;
-      color: #1a7ff1;
-      text-decoration: underline;
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: 20px;
+      color: #555;
+      text-decoration: none;
+      font-size: 14px;
+      background-color: #f0f0f0;
+      transition: background-color 0.2s, color 0.2s;
 
-      &.first {
-        margin-left: 0;
+      &:hover {
+        background-color: #e0e0e0;
+        color: #333;
+      }
+      &.router-link-active {
+        background-color: #4a90d9;
+        color: #fff;
       }
     }
   }
@@ -67,15 +88,18 @@ html, body, #app {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  gap: 12px;
 }
 .box1 {
-  padding: 60px 0;
+  padding: 60px 20px;
   text-align: center;
   font-size: 18px;
   font-weight: bold;
   user-select: none;
-  border: 1px solid #3676ff;
-  background-color: #89bffc;
+  border: none;
+  border-radius: 8px;
+  background-color: #e8f0fe;
+  color: #2c5282;
 }
 .box3 {
   position: relative;
@@ -84,24 +108,29 @@ html, body, #app {
   font-size: 18px;
   font-weight: bold;
   user-select: none;
-  border: 1px solid #ff9252;
-  background-color: #ffefbc;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  color: #444;
 }
 .box4 {
   padding: 10px 0;
   text-align: center;
   font-size: 14px;
-  border: 1px dashed #ececec;
-  background-color: #dadada;
+  border: none;
+  border-radius: 8px;
+  background-color: #eaeaea;
+  color: #555;
 }
 .box6 {
   padding: 60px 0;
   text-align: center;
   font-size: 18px;
   user-select: none;
-  color: #000;
-  background-color: rgb(245, 245, 245);
-  border: 1px dashed #7e7e7e;
+  color: #333;
+  background-color: #f5f5f5;
+  border: none;
+  border-radius: 8px;
 }
 .box5 {
   padding: 60px 0;
@@ -109,25 +138,25 @@ html, body, #app {
   font-size: 18px;
   user-select: none;
   color: #fff;
-  background-color: #7e7e7e;
-  border: 1px dashed #ececec;
+  background-color: #6b7280;
+  border: none;
+  border-radius: 8px;
 }
 .box2 {
-  width: 80%;
   padding: 20px 60px;
-  margin: 0 auto;
   margin-top: 10px;
-  border-radius: 10px;
-  background-color: #777777;
+  border-radius: 8px;
+  background-color: #6b7280;
   color: #fff;
 }
 code {
-  border-radius: 10px;
+  border-radius: 8px;
 }
 .grid {
   display: grid;
-  grid-template-columns: 33.33% 33.33% 33.33%;
-  grid-template-rows: 33.33% 33.33% 33.33%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 4px;
 
   div {
     position: relative;
@@ -135,30 +164,28 @@ code {
     text-align: center;
     font-size: 13px;
     user-select: none;
-    border: 1px solid #ff9252;
-    background-color: #ffefbc;
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0;
+    color: #444;
   }
 }
 
 @media screen and (max-width: 1200px) {
   .test {
     .test-top {
-      height: 90px;
+      flex-wrap: wrap;
     }
   }
 }
 @media screen and (max-width: 800px) {
   .test {
     .test-top {
-      height: 100px;
-      margin-left: 100px;
+      padding: 16px 16px 0;
 
       h1 {
-        display: block;
-        font-size: 27px;
-      }
-      a {
-        margin: 0 10px;
+        width: 100%;
+        font-size: 20px;
       }
     }
   }
@@ -174,11 +201,8 @@ code {
 @media screen and (max-width: 425px) {
   .test {
     .test-top {
-      margin-left: 80px;
-      height: 120px;
-
       h1 {
-        font-size: 22px;
+        font-size: 18px;
       }
     }
   }
