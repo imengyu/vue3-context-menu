@@ -142,6 +142,10 @@ export interface SubMenuParentContext {
   closeOtherSubMenuWithTimeOut: () => void;
   checkCloseOtherSubMenuTimeOut: () => boolean;
 
+  //SubMenu delayed open
+  openSubMenuWithDelay: (openFn: () => void, menuItemEl: HTMLElement) => void;
+  cancelPendingOpen: () => void;
+
   //Item control
   addChildMenuItem: (item: MenuItemContext, index?: number) => void;
   removeChildMenuItem: (item: MenuItemContext) => void;
@@ -250,6 +254,7 @@ const globalSetCurrentSubMenu = inject('globalSetCurrentSubMenu') as (menu: SubM
 const menuItems = [] as MenuItemContext[];
 let currentItem = null as MenuItemContext|null;
 let leaveTimeout = 0;
+let pendingOpenTimeout = 0;
 
 function blurCurrentMenu() {
   if (currentItem)
@@ -364,7 +369,34 @@ const thisMenuContext : SubMenuParentContext = {
     leaveTimeout = setTimeout(() => {
       leaveTimeout = 0;
       this.closeOtherSubMenu();
-    }, 200) as unknown as number; //Add a delay, the user will not hide the menu when moving too fast
+    }, 200) as unknown as number;
+  },
+  openSubMenuWithDelay(openFn: () => void, menuItemEl: HTMLElement) {
+    if (pendingOpenTimeout) {
+      clearTimeout(pendingOpenTimeout);
+      pendingOpenTimeout = 0;
+    }
+    const delay = options.value.subMenuOpenDelay ?? MenuConstOptions.defaultSubMenuOpenDelay;
+    const hasOpenedSubMenu = openedSubMenuClose.length > 0;
+
+    if (delay === 0 || !hasOpenedSubMenu) {
+      this.closeOtherSubMenu();
+      openFn();
+    } else {
+      pendingOpenTimeout = setTimeout(() => {
+        pendingOpenTimeout = 0;
+        if (menuItemEl.matches(':hover')) {
+          this.closeOtherSubMenu();
+          openFn();
+        }
+      }, delay) as unknown as number;
+    }
+  },
+  cancelPendingOpen() {
+    if (pendingOpenTimeout) {
+      clearTimeout(pendingOpenTimeout);
+      pendingOpenTimeout = 0;
+    }
   },
   addChildMenuItem: (item: MenuItemContext, index?: number) => {
     if (index === undefined)

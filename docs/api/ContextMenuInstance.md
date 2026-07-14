@@ -72,6 +72,7 @@ import ContextMenu from '@imengyu/vue3-context-menu'
 | theme | 菜单的[主题](../guide/theme.md) | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | preserveIconWidth | 是否应为没有图标的菜单项保留固定宽度的图标区域 | `boolean` | - | `true` |
 | closeWhenScroll | 用户滚动鼠标时是否关闭菜单 | `boolean` | - | `true` |
+| subMenuOpenDelay | 悬停菜单项时，子菜单打开的延时时间（毫秒）。仅在已有子菜单打开需要切换时生效。设为 0 则立即打开（无延时）。 | `number` | — | `200` |
 | mouseScroll | 设置用户是否可以在菜单区域中使用鼠标滚轮来滚动长菜单。 | `boolean` | — | `false` |
 | adjustPadding | 自动调整菜单时的上下边距 | `{ x: number, y: number }` or `number` | — | `10` |
 | adjustPosition | 默认情况下，菜单将自动调整其位置，以防止溢出容器。如果允许菜单溢出容器，则可以将其设置为false。 | `boolean` | — | `true` |

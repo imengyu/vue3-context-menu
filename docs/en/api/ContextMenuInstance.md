@@ -68,6 +68,7 @@ Global Function
 | preserveIconWidth | Should a fixed-width icon area be reserved for menu items without icon. | `boolean` | - | `true` |
 | keyboardControl | Set whether the user can use keyboard keys to control the current menu. | `boolean` | — | `true` |
 | closeWhenScroll | Set whether to close the menu when the user scrolls the mouse. | `boolean` | - | `true` |
+| subMenuOpenDelay | The delay time (in ms) before opening a submenu when hovering over a menu item. Only takes effect when switching between open submenus. Set to 0 for immediate opening (no delay). | `number` | — | `200` |
 | mouseScroll | Set whether users can use the mouse scroll wheel to scroll through long menus in the menu area. | `boolean` | — | `false` |
 | theme | The [theme](../guide/theme.md) of this menu. | `string` | `'default' 'dark' 'flat' 'win10' 'mac'` | `default` |
 | minWidth | Submenu minimum width (in pixels). | `number` or `string` | — | `100` |

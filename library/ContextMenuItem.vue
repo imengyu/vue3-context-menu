@@ -346,11 +346,6 @@ function onMouseEnter(e?: MouseEvent) {
   //Clear keyBoard focus style
   keyBoardFocusMenu.value = false;
 
-  //等待一个延时，以防止用户过快移动鼠标导致菜单隐藏
-  //Wait for a delay to prevent the menu from being hidden due to the user moving the mouse too fast
-  if (!menuContext.checkCloseOtherSubMenuTimeOut())
-    menuContext.closeOtherSubMenu();
-
   if (!disabled.value) {
     //Mark current item
     menuContext.markActiveMenuItem(menuItemInstance);
@@ -358,10 +353,15 @@ function onMouseEnter(e?: MouseEvent) {
     if (hasChildren.value) {
       if (!e)
         menuContext.markThisOpenedByKeyBoard();
-      //Open sub menu
-      menuContext.addOpenedSubMenu(closeSubMenu);
-      showSubMenu.value = true;
-      nextTick(() => emit('subMenuOpen', menuItemInstance));
+
+      menuContext.openSubMenuWithDelay(() => {
+        menuContext.addOpenedSubMenu(closeSubMenu);
+        showSubMenu.value = true;
+        nextTick(() => emit('subMenuOpen', menuItemInstance));
+      }, menuItemRef.value!);
+    } else {
+      menuContext.cancelPendingOpen();
+      menuContext.closeOtherSubMenu();
     }
   }
 }

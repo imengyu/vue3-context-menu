@@ -13,6 +13,7 @@ export const MenuConstOptions = {
     x: 0,
     y: 10.
   },
+  defaultSubMenuOpenDelay: 200,
 }
 
 /**
@@ -319,6 +320,14 @@ export interface MenuOptions {
    * Default: true
    */
   destroyOnClose ?: boolean;
+  /**
+   * The delay time (in ms) before opening a submenu when hovering over a menu item
+   * that has children, only when another submenu is already open.
+   * Set to 0 to open immediately (no delay).
+   *
+   * Default: 200
+   */
+  subMenuOpenDelay ?: number;
   /**
    * Close when user scroll mouse ? Default is true.
    */

@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.5.5 - 2026/07/14
+
+* [Add] Add `subMenuOpenDelay` option to control the delay (in ms) before opening a submenu on hover, preventing submenu flickering during fast mouse movement. Default is 200ms, set to 0 for immediate opening.
+
 ## v1.5.4 - 2026/02/09
 
 * [Add] Add the `destroy-on-close` option to the component mode to control whether the component is destroyed when it is hidden. Thanks @[EralChen](https://github.com/EralChen) ([#132](https://github.com/imengyu/vue3-context-menu/pull/132))

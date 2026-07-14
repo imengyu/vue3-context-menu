@@ -245,6 +245,8 @@ provide('menuContext', {
   getPositon: () => [options.value.x,options.value.y],
   closeOtherSubMenuWithTimeOut: () => {/* Do nothing */},
   checkCloseOtherSubMenuTimeOut: () => false,
+  openSubMenuWithDelay: (openFn) => openFn(),
+  cancelPendingOpen: () => {/* Do nothing */},
   addOpenedSubMenu: () => {/* Do nothing */},
   closeOtherSubMenu: () => {/* Do nothing */},
   getParentContext: () => null,

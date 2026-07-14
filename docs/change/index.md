@@ -5,6 +5,10 @@ nav:
   order: 5
 ---
 
+## v1.5.5 - 2026/07/14
+
+* [Add] 新增 `subMenuOpenDelay` 配置项，控制悬停菜单项时子菜单的打开延时（毫秒），防止快速移动鼠标时子菜单闪烁。默认 200ms，设为 0 则立即打开。
+
 ## v1.5.4 - 2026/02/09
 
 * [Add] 为组件模式添加 destroy-on-close 选项，控制显隐是否销毁组件。 Thanks @[EralChen](https://github.com/EralChen) ([#132](https://github.com/imengyu/vue3-context-menu/pull/132))
