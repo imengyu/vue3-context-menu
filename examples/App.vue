@@ -10,6 +10,7 @@
       <router-link :to="{ name: 'ChangeContainer' }">Change container</router-link>
       <router-link :to="{ name: 'MenuBar' }">MenuBar</router-link>
       <router-link :to="{ name: 'DestroyOnClose' }">DestroyOnClose</router-link>
+      <router-link :to="{ name: 'MenuTrigger' }">MenuTrigger</router-link>
     </div>
     <div class="test-host">
       <router-view />

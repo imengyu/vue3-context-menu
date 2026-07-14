@@ -7,6 +7,7 @@ import ComponentCustomize from '../views/ComponentCustomize.vue'
 import MenuBar from '../views/MenuBar.vue'
 import ChangeContainer from '../views/ChangeContainer.vue'
 import DestroyOnClose from '../views/DestroyOnClose.vue'
+import MenuTrigger from '../views/MenuTrigger.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -48,6 +49,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/DestroyOnClose',
     name: 'DestroyOnClose',
     component: DestroyOnClose,
+  },
+  {
+    path: '/MenuTrigger',
+    name: 'MenuTrigger',
+    component: MenuTrigger,
   }
 ]
 

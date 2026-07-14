@@ -8,6 +8,7 @@ nav:
 ## v1.5.5 - 2026/07/14
 
 * [Add] Add `subMenuOpenDelay` option to control the delay (in ms) before opening a submenu on hover, preventing submenu flickering during fast mouse movement. Default is 200ms, set to 0 for immediate opening.
+* [Add] Add `MenuTrigger` component for triggering menu display near specified elements in a given direction, supporting click and hover trigger modes.
 
 ## v1.5.4 - 2026/02/09
 
