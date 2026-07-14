@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git commit *)",
       "Bash(npm run *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "WebFetch(domain:github.blog)"
     ]
   }
 }
