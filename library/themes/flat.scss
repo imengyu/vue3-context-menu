@@ -1,0 +1,12 @@
+//Flat theme
+//===================================================
+.mx-menu-bar.flat,
+.mx-context-menu.flat {
+  border-radius: 0;
+  padding: 7px 0;
+  box-shadow: 0px 1px 2px 1px var(--mx-menu-shadow-color);
+
+  .mx-context-menu-item {
+    padding: 3px 12px;
+  }
+}

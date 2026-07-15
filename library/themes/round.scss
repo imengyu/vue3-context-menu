@@ -1,0 +1,92 @@
+//Round theme
+//===================================================
+.mx-menu-bar.round,
+.mx-context-menu.round {
+
+  & {
+    //Backgroud
+    --mx-menu-backgroud: #fff;
+    --mx-menu-hover-backgroud: #eeeeee;
+    --mx-menu-active-backgroud: #eeeeee;
+    --mx-menu-open-backgroud: #eeeeee;
+    --mx-menu-open-hover-backgroud: #eeeeee;
+    --mx-menu-divider: #eaeaea;
+
+    //Text
+    --mx-menu-text: #141414;
+    --mx-menu-hover-text: #141414;
+    --mx-menu-active-text: #141414;
+    --mx-menu-open-text: #141414;
+    --mx-menu-open-hover-text: #141414;
+    --mx-menu-disabled-text: #bfbfbf;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.08);
+    --mx-menu-backgroud-radius: 10px;
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: #f5f5f5;
+    --mx-menu-shortcut-backgroud-hover: #e8e8e8;
+    --mx-menu-shortcut-backgroud-active: #e8e8e8;
+    --mx-menu-shortcut-backgroud-open: #e8e8e8;
+    --mx-menu-shortcut-backgroud-disabled: #fafafa;
+    --mx-menu-shortcut-text: #595959;
+    --mx-menu-shortcut-text-hover: #595959;
+    --mx-menu-shortcut-text-active: #595959;
+    --mx-menu-shortcut-text-open: #595959;
+    --mx-menu-shortcut-text-disabled: #bfbfbf;
+
+    //Border
+    --mx-menu-border-color: #eaeaea;
+  }
+  &.dark {
+    //Backgroud
+    --mx-menu-backgroud: #1f1f1f;
+    --mx-menu-hover-backgroud: #2a2a2a;
+    --mx-menu-active-backgroud: #2a2a2a;
+    --mx-menu-open-backgroud: #2a2a2a;
+    --mx-menu-open-hover-backgroud: #2a2a2a;
+    --mx-menu-divider: #333333;
+
+    //Text
+    --mx-menu-text: #e8e8e8;
+    --mx-menu-hover-text: #ffffff;
+    --mx-menu-active-text: #ffffff;
+    --mx-menu-open-text: #ffffff;
+    --mx-menu-open-hover-text: #ffffff;
+    --mx-menu-disabled-text: #5c5c5c;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.2);
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: #2a2a2a;
+    --mx-menu-shortcut-backgroud-hover: #333333;
+    --mx-menu-shortcut-backgroud-active: #333333;
+    --mx-menu-shortcut-backgroud-open: #333333;
+    --mx-menu-shortcut-backgroud-disabled: #252525;
+    --mx-menu-shortcut-text: #a0a0a0;
+    --mx-menu-shortcut-text-hover: #ffffff;
+    --mx-menu-shortcut-text-active: #ffffff;
+    --mx-menu-shortcut-text-open: #ffffff;
+    --mx-menu-shortcut-text-disabled: #5c5c5c;
+
+    //Border
+    --mx-menu-border-color: #333333;
+  }
+
+  border-radius: 10px;
+  padding: 8px 0;
+  border: 1px solid var(--mx-menu-border-color);
+  box-shadow: 0px 4px 12px 0 var(--mx-menu-shadow-color);
+
+  .mx-context-menu-item {
+    border-radius: 6px;
+    margin: 0 6px;
+    padding: 6px 10px;
+  }
+  .mx-context-menu-item-separator,
+  .mx-context-menu-item-sperator {
+    margin: 0 12px;
+  }
+}

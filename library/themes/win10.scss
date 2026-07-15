@@ -1,0 +1,71 @@
+//win10 theme
+//===================================================
+.mx-menu-bar.win10,
+.mx-context-menu.win10 {
+  & {
+    --mx-menu-backgroud: #eeeeee;
+    --mx-menu-hover-backgroud: #d8d8d8;
+    --mx-menu-active-backgroud: #dfdfdf;
+    --mx-menu-open-backgroud: #f1f1f1;
+    --mx-menu-open-hover-backgroud: #d8d8d8;
+    --mx-menu-divider: #aaaaaa;
+    --mx-menu-border-color: #b1b1b1;
+
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover: transparent;
+    --mx-menu-shortcut-backgroud-active: transparent;
+    --mx-menu-shortcut-backgroud-open: transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #272727;
+    --mx-menu-shortcut-text-hover: #272727;
+    --mx-menu-shortcut-text-active: #272727;
+    --mx-menu-shortcut-text-open: #272727;
+    --mx-menu-shortcut-text-disabled: #6b6b6b;
+
+    .mx-context-menu-item {
+      padding: 2px 4px;
+      margin: 0 4px;
+    }
+    .mx-context-menu-item-separator,
+    .mx-context-menu-item-sperator {
+      margin: 0 4px;
+    }
+  }
+  &.dark {
+    --mx-menu-backgroud: #303031;
+    --mx-menu-hover-backgroud: #636363;
+    --mx-menu-active-backgroud: #555555;
+    --mx-menu-open-backgroud: #636363;
+    --mx-menu-open-hover-backgroud: #636363;
+    --mx-menu-divider: #808080;
+    --mx-menu-border-color: #656565;
+
+    --mx-menu-shortcut-backgroud: #505050;
+    --mx-menu-shortcut-backgroud-hover:#505050;
+    --mx-menu-shortcut-backgroud-active:#505050;
+    --mx-menu-shortcut-backgroud-open:#505050;
+    --mx-menu-shortcut-backgroud-disabled:#444444;
+    --mx-menu-shortcut-text: #f1f1f1;
+    --mx-menu-shortcut-text-hover: #ffffff;
+    --mx-menu-shortcut-text-active: #ffffff;
+    --mx-menu-shortcut-text-open: #ffffff;
+    --mx-menu-shortcut-text-disabled: #9d9d9d;
+
+    padding: 8px 0;
+
+    .mx-context-menu-item {
+      padding: 6px 12px;
+      margin: 0;
+    }
+    .mx-context-menu-item-separator,
+    .mx-context-menu-item-sperator {
+      margin: 0 7px;
+    }
+  }
+
+  border-radius: 0;
+  padding: 8px 0;
+  border: 1px solid var(--mx-menu-border-color);
+  box-shadow: 2px 2px 1px 0 var(--mx-menu-shadow-color);
+
+}

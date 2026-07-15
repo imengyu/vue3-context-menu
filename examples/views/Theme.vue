@@ -9,6 +9,14 @@
     </div>
   </div>
   <div class="horbox">
+    <div class="box6" style="flex:1" @contextmenu="onContextMenu($event, 'round')">
+      Right click to show a <b>round theme</b> contextmenu !
+    </div>
+    <div class="box5" style="flex:1" @contextmenu="onContextMenu($event, 'round dark')">
+      Right click to show a <b>round dark theme</b> contextmenu !
+    </div>
+  </div>
+  <div class="horbox">
     <div class="box6" style="flex:1" @contextmenu="onContextMenu($event, 'flat')">
       Right click to show a <b>flat theme</b> contextmenu !
     </div>

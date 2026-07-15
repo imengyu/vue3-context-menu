@@ -1,0 +1,108 @@
+//Mac theme
+//===================================================
+.mx-menu-bar.mac,
+.mx-context-menu.mac {
+
+  & {
+
+    //Backgroud
+    --mx-menu-backgroud: #ececec;
+    --mx-menu-hover-backgroud: #0165e1;
+    --mx-menu-active-backgroud: #0165e1;
+    --mx-menu-open-backgroud: #858585;
+    --mx-menu-open-hover-backgroud: #0165e1;
+    --mx-menu-divider: #d2d2d2;
+
+    //Text
+    --mx-menu-text: #232323;
+    --mx-menu-hover-text: #fff;
+    --mx-menu-active-text: #fff;
+    --mx-menu-open-text: #fff;
+    --mx-menu-open-hover-text: #fff;
+    --mx-menu-disabled-text: #bbbbbb;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
+    --mx-menu-backgroud-radius: 10px;
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover:transparent;
+    --mx-menu-shortcut-backgroud-active:transparent;
+    --mx-menu-shortcut-backgroud-open:transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #424242;
+    --mx-menu-shortcut-text-hover: #fff;
+    --mx-menu-shortcut-text-active: #fff;
+    --mx-menu-shortcut-text-open: #fff;
+    --mx-menu-shortcut-text-disabled: #a5a5a5;
+
+    //Focus border color
+    --mx-menu-border-color: #bbbbbb;
+  }
+  &.dark {
+    //Backgroud
+    --mx-menu-backgroud: #333333;
+    --mx-menu-hover-backgroud: #0153d2;
+    --mx-menu-active-backgroud: #0153d2;
+    --mx-menu-open-hover-backgroud: #0153d2;
+    --mx-menu-open-backgroud: #414346;
+    --mx-menu-divider: #575757;
+
+    //Text
+    --mx-menu-text: #dcdcdc;
+    --mx-menu-hover-text: #fff;
+    --mx-menu-active-text: #fff;
+    --mx-menu-open-text: #fff;
+    --mx-menu-open-hover-text: #fff;
+    --mx-menu-disabled-text: #6a6a6a;
+
+    //Shadow
+    --mx-menu-shadow-color: rgba(0, 0, 0, 0.1);
+    --mx-menu-backgroud-radius: 10px;
+
+    //Shortcut badge
+    --mx-menu-shortcut-backgroud: transparent;
+    --mx-menu-shortcut-backgroud-hover:transparent;
+    --mx-menu-shortcut-backgroud-active:transparent;
+    --mx-menu-shortcut-backgroud-open:transparent;
+    --mx-menu-shortcut-backgroud-disabled:transparent;
+    --mx-menu-shortcut-text: #dadada;
+    --mx-menu-shortcut-text-hover: #fff;
+    --mx-menu-shortcut-text-active: #fff;
+    --mx-menu-shortcut-text-open: #fff;
+    --mx-menu-shortcut-text-disabled: #6a6a6a;
+
+    //Focus border color
+    --mx-menu-border-color: #222;
+  }
+
+  padding: 8px 0;
+  box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
+  border: 1px solid var(--mx-menu-border-color);
+
+  .mx-context-menu-item {
+    border-radius: 5px;
+    margin: 0 6px;
+    padding: 3px 6px;
+
+    //Focus by keyboard
+    &.keyboard-focus {
+      background-color: var(--mx-menu-active-backgroud);
+      color: var(--mx-menu-active-text);
+      outline: none;
+
+      .mx-right-arrow, .mx-checked-mark {
+        fill: var(--mx-menu-active-text);
+      }
+      .mx-shortcut {
+        background-color: var(--mx-menu-shortcut-backgroud-active);
+        color: var(--mx-menu-shortcut-text-active);
+      }
+    }
+  }
+  .mx-context-menu-item-separator,
+  .mx-context-menu-item-sperator {
+    margin: 0 12px;
+  }
+}
