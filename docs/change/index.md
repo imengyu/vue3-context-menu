@@ -5,12 +5,15 @@ nav:
   order: 5
 ---
 
+## v1.5.6 - 2026/07/15
+
+* [Add] 新增 `round` 主题（含 dark 模式），大圆角 10px、简洁配色风格。
+* [Fix] 修复 `MenuTrigger` 顶部方向（top direction）定位不匹配问题。
+
 ## v1.5.5 - 2026/07/14
 
 * [Add] 新增 `subMenuOpenDelay` 配置项，控制悬停菜单项时子菜单的打开延时（毫秒），防止快速移动鼠标时子菜单闪烁。默认 200ms，设为 0 则立即打开。
 * [Add] 新增 `MenuTrigger` 组件，用于在指定元素指定方向上触发显示菜单，支持 click 和 hover 两种触发方式。
-* [Add] 新增 `round` 主题（含 dark 模式），大圆角 10px、简洁配色风格。
-* [Fix] 修复 `MenuTrigger` 顶部方向（top direction）定位不匹配问题。
 * [Change] 将 flat、win10、mac 主题样式拆分至 `library/themes/` 目录独立文件。
 
 ## v1.5.4 - 2026/02/09

@@ -5,12 +5,15 @@ nav:
   order: 5
 ---
 
+## v1.5.6 - 2026/07/15
+
+* [Add] Add `round` theme (with dark mode), featuring large 10px border-radius and clean color scheme.
+* [Fix] Fix `MenuTrigger` top direction position mismatch.
+
 ## v1.5.5 - 2026/07/14
 
 * [Add] Add `subMenuOpenDelay` option to control the delay (in ms) before opening a submenu on hover, preventing submenu flickering during fast mouse movement. Default is 200ms, set to 0 for immediate opening.
 * [Add] Add `MenuTrigger` component for triggering menu display near specified elements in a given direction, supporting click and hover trigger modes.
-* [Add] Add `round` theme (with dark mode), featuring large 10px border-radius and clean color scheme.
-* [Fix] Fix `MenuTrigger` top direction position mismatch.
 * [Change] Split flat, win10, and mac theme styles into separate files under `library/themes/`.
 
 ## v1.5.4 - 2026/02/09
