@@ -10,7 +10,7 @@
     </div>
     <slot 
       name="menu" 
-      :options="menuPos" 
+      :options="menuOptions" 
       :show="visible" 
       :onClose="() => visible=false" 
     />
@@ -18,8 +18,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, type PropType } from 'vue';
-import type { MenuPopDirection } from './ContextMenuDefine';
+import { computed, ref, type PropType } from 'vue';
+import type { MenuOptions, MenuPopDirection } from './ContextMenuDefine';
 import { getTop, getLeft } from './ContextMenuUtils';
 
 const props = defineProps({
@@ -46,7 +46,15 @@ const emit = defineEmits(['show', 'hide']);
 const wrapperRef = ref<HTMLElement>();
 const triggerRef = ref<HTMLElement>();
 const visible = ref(false);
-const menuPos = ref({ x: 0, y: 0 });
+const menuPos = ref({ 
+  x: 0, 
+  y: 0,
+});
+const menuOptions = computed<MenuOptions>(() => ({
+  x: menuPos.value.x,
+  y: menuPos.value.y,
+  direction: props.position,
+}));
 
 function calcPosition(): { x: number; y: number } {
   const el = triggerRef.value!;
@@ -60,12 +68,22 @@ function calcPosition(): { x: number; y: number } {
   else
     y = getTop(el) + el.offsetHeight / 2;
 
-  if (pos.endsWith('l'))
-    x = getLeft(el);
-  else if (pos.endsWith('r'))
-    x = getLeft(el) + el.offsetWidth;
-  else
-    x = getLeft(el) + el.offsetWidth / 2;
+
+  if (pos.startsWith('t') || pos.startsWith('b')) {
+    if (pos.includes('l'))
+      x = getLeft(el) + el.offsetWidth;
+    else if (pos.includes('r'))
+      x = getLeft(el);
+    else
+      x = getLeft(el) + el.offsetWidth / 2;
+  } else {
+    if (pos.includes('l'))
+      x = getLeft(el);
+    else if (pos.includes('r'))
+      x = getLeft(el) + el.offsetWidth;
+    else
+      x = getLeft(el) + el.offsetWidth / 2;
+  }
 
   return { x, y };
 }
@@ -75,7 +93,7 @@ function showMenu() {
   const pos = calcPosition();
   menuPos.value = pos;
   visible.value = true;
-  emit('show', pos);
+  emit('show', menuOptions.value);
 }
 
 function hideMenu() {
