@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.5.6 - 2026/07/15
+## v1.5.7 - 2026/10/22
 
 * [Add] Add `round` theme (with dark mode), featuring large 10px border-radius and clean color scheme.
 * [Fix] Fix `MenuTrigger` top direction position mismatch.

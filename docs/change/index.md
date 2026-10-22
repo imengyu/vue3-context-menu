@@ -5,7 +5,7 @@ nav:
   order: 5
 ---
 
-## v1.5.6 - 2026/07/15
+## v1.5.7 - 2026/10/22
 
 * [Add] 新增 `round` 主题（含 dark 模式），大圆角 10px、简洁配色风格。
 * [Fix] 修复 `MenuTrigger` 顶部方向（top direction）定位不匹配问题。
