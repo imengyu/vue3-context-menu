@@ -16,42 +16,42 @@
         </div>
         <div class="box1" style="flex:1;margin:10px 30px" @contextmenu="onContextComponentMenu($event)">
           And right click to show contextmenu (component mode) !
+          <!--this is component mode of context-menu-->
+          <ContextMenuComponent
+            v-model:show="componentMenuShow"
+            :options="componentMenuOptions"
+          >
+            <context-menu-item label="Simple item" />
+            <context-menu-item label="Item with a icon" icon="icon-reload-1" />
+            <context-menu-group label="Menu with child">
+              <context-menu-item label="Item1" />
+              <context-menu-item label="Item1" />
+            </context-menu-group>
+            <context-menu-separator />
+            <context-menu-group label="Menu with child child child">
+              <context-menu-item label="Item1" />
+              <context-menu-item label="Item2" />
+              <context-menu-separator />
+              <context-menu-group label="Child with v-for 50">
+                <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" />
+              </context-menu-group>
+              <context-menu-group label="Childs">
+                <context-menu-item label="Item1-1" />
+                <context-menu-item label="Item1-2" />
+                <context-menu-separator />
+                <context-menu-group label="Childs">
+                  <context-menu-item label="Item2-1" />
+                  <context-menu-item label="Item2-2" />
+                </context-menu-group>
+              </context-menu-group>
+            </context-menu-group>
+          </ContextMenuComponent>
         </div>
       </div>
     </div>
     <div class="box4">
       You can open examples\views\ChangeContainer.vue file view complete source code.
     </div>
-    <!--this is component mode of context-menu-->
-    <ContextMenuComponent
-      v-model:show="componentMenuShow"
-      :options="componentMenuOptions"
-    >
-      <context-menu-item label="Simple item" />
-      <context-menu-item label="Item with a icon" icon="icon-reload-1" />
-      <context-menu-group label="Menu with child">
-        <context-menu-item label="Item1" />
-        <context-menu-item label="Item1" />
-      </context-menu-group>
-      <context-menu-separator />
-      <context-menu-group label="Menu with child child child">
-        <context-menu-item label="Item1" />
-        <context-menu-item label="Item2" />
-        <context-menu-separator />
-        <context-menu-group label="Child with v-for 50">
-          <context-menu-item v-for="index of 50" :key="index" :label="'Item3-'+index" />
-        </context-menu-group>
-        <context-menu-group label="Childs">
-          <context-menu-item label="Item1-1" />
-          <context-menu-item label="Item1-2" />
-          <context-menu-separator />
-          <context-menu-group label="Childs">
-            <context-menu-item label="Item2-1" />
-            <context-menu-item label="Item2-2" />
-          </context-menu-group>
-        </context-menu-group>
-      </context-menu-group>
-    </ContextMenuComponent>
   </div>
 </template>
 
