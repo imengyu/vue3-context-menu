@@ -9,6 +9,7 @@ nav:
 
 * [Add] Add `round` theme (with dark mode), featuring large 10px border-radius and clean color scheme.
 * [Fix] Fix `MenuTrigger` top direction position mismatch.
+* [Fix] Fix incorrect menu position calculation when the trigger is inside a statically positioned (`position: static`) scroll container; position calculation now uses `getBoundingClientRect`.
 
 ## v1.5.5 - 2026/07/14
 

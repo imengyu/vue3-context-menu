@@ -4,32 +4,28 @@ import type { MenuOptions } from "./ContextMenuDefine";
 import { MenuConstOptions } from "./ContextMenuDefine";
 
 /**
- * Get absolute y position of HTMLElement
+ * Get y position of HTMLElement relative to the viewport.
+ * Uses `getBoundingClientRect` so that scroll of any ancestor container
+ * (including non-positioned scroll containers) is correctly accounted for.
  * @param e Element
- * @param stopNode Specify the node for recursive termination, default to body
+ * @param stopNode If specified, return the position relative to this element instead of the viewport.
  * @returns 
  */
 export function getTop(e: HTMLElement, stopNode?: HTMLElement): number {
-  let offset = e.offsetTop;
-  if (e.offsetParent != null && e.offsetParent != stopNode) {
-    offset -= e.offsetParent.scrollTop;
-    offset += getTop(e.offsetParent as HTMLElement, stopNode);
-  }
-  return offset;
+  const top = e.getBoundingClientRect().top;
+  return stopNode ? top - stopNode.getBoundingClientRect().top : top;
 }
 /**
- * Get absolute x position of HTMLElement
+ * Get x position of HTMLElement relative to the viewport.
+ * Uses `getBoundingClientRect` so that scroll of any ancestor container
+ * (including non-positioned scroll containers) is correctly accounted for.
  * @param e Element
- * @param stopNode Specify the node for recursive termination, default to body
+ * @param stopNode If specified, return the position relative to this element instead of the viewport.
  * @returns 
  */
 export function getLeft(e: HTMLElement, stopNode?: HTMLElement): number {
-  let offset = e.offsetLeft;
-  if (e.offsetParent != null && e.offsetParent != stopNode) {
-    offset -= e.offsetParent.scrollLeft;
-    offset += getLeft(e.offsetParent as HTMLElement, stopNode);
-  }
-  return offset;
+  const left = e.getBoundingClientRect().left;
+  return stopNode ? left - stopNode.getBoundingClientRect().left : left;
 }
 
 /**

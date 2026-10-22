@@ -59,6 +59,30 @@
     <div v-if="lastAction" style="margin-top: 20px; padding: 10px; background: #e8f5e9; border-radius: 4px;">
       Last action: {{ lastAction }}
     </div>
+
+    <div style="height: 600px;"></div>
+
+    <h3>In scroll content</h3>
+    <div class="scroll-box">
+      <div class="scroll-spacer"></div>
+      <MenuTrigger trigger="hover" :position="(position as MenuPopDirection )">
+        <button class="trigger-btn">Hover me (in scroll container)</button>
+        <template #menu="{ options, show, onClose }">
+          <ContextMenu
+            :options="{ ...menuData, ...options }"
+            :show="show"
+            @close="onClose()"
+          >
+            <ContextMenuItem label="Hover Item 1" @click="onMenuClick('Hover - Item 1')" />
+            <ContextMenuItem label="Hover Item 2" @click="onMenuClick('Hover - Item 2')" />
+          </ContextMenu>
+        </template>
+      </MenuTrigger>
+      <div class="scroll-spacer"></div>
+    </div>
+
+    <div style="height: 100px;"></div>
+
   </div>
 </template>
 
@@ -112,5 +136,15 @@ function onFunctionShow(pos: MenuOptions) {
 }
 .trigger-btn:hover {
   background: #bbdefb;
+}
+.scroll-box {
+  height: 380px;
+  overflow: auto;
+  border: 1px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  padding: 8px;
+}
+.scroll-spacer {
+  height: 240px;
 }
 </style>

@@ -9,6 +9,7 @@ nav:
 
 * [Add] 新增 `round` 主题（含 dark 模式），大圆角 10px、简洁配色风格。
 * [Fix] 修复 `MenuTrigger` 顶部方向（top direction）定位不匹配问题。
+* [Fix] 修复菜单在静态定位（`position: static`）的滚动容器中位置计算不正确的问题，坐标计算改用 `getBoundingClientRect`。
 
 ## v1.5.5 - 2026/07/14
 
