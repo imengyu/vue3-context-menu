@@ -17,6 +17,8 @@ function initInstance(
   isNew: boolean, 
   customSlots?: Record<string, Slot>,
 ) {
+  // Each menu owns its render root; the visible menu is teleported to the shared container.
+  const renderRoot = document.createElement('div');
   const show = ref(true);
   const vnode = h(ContextSubMenuWrapperConstructor, { 
     options: options,
@@ -24,14 +26,14 @@ function initInstance(
     container: container,
     isFullScreenContainer: !isNew,
     onCloseAnimFinished: () => {
-      render(null, container);
+      render(null, renderRoot);
     },
     onClose: (item: undefined) => {
       options.onClose?.(item);
       show.value = false;
     },
   }, customSlots);
-  render(vnode, container);
+  render(vnode, renderRoot);
   return vnode.component;
 }
 
