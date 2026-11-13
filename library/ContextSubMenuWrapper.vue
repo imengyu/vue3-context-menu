@@ -104,6 +104,7 @@ const instance : ContextMenuInstance = {
   getMenuDimensions: () => submenuInstance.value?.getMenuDimensions() ?? { width: 0, height: 0 },
 };
 let closed = false;
+let bodyEventsTimer: number | undefined;
 
 function openMenu() {
   installBodyEvents();
@@ -111,6 +112,7 @@ function openMenu() {
 }
 function closeMenu(fromItem?: MenuItem|undefined) {
   closed = true;
+  removeBodyEvents();
   emit("close", fromItem);
   if (!options.value.menuTransitionProps)
     emit('closeAnimFinished');
@@ -121,7 +123,8 @@ function isClosed() {
 }
 
 function installBodyEvents() {
-  setTimeout(() => {
+  bodyEventsTimer = window.setTimeout(() => {
+    bodyEventsTimer = undefined;
     document.addEventListener("click", onBodyClick, true);
     document.addEventListener("contextmenu", onBodyClick, true);
     document.addEventListener("scroll", onBodyScroll, true);
@@ -132,6 +135,8 @@ function installBodyEvents() {
   }, 50);
 }
 function removeBodyEvents() {
+  window.clearTimeout(bodyEventsTimer);
+  bodyEventsTimer = undefined;
   document.removeEventListener("contextmenu", onBodyClick, true);
   document.removeEventListener("click", onBodyClick, true);
   document.removeEventListener("scroll", onBodyScroll, true);
@@ -211,13 +216,11 @@ function checkTargetAndClose(target: HTMLElement, e: MouseEvent|null) {
   if (e) {
     if (options.value.clickCloseOnOutside !== false) {
       //Close menu
-      removeBodyEvents();
       closeMenu();
     } else {
       options.value.onClickOnOutside?.(e);
     }
   } else {
-    removeBodyEvents();
     closeMenu();
   }
 }
