@@ -86,6 +86,7 @@ onMounted(() => {
 })
 onBeforeUnmount(() => {
   removeBodyEvents();
+  removeOpenedContextMenu(instance);
 });
 
 watch(show, (v: boolean) => {
